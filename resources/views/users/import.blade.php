@@ -24,26 +24,6 @@
                 <label for="formFile" class="form-label">Pilih File</label>
                 <input class="form-control" type="file" id="formFile" name="file" required>
             </div>
-            @if ($role == 'siswa')
-            <div class="mb-3">
-                <label for="formFile" class="form-label">Kelas</label>
-                <select class="form-select" name="kelas_id">
-                    @foreach ($kelas as $row)
-                    <option value="{{ $row->id }}">{{ $row->romawi }} {{ $row->nama }}</option>
-                    @endforeach
-                </select>
-            </div>
-            @if (check_jenjang())
-            <div class="mb-3">
-                <label for="formFile" class="form-label">Jurusan</label>
-                <select class="form-select" name="kompetensi_id">
-                    @foreach ($kompetensis as $kompetensi)
-                    <option value="{{ $kompetensi->id }}">{{ $kompetensi->kompetensi }}</option>
-                    @endforeach
-                </select>
-            </div>
-            @endif
-            @endif
             <button class="btn btn-primary" type="submit">Import</button>
         </form>
     </div>

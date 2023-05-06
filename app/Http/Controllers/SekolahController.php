@@ -120,14 +120,7 @@ class SekolahController extends Controller
         foreach ($sekolah->kelas as $key => $kelas) {
             $kelas->delete();
         }
-
-        foreach ($sekolah->kompetensi as $key => $kompetensi) {
-            $kompetensi->delete();
-        }
-
-        $sekolah->tingkat()->sync([]);
-        $sekolah->spp()->sync([]);
-
+        
         $sekolah->delete();
 
         return redirect()->back()->with('msg_success', 'Sekolah berhasil dihapus');

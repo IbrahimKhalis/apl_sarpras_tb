@@ -139,25 +139,6 @@
                   @enderror
                 </div>
                 <div class="mb-3">
-                  <label for="tingkat_id" class="form-label">Tingkat/Kelas</label>
-                  <select name="tingkat_id[]" id="tingkat_id" class="fstdropdown-select text-dark form-control @error('tingkat_id') is-invalid @enderror"
-                    style="border-radius: 5px;"
-                    required multiple>
-                    @foreach ($tingkats as $tingkat)
-                    @if (old('tingkat_id'))
-                    <option value="{{ $tingkat->id }}" {{ (in_array($tingkat->id, old('tingkat_id')) ? 'selected' : '') }}>{{ $tingkat->romawi }}</option>                        
-                    @else
-                    <option value="{{ $tingkat->id }}">{{ $tingkat->romawi }}</option>                        
-                    @endif
-                    @endforeach
-                  </select>
-                  @error('tingkat_id')
-                    <div class="invalid-feedback">
-                      {{ $message }}
-                    </div>
-                  @enderror
-                </div>
-                <div class="mb-3">
                   <label for="logo" class="form-label">Logo (opsional)</label>
                   <input class="form-control" type="file" id="formFile" name="logo"
                     style="border-radius: 5px;">

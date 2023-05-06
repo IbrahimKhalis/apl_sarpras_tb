@@ -27,7 +27,7 @@
                 @foreach (Auth::user()->sekolah->kelas as $kelas)
                 <tr class="text-center">
                     <th scope="row">{{ $loop->iteration }}</th>
-                    <td>{{ $kelas->tingkat->romawi }} {{ $kelas->nama }}</td>
+                    <td>{{ $kelas->nama }}</td>
                     @if (auth()->user()->can('edit_kelas') || auth()->user()->can('delete_kelas') ||
                     auth()->user()->can('upgrade_kelas'))
                     <td>

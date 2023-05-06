@@ -38,7 +38,8 @@ class UpdateUserRequest extends FormRequest
             'ref_kelurahan_id' => 'required', 
             'jalan' => 'required',  
             'profil' => 'mimes:png,jpg,jpeg|file|max:5024',
-            'email' => ['required', Rule::unique('users')->ignore($this->id)]
+            'email' => ['required', Rule::unique('users')->ignore($this->id)],
+            'nip' => ['required', Rule::unique('users')->ignore($this->id)], 
         ];
     }
 }

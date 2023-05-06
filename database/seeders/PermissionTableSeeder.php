@@ -42,27 +42,10 @@ class PermissionTableSeeder extends Seeder
             'edit_kelas',
             'delete_kelas',
 
-            'view_kompetensi',
-            'add_kompetensi',
-            'edit_kompetensi',
-            'delete_kompetensi',
-
             'view_agama',
             'add_agama',
             'edit_agama',
             'delete_agama',
-
-            'upgrade_kelas',
-
-            'view_spp',
-            'add_spp',
-            'edit_spp',
-            'delete_spp',
-            
-            'view_pembayaran',
-            'add_pembayaran',
-            'delete_pembayaran',
-            'export_pembayaran',
         ];
 
         foreach ($permissions as $permission) {

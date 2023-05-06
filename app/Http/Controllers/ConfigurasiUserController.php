@@ -32,11 +32,7 @@ class ConfigurasiUserController extends Controller
         
         Auth::user()->update($validatedData);
 
-        if (Auth::user()->hasRole('siswa')) {
-            Auth::user()->profile_siswa->update($validatedData);
-        }else{
-            Auth::user()->profile_user->update($validatedData);
-        }
+        Auth::user()->profile_user->update($validatedData);
 
         if ($request->email != Auth::user()->email) {
             \Auth::guard('web')->logout();

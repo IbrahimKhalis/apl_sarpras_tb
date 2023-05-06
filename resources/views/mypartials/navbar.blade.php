@@ -31,8 +31,7 @@
 
         <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
           <img src="{{ Auth::user()->profil != '/img/profil.png' ? asset('storage/' . Auth::user()->profil) : asset('/img/profil.png') }}" class="avatar img-fluid rounded me-1" alt="Charles Hall" />
-          <span class="text-dark">{{ Auth::user()->hasRole('siswa') ? Auth::user()->profile_siswa->name :
-            Auth::user()->profile_user->name }}</span>
+          <span class="text-dark">{{ Auth::user()->profile_user->name }}</span>
         </a>
         <div class="dropdown-menu dropdown-menu-end">
           <a class="dropdown-item" href="{{ route('profil.index') }}"><i class="align-middle me-1" data-feather="user"></i>

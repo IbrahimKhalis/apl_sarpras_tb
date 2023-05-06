@@ -14,7 +14,6 @@
                         <th scope="col">Name</th>
                         <th scope="col">NPSN</th>
                         <th scope="col">Kepala Sekolah</th>
-                        <th scope="col">Tingkat</th>
                         <th scope="col">Alamat</th>
                         @if (auth()->user()->can('edit_sekolah') || auth()->user()->can('delete_sekolah'))
                         <th scope="col">Action</th>
@@ -35,7 +34,6 @@
                         <td>{{ $sekolah->nama }}</td>
                         <td>{{ $sekolah->npsn }}</td>
                         <td>{{ $sekolah->kepala_sekolah }}</td>
-                        <td style="text-transform: uppercase;s">{{ $sekolah->jenjang }}</td>
                         <td>{{ $sekolah->alamat }}</td>
                         @if (auth()->user()->can('edit_sekolah') || auth()->user()->can('delete_sekolah')) 
                         <td>

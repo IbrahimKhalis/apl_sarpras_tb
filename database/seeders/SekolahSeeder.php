@@ -25,7 +25,5 @@ class SekolahSeeder extends Seeder
             'ref_kelurahan_id' => 1102032001,
             'jalan' => 'asd'
         ]);
-
-        $sekolah->tingkat()->sync([10, 11, 12]);
     }
 }

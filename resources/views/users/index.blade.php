@@ -31,26 +31,6 @@
             <div class="col-md-6 mb-3">
                 <input type="text" class="form-control" placeholder="Search..." name="search" onkeyup="filter_user()">
             </div>
-            @if ($role == 'siswa')
-            @if (check_jenjang())
-            <div class="col-md-3 mb-3">
-                <select class="form-select filter-kompetensi" onchange="filter_user()">
-                    <option value="" selected>Pilih Kompetensi</option>
-                    @foreach ($kompetensis as $kompetensi)
-                    <option value="{{ $kompetensi->id }}">{{ $kompetensi->kompetensi }}</option>
-                    @endforeach
-                </select>
-            </div>
-            @endif
-            <div class="col-md-3 mb-3">
-                <select class="form-select filter-kelas" onchange="filter_user()">
-                    <option value="" selected>Pilih Kelas</option>
-                    @foreach ($kelas as $row)
-                    <option value="{{ $row->id }}">{{ $row->romawi }} {{ $row->nama }}</option>
-                    @endforeach
-                </select>
-            </div>
-            @endif
         </div>
         <div class="table table-responsive table-hover text-center">
             <table class="table align-middle table-user">
@@ -71,8 +51,7 @@
                             <img src="{{ $user->profil == '/img/profil.png' ? asset($user->profil) : asset('storage/' . $user->profil) }}"
                                 alt="" style="width: 4rem;height: 4rem;object-fit: cover;">
                         </td>
-                        <td>{{ $role != 'siswa' ? ($user->profile_user ? $user->profile_user->name : '') :
-                            ($user->profile_siswa ? $user->profile_siswa->name : '') }}</td>
+                        <td>{{ ($user->profile_user ? $user->profile_user->name : '') }}</td>
                         <td class="col-2">
                             <div class="d-flex flex-wrap gap-2">
                                 <form action="{{ route('users.shows', ['role' => $role, 'id' => $user->id]) }}"
@@ -85,14 +64,6 @@
                                     method="get">
                                     @include('mypartials.tahunajaran')
                                     <button class="btn btn-sm btn-warning rounded" style="width: 4rem;">Edit</button>
-                                </form>
-                                @endif
-                                @if ($role == 'siswa')
-                                <form action="{{ route('users.down', ['id' => $user->id]) }}" method="post">
-                                    @include('mypartials.tahunajaran')
-                                    @csrf
-                                    <button class="btn btn-sm btn-danger rounded" style="width: 4rem;"
-                                        onclick="return confirm('apakah anda yakin?')">Down</button>
                                 </form>
                                 @endif
                                 @if (auth()->user()->can('delete_users'))
@@ -114,14 +85,12 @@
 @push('js')
 <script>
     const search = $('.container-filter input[name="search"]');
-    const kompetensi = $('.container-filter .filter-kompetensi');
     const kelas = $('.container-filter .filter-kelas');
 
     function filter_user(){
         let role = '{{ request("role") }}';
         let form = new FormData();
         form.set('search', search.val());
-        form.set('kompetensi', kompetensi ? kompetensi.val() : '');
         form.set('kelas', kelas.val());
         form.set('tahun_awal', "{{ request('tahun_awal') }}");
         form.set('tahun_akhir', "{{ request('tahun_akhir') }}");
@@ -162,14 +131,6 @@
                                         @include('mypartials.tahunajaran')
                                         <button class="btn btn-sm btn-warning rounded" style="width: 4rem;">Edit</button>
                                     </form>
-                                    @if ($role == 'siswa')
-                                    <form action="/users/siswa/${e.id}/down" method="post">
-                                        @include('mypartials.tahunajaran')
-                                        @csrf
-                                        <button class="btn btn-sm btn-danger rounded" style="width: 4rem;"
-                                    onclick="return confirm('apakah anda yakin?')">Down</button>
-                                    </form>
-                                    @endif
                                     @endif
                                     @if (auth()->user()->can('delete_users'))
                                     <button type="submit" class="btn btn-sm btn-danger rounded" style="width: 4rem;" onclick="deleteData('/users/${role}/${e.id}')">Hapus</button>
@@ -194,7 +155,6 @@
         $(`
             <input type="hidden" name="search" value="${search.val()}">
             <input type="hidden" name="kelas" value="${kelas.val()}">
-            <input type="hidden" name="kompetensi" value="${kompetensi ? kompetensi.val() : ''}">
         `).insertBefore(this)
 
         $(this).parent().submit();

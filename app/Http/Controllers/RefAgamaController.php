@@ -99,19 +99,6 @@ class RefAgamaController extends Controller
     public function destroy($id)
     {
         $ref_agama = ref_agama::findOrFail($id);
-
-        // foreach ($ref_agama->profile_siswa as $key => $siswa) {
-        //     $siswa->update([
-        //         'ref_agama_id' => null
-        //     ]);
-        // }
-
-        // foreach ($ref_agama->profile_user as $key => $user) {
-        //     $user->update([
-        //         'ref_agama_id' => null
-        //     ]);
-        // }
-
         $ref_agama->delete();
         return redirect()->back()->with('msg_success', 'Berhasil dihapus');
     }

@@ -15,24 +15,8 @@ class Sekolah extends Model
         return $this->hasMany(User::class);
     }
 
-    public function kompetensi(){
-        return $this->hasMany(Kompetensi::class);
-    }
-
     public function kelas(){
         return $this->hasMany(Kelas::class);
-    }
-
-    public function siswa(){
-        return $this->hasMany(Siswa::class);
-    }
-
-    public function tingkat(){
-        return $this->belongsToMany(ref_tingkat::class, 'sekolah_tingkat');
-    }
-
-    public function spp(){
-        return $this->belongsToMany(TahunAjaran::class, 'm_spps', 'sekolah_id', 'tahun_ajaran_id')->withPivot('nominal', 'id');
     }
 
     public function provinsi(){

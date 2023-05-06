@@ -18,9 +18,9 @@
             @csrf
             <h2 class="text-center mb-3" style="color: #263238;">Sign In</h2>
             <div class="mb-3 login">
-              <label for="login" class="form-label">Email/NIP/NIPD</label>
+              <label for="login" class="form-label">Email/NIP</label>
               <input type="text" class="form-control w-100" id="login" name="login"
-                placeholder="Masukkan Email/NIP/NIPD">
+                placeholder="Masukkan Email/NIP">
             </div>
             <div class="mb-3 password">
               <label class="form-label" for="password">Password</label>

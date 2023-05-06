@@ -14,13 +14,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         $this->call(RefTingkatSeeder::class);
          $this->call(PermissionTableSeeder::class);
          $this->call(SekolahSeeder::class);
          $this->call(RefAgamaSeeder::class);
          $this->call(TahunAjaranSeeder::class);
          $this->call(KelasSeeder::class);
-         $this->call(KompetensiSeeder::class);
          $this->call(UserSeeder::class);
     }
 }

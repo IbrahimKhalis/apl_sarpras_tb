@@ -37,7 +37,6 @@ class AuthenticatedSessionController extends Controller
         ]);
         
         $user = User::where('email', $request->login)
-                    ->orWhere('nipd', $request->login)
                     ->orWhere('nip', $request->login)
                     ->first();
                 

@@ -25,8 +25,7 @@ class SekolahController extends Controller
 
     public function create(){
         $provinsis = DB::table('ref_provinsis')->get();
-        $tingkats = DB::table('ref_tingkats')->get();
-        return view('myauth.register', compact('provinsis', 'tingkats'));
+        return view('myauth.register', compact('provinsis'));
     }
     
     public function store(StoreSekolahRegRequest $request)
@@ -42,8 +41,6 @@ class SekolahController extends Controller
             'jalan' => $request->jalan,
             'jenjang' => $request->jenjang,
         ]);
-
-        $sekolah->tingkat()->sync($request->tingkat_id);
 
         $user = User::create([
             'email' => $request->email,
@@ -68,8 +65,6 @@ class SekolahController extends Controller
     public function edit(){
         $provinsis = DB::table('ref_provinsis')->get();
         $data = Auth::user()->sekolah;
-        // $tingkats = DB::table('ref_tingkats')->get();
-        // $data['tingkat'] = $this->parseDataToArray($data->tingkat);
         return view('sekolah.edit', compact('provinsis', 'data'));
     }
 

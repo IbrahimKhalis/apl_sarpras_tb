@@ -27,8 +27,7 @@
       </li>
       @endcan
 
-      @if (auth()->user()->can('view_tahun_ajaran') || auth()->user()->can('view_agama') ||
-      auth()->user()->can('view_kompetensi') || auth()->user()->can('view_kelas') || auth()->user()->can('view_spp'))
+      @if (auth()->user()->can('view_tahun_ajaran') || auth()->user()->can('view_agama') || auth()->user()->can('view_kelas'))
       <li class="sidebar-header">
         Data Master
       </li>
@@ -46,24 +45,10 @@
         </a>
       </li>
       @endcan
-      @can('view_kompetensi')
-      <li class="sidebar-item {{ Request::is('data-master/kompetensi*') ? 'active' : '' }}">
-        <x-ButtonCustom class="sidebar-link btn-sidebar-self" route="{{ route('kompetensi.index') }}">
-          <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Kompetensi</span>
-        </x-ButtonCustom>
-      </li>
-      @endcan
       @can('view_kelas')
       <li class="sidebar-item {{ Request::is('data-master/kelas*') ? 'active' : '' }}">
         <x-ButtonCustom class="sidebar-link btn-sidebar-self" route="{{ route('kelas.index') }}">
           <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Kelas</span>
-        </x-ButtonCustom>
-      </li>
-      @endcan
-      @can('view_spp')
-      <li class="sidebar-item {{ Request::is('data-master/spp*') ? 'active' : '' }}">
-        <x-ButtonCustom class="sidebar-link btn-sidebar-self" route="{{ route('spp.index') }}">
-          <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">SPP</span>
         </x-ButtonCustom>
       </li>
       @endcan

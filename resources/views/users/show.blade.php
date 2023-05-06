@@ -24,19 +24,11 @@
                             <td class="col-1">:</td>
                             <td class="col-8">{{ $user->email }}</td>
                         </tr>
-                        @if ($role != 'siswa' && $role != 'admin' && $role != 'super_admin')
                         <tr class="row">
                             <td class="col-3" style="font-weight: 600;">NIP</td>
                             <td class="col-1">:</td>
                             <td class="col-8">{{ $user->nip }}</td>
                         </tr>
-                        @else
-                        <tr class="row">
-                            <td class="col-3" style="font-weight: 600;">NIPD</td>
-                            <td class="col-1">:</td>
-                            <td class="col-8">{{ $user->nipd }}</td>
-                        </tr>
-                        @endif
                         <tr class="row">
                             <td class="col-3" style="font-weight: 600;">Jenis Kelamin</td>
                             <td class="col-1">:</td>
@@ -60,29 +52,8 @@
                         <tr class="row">
                             <td class="col-3" style="font-weight: 600;">Alamat</td>
                             <td class="col-1">:</td>
-                            <td class="col-8">{{ $user->provinsi }}, {{ $user->kabupaten }}, {{ $user->kecamatan }}, {{ $user->kelurahan }}, {{ $user->jalan }}/td>
+                            <td class="col-8">{{ $user->provinsi }}, {{ $user->kabupaten }}, {{ $user->kecamatan }}, {{ $user->kelurahan }}, {{ $user->jalan }}</td>
                         </tr>
-                        @if ($role == 'siswa' && isset($user->kelas))
-                        <tr class="row">
-                            <td class="col-3" style="font-weight: 600;">Kelas</td>
-                            <td class="col-1">:</td>
-                            <td class="col-8">{{ $user->romawi }} {{ $user->kelas }}</td>
-                        </tr>
-                        @endif
-                        @if ($role == 'siswa' && isset($user->kompetensi))
-                        <tr class="row">
-                            <td class="col-3" style="font-weight: 600;">Kompetensi Keahlian</td>
-                            <td class="col-1">:</td>
-                            <td class="col-8">{{ $user->kompetensi }}</td>
-                        </tr>
-                        @endif
-                        @if ($role == 'siswa' && isset($user->spp))
-                        <tr class="row">
-                            <td class="col-3" style="font-weight: 600;">SPP</td>
-                            <td class="col-1">:</td>
-                            <td class="col-8">{{ $user->spp->nominal }}</td>
-                        </tr>
-                        @endif
                     </table>
                 </div>
             </div>

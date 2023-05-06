@@ -31,7 +31,7 @@
                         <div class="mb-3 col-md-6">
                             <label for="name" class="form-label">Name</label>
                             <input class="form-control" type="text" id="name" name="name"
-                                value="{{ Auth::user()->hasRole('siswa') ? Auth::user()->profile_siswa->name : Auth::user()->profile_user->name }}"
+                                value="{{ Auth::user()->profile_user->name }}"
                                 autofocus />
                         </div>
                         <div class="mb-3 col-md-6">

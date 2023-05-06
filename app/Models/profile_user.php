@@ -14,4 +14,8 @@ class profile_user extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+    
+    public function ref_agama(){
+        return $this->belongsTo(ref_agama::class);
+    }
 }
