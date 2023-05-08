@@ -74,10 +74,10 @@ Route::group(['middleware' => ['auth']], function() {
 
      // Profil
     Route::prefix('profil')->name('profil.')->group(function () {
-         Route::get('/', [ConfigurasiUserController::class, 'index'])->name('index');
-         Route::patch('/update', [ConfigurasiUserController::class, 'update'])->name('update');
-         Route::get('/ubah-password', [ConfigurasiUserController::class, 'ubahPassword'])->name('ubah-password');
-         Route::patch('/reset-password', [ConfigurasiUserController::class, 'reset_password'])->name('reset-password');
+        Route::get('/', [ConfigurasiUserController::class, 'index'])->name('index');
+        Route::patch('/update', [ConfigurasiUserController::class, 'update'])->name('update');
+        Route::get('/ubah-password', [ConfigurasiUserController::class, 'ubahPassword'])->name('ubah-password');
+        Route::patch('/reset-password', [ConfigurasiUserController::class, 'reset_password'])->name('reset-password');
     });
 
 });
