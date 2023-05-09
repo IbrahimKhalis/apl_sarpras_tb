@@ -3,13 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\KelasController;
-use App\Http\Controllers\RefAgamaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TahunAjaranController;
-use App\Http\Controllers\RefKabupatenController;
-use App\Http\Controllers\RefKecamatanController;
-use App\Http\Controllers\RefKelurahanController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\ConfigurasiUserController;
 
@@ -32,13 +27,6 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/register', [App\Http\Controllers\User\SekolahController::class, 'store'])->name('register.store');
 });
 
-Route::prefix('data-master')->group(function () {
-    Route::post('kabupaten', [RefKabupatenController::class, 'index'])->name('kabupaten_list');
-    Route::post('kecamatan', [RefKecamatanController::class, 'index'])->name('kecamatan_list');
-    Route::post('kelurahan', [RefKelurahanController::class, 'index'])->name('kelurahan_list');
-    Route::post('/get-data', [KelasController::class, 'get_data'])->name('kelas.get_data');
-});
-
 Route::group(['middleware' => ['auth']], function() {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('roles', RoleController::class);
@@ -46,9 +34,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('edit/sekolah', [App\Http\Controllers\User\SekolahController::class, 'edit'])->name('sekolah.edit.own');
     Route::patch('update/sekolah', [App\Http\Controllers\User\SekolahController::class, 'update'])->name('sekolah.update.own');
     Route::prefix('data-master')->group(function () {
-        Route::post('kelas/upgrade', [KelasController::class, 'upgrade'])->name('kelas.upgrade');
-        Route::resource('kelas', KelasController::class);
-        Route::resource('agama', RefAgamaController::class);
         Route::resource('tahun-ajaran', TahunAjaranController::class);
     });
     

@@ -23,11 +23,11 @@ class UserSeeder extends Seeder
         $roles = [
             'super_admin' => [
                 'name_long' => 'Super Admin',
-                'permission' => ['7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '22', '23', '24', '25']
+                'permission' => ['7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17']
             ],
             'admin' => [
                 'name_long' => 'Admin',
-                'permission' => ['1', '2', '3', '4', '5', '6', '18', '19', '20', '21']
+                'permission' => ['1', '2', '3', '4', '5', '6']
             ],
             'petugas' => [
                 'name_long' => 'Petugas',
@@ -61,15 +61,15 @@ class UserSeeder extends Seeder
         ]);
 
         // User Admin SMK TB
-        $adminsmk = User::create([
-            'email' => 'adminsmk@gmail.com',
-            'password' => bcrypt('password'),
-            'sekolah_id' => 1
-        ])->assignRole('admin');
+        // $adminsmk = User::create([
+        //     'email' => 'adminsmk@gmail.com',
+        //     'password' => bcrypt('password'),
+        //     'sekolah_id' => 1
+        // ])->assignRole('admin');
 
-        profile_user::create([
-            'name' => 'Admin SMK',
-            'user_id' => $adminsmk->id
-        ]);
+        // profile_user::create([
+        //     'name' => 'Admin SMK',
+        //     'user_id' => $adminsmk->id
+        // ]);
     }
 }

@@ -19,11 +19,11 @@ return new class extends Migration
             $table->string('kepala_sekolah')->nullable();
             $table->string('npsn');
             $table->string('logo')->default('/img/tutwuri.png');
-            $table->foreignId('ref_provinsi_id')->constrained();
-            $table->foreignId('ref_kabupaten_id')->constrained();
-            $table->foreignId('ref_kecamatan_id')->constrained();
-            $table->foreignId('ref_kelurahan_id')->constrained();
-            $table->text('jalan');
+            // $table->foreignId('ref_provinsi_id')->constrained();
+            // $table->foreignId('ref_kabupaten_id')->constrained();
+            // $table->foreignId('ref_kecamatan_id')->constrained();
+            // $table->foreignId('ref_kelurahan_id')->constrained();
+            // $table->text('jalan');
             $table->enum('jenjang', ['sd', 'smp', 'smk', 'sma']);
             $table->timestamps();
         });

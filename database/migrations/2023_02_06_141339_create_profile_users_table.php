@@ -20,12 +20,14 @@ return new class extends Migration
             $table->enum('jk', ['L', 'P'])->nullable();
             $table->string('tempat_lahir')->nullable();
             $table->date('tanggal_lahir')->nullable();
-            $table->foreignId('ref_agama_id')->nullable()->constrained();
-            $table->foreignId('ref_provinsi_id')->nullable()->constrained();
-            $table->foreignId('ref_kabupaten_id')->nullable()->constrained();
-            $table->foreignId('ref_kecamatan_id')->nullable()->constrained();
-            $table->foreignId('ref_kelurahan_id')->nullable()->constrained();
-            $table->string('jalan')->nullable();
+            $table->string('agama')->nullable();
+            $table->text('alamat')->nullable();
+            // $table->foreignId('ref_agama_id')->nullable()->constrained();
+            // $table->foreignId('ref_provinsi_id')->nullable()->constrained();
+            // $table->foreignId('ref_kabupaten_id')->nullable()->constrained();
+            // $table->foreignId('ref_kecamatan_id')->nullable()->constrained();
+            // $table->foreignId('ref_kelurahan_id')->nullable()->constrained();
+            // $table->string('jalan')->nullable();
             $table->timestamps();
         });
     }
