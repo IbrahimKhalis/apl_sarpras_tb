@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Hash, Session, DB;
+use Spatie\Permission\Models\Role;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -19,8 +20,8 @@ class AuthenticatedSessionController extends Controller
      */
     public function create()
     {   
-        $count_tahun_ajaran = DB::table('tahun_ajarans')->count();
-        return view('myauth.login', compact('count_tahun_ajaran'));
+        $roles = Role::all();
+        return view('myauth.login', compact('roles'));
     }
 
     /**
@@ -32,6 +33,7 @@ class AuthenticatedSessionController extends Controller
     public function store(Request $request)
     {   
         $request->validate([
+            'role' => 'required',
             'login' => 'required',
             'password' => 'required'
         ]);
@@ -40,7 +42,7 @@ class AuthenticatedSessionController extends Controller
                     ->orWhere('nip', $request->login)
                     ->first();
                 
-        if ($user && Hash::check($request->password, $user->password)) {
+        if ($user && Hash::check($request->password, $user->password) && $user->hasRole($request->role)) {
             Auth::login($user);
             return redirect()->intended(RouteServiceProvider::HOME); 
         } else {

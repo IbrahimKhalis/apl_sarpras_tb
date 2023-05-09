@@ -11,13 +11,13 @@
         </x-ButtonCustom>
       </li>
 
-      {{-- @can('view_sekolah')
+      @can('view_sekolah')
       <li class="sidebar-item {{ Request::is('sekolah*') ? 'active' : '' }}">
         <a class="sidebar-link" href="{{ route('sekolah.index') }}">
           <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Sekolah</span>
         </a>
       </li>
-      @endcan --}}
+      @endcan
 
       @can('view_pembayaran')
       <li class="sidebar-item {{ Request::is('pembayaran*') ? 'active' : '' }}">

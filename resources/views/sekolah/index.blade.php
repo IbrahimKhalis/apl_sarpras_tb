@@ -5,6 +5,7 @@
 <div class="card">
     <div class="card-body">
         <h4 class="card-title">Sekolah</h4>
+        <a href="{{ route('sekolah.create') }}" class="btn btn-primary">Tambah</a>
         <div class="table table-responsive table-hover text-center">
             <table class="table align-middle">
                 <thead>
@@ -37,6 +38,7 @@
                         <td>{{ $sekolah->alamat }}</td>
                         @if (auth()->user()->can('edit_sekolah') || auth()->user()->can('delete_sekolah')) 
                         <td>
+                            <a href="{{ route('sekolah.show', $sekolah->id) }}" class="btn btn-primary btn-sm rounded">Detail</a>
                             @if (auth()->user()->can('delete_sekolah'))
                             <button type="submit" class="btn btn-sm btn-danger"
                                 onclick="deleteData('{{ route('sekolah.destroy', [$sekolah->id]) }}')" style="width: 5rem; margin: 0.1rem; border-radius: 5px; font-weight: 500;">Hapus</button>

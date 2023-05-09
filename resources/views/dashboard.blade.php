@@ -25,14 +25,6 @@
     <div class="col-md-4">
         <div class="card text-center">
             <div class="card-body">
-                <h5 class="card-title">Jumlah Agama</h5>
-                <p class="card-text" style="font-size: 2rem">{{ $countAgama }}</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card text-center">
-            <div class="card-body">
                 <h5 class="card-title">Jumlah Role</h5>
                 <p class="card-text" style="font-size: 2rem">{{ $countRole }}</p>
             </div>
@@ -71,9 +63,7 @@
                     <tr>
                         <td class="title">Alamat</td>
                         <td>:</td>
-                        <td>{{ Auth::user()->sekolah->jalan }},{{ Auth::user()->sekolah->kelurahan->nama }},{{
-                            Auth::user()->sekolah->kecamatan->nama }}, {{ Auth::user()->sekolah->kabupaten->nama }}, {{
-                            Auth::user()->sekolah->provinsi->nama }}</td>
+                        <td>{{ Auth::user()->sekolah->alamat }}</td>
                     </tr>
                 </table>
             </div>

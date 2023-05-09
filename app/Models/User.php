@@ -31,12 +31,12 @@ class User extends Authenticatable
         return $this->belongsTo(Sekolah::class);
     }
 
-    public function kelas(){
-        return $this->belongsToMany(Kelas::class, 'user_kelas');
-    }
-
     public function profile_user(){
         return $this->hasOne(profile_user::class, 'user_id');
+    }
+
+    public function log(){
+        return $this->hasMany(Log::class);
     }
 
     private static function parseDataToArray($datas){
