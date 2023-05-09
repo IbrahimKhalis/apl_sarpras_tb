@@ -7,6 +7,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TahunAjaranController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\ConfigurasiUserController;
+use App\Http\Controllers\KategoriController;
+use App\Models\Kategori;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +67,10 @@ Route::group(['middleware' => ['auth']], function() {
         Route::patch('/reset-password', [ConfigurasiUserController::class, 'reset_password'])->name('reset-password');
     });
 
+});
+
+Route::prefix('sementara')->name('sementara.')->group(function(){
+    Route::get('/kategori', [KategoriController::class, 'index'])->name('index');
 });
 
 require __DIR__.'/auth.php';
