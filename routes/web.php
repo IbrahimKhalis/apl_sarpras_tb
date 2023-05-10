@@ -24,6 +24,12 @@ use App\Models\Kategori;
 Route::get('/', function(){
     return view('welcome');
 })->name('index');
+Route::get('/jurusan-pplg', function(){
+    return view('jurusan.jurusan');
+})->name('jurusan');
+Route::get('/edit-jurusan', function(){
+    return view('jurusan.edit');
+})->name('edit-jurusan');
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/register',[App\Http\Controllers\User\SekolahController::class, 'create'])->name('register');

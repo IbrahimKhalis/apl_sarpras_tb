@@ -11,6 +11,7 @@ class JurusanController extends Controller
     public function index()
     {
         return Jurusan::all();
+        
     }
 
     public function create()

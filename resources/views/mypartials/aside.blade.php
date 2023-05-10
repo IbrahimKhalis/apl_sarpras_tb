@@ -179,11 +179,16 @@
       @endcan
 
       @if (auth()->user()->can('view_tahun_ajaran') || auth()->user()->can('view_agama') || auth()->user()->can('view_kelas'))
-        <li class="side-menu" style="color: grey">
-              <div class="side-menu__icon"> <i data-lucide="inbox"></i></div>
-              <div class="side-menu__title">Data Master</div>
-        </li>
-        @can('view_tahun_ajaran')
+      <li>
+        <a href="javascript:;.html" class="side-menu ">
+            <div class="side-menu__icon"> <i data-lucide="home"></i> </div>
+            <div class="side-menu__title">
+                Data Master
+                <div class="side-menu__sub-icon"> <i data-lucide="chevron-down"></i> </div>
+            </div>
+        </a>
+        <ul class="side-menu__sub">
+          @can('view_tahun_ajaran')
           <li>
             <a href="{{ route('tahun-ajaran.index') }}" class="side-menu {{ Request::is('data-master/tahun-ajaran*') ? 'active' : '' }}">
                 <div class="side-menu__icon"><i data-lucide="inbox"></i></div>
@@ -210,6 +215,10 @@
           </li>
         @endcan
       @endif
+        </ul>
+    </li>  
+ 
+        
 
 
       @can('view_users')
@@ -243,6 +252,16 @@
         </li>
       @endcan
       @endcan
+      <li>
+        <a href="{{ route('jurusan') }}" class="side-menu">
+            <div class="side-menu__icon"><i data-lucide="users"></i></div>
+            <div class="side-menu__title">Jurusan</div>
+        </a>
+      </li>
+      <li>
+     
+       
+    </li>
   </ul>
 </nav>
 <!-- END: Side Menu -->
