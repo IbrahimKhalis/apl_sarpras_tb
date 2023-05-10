@@ -11,7 +11,7 @@
 @section('content')
 <form action="{{ route('jurusan.store') }}" method="POST">
     @csrf
-    @method("patch")
+    @method("post")
     <input type="text" name="nama_jurusan">
     <input type="text" name="nama_kaprog">
     <button type="submit">Kirim</button>

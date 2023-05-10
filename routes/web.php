@@ -73,7 +73,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('/jurusan', JurusanController::class);
     
     // update admin 
-    Route::patch('/admin/{id}', [ProfileController::class, 'updateAdmin']);
+    Route::patch('/admin/{id}', [ProfileController::class, 'updateAdmin'])->name('admin.update');
 });
 
 Route::prefix('sementara')->name('sementara.')->group(function(){
