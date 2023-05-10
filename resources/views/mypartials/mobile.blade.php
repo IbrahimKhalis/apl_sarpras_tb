@@ -2,7 +2,7 @@
  <div class="mobile-menu md:hidden">
     <div class="mobile-menu-bar">
         <a href="" class="flex mr-auto">
-            <img alt="Midone - HTML Admin Template" class="w-6" src="dist/images/logo.svg">
+            <img alt="Midone - HTML Admin Template" class="w-6" src="{{ asset('dist/images/logo.svg') }}">
         </a>
         <a href="javascript:;" id="mobile-menu-toggler"> <i data-lucide="bar-chart-2" class="w-8 h-8 text-white transform -rotate-90"></i> </a>
     </div>
@@ -10,7 +10,7 @@
         <li>
             <a href="javascript:;.html" class="menu menu--active">
                 <div class="menu__icon"> <i data-lucide="home"></i> </div>
-                <div class="menu__title"> Dashboard <i data-lucide="chevron-down" class="menu__sub-icon transform rotate-180"></i> </div>
+                <div class="menu__title"> Dashboard mobile <i data-lucide="chevron-down" class="menu__sub-icon transform rotate-180"></i> </div>
             </a>
             <ul class="menu__sub-open">
                 <li>
