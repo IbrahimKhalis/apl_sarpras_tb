@@ -99,15 +99,15 @@
                 <form action="{{ route('login') }}" method="POST" class="form-login">
                   @csrf
                   <select class="intro-x login__input form-control py-3 px-4 block mt-4y" name="role" id="role">
-                    <option>Pilih Sebagai</option>
+                    <option value="">Pilih Sebagai</option>
                     @foreach ($roles as $role)
                     <option value="{{ $role->name }}">{{ ucfirst(str_replace('_', ' ', $role->name)) }}</option>
                     @endforeach
                   </select>
                   <div class="intro-x mt-2 text-slate-400 xl:hidden text-center">A few more clicks to sign in to your account. Manage all your e-commerce accounts in one place</div>
                   <div class="intro-x mt-8">
-                      <input type="text" class="intro-x login__input form-control py-3 px-4 block" type="email"  id="login" name="login"  placeholder="Email">
-                      <input type="password" class="intro-x login__input form-control py-3 px-4 block mt-4" type="password" id="password" class="" name="password"
+                      <input type="text" id="login" class="form-login intro-x login__input form-control py-3 px-4 block" type="email"  id="login" name="login"  placeholder="Email" disabled>
+                      <input type="password" id="password" class="form-login intro-x login__input form-control py-3 px-4 block mt-4" type="password" id="password" class="" name="password" disabled
                       placeholder="&nbsp;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;">
                   </div>
                   <div class="intro-x flex text-slate-600 dark:text-slate-500 text-xs sm:text-sm mt-4">

@@ -3,19 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Models\Jurusan;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class JurusanController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:view_users', ['only' => ['index','show']]);
+         $this->middleware('permission:add_users', ['only' => ['create','store']]);
+         $this->middleware('permission:edit_users', ['only' => ['edit','update']]);
+         $this->middleware('permission:delete_users', ['only' => ['destroy']]);
+    }
+
     public function index()
     {
-        return Jurusan::all();
+        return view('jurusan.form');
     }
 
     public function create()
     {
-        //
+        return view('jurusan.form');
     }
 
     public function store(Request $request)
@@ -32,7 +41,7 @@ class JurusanController extends Controller
             'sekolah_id'=> Auth::user()->sekolah->id,
         ]);
 
-        return $request->all();
+        return back();
     }
 
     public function show($id)
