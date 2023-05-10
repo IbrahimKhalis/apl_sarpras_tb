@@ -25,11 +25,9 @@ class StoreUserRequest extends FormRequest
     {
         return [
             'name' => 'required',
+            'nip' => 'required|unique:users',
             'email' => 'required|unique:users',
             'jk' => 'required', 
-            'tempat_lahir' => 'required', 
-            'tanggal_lahir' => 'required', 
-            'jalan' => 'required', 
             'profil' => 'mimes:png,jpg,jpeg|file|max:5024'
         ];
     }

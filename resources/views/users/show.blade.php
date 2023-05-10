@@ -34,26 +34,6 @@
                             <td class="col-1">:</td>
                             <td class="col-8">{{ $user->jk == 'L' ? 'Laki-Laki' : 'Perempuan' }}</td>
                         </tr>
-                        <tr class="row">
-                            <td class="col-3" style="font-weight: 600;">Tempat Lahir</td>
-                            <td class="col-1">:</td>
-                            <td class="col-8">{{ $user->tempat_lahir }}</td>
-                        </tr>
-                        <tr class="row">
-                            <td class="col-3" style="font-weight: 600;">Tanggal Lahir</td>
-                            <td class="col-1">:</td>
-                            <td class="col-8">{{ date('d F Y', strtotime($user->tanggal_lahir)) }}</td>
-                        </tr>
-                        <tr class="row">
-                            <td class="col-3" style="font-weight: 600;">Agama</td>
-                            <td class="col-1">:</td>
-                            <td class="col-8">{{ $user->agama }}</td>
-                        </tr>
-                        <tr class="row">
-                            <td class="col-3" style="font-weight: 600;">Alamat</td>
-                            <td class="col-1">:</td>
-                            <td class="col-8">{{ $user->provinsi }}, {{ $user->kabupaten }}, {{ $user->kecamatan }}, {{ $user->kelurahan }}, {{ $user->jalan }}</td>
-                        </tr>
                     </table>
                 </div>
             </div>

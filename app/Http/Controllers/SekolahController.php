@@ -51,28 +51,31 @@ class SekolahController extends Controller
      */
     public function store(StoreSekolahRequest $request)
     {
-        $sekolah = Sekolah::create([
-            'nama' => $request->nama_sekolah,
-            'kepala_sekolah' => $request->kepala_sekolah,
-            'npsn' => $request->npsn,
-            'jenjang' => $request->jenjang,
-            'alamat' => $request->alamat,
-        ]);
+        DB::beginTransaction();
+        try {
+            $sekolah = Sekolah::create([
+                'nama' => $request->nama_sekolah,
+                'kepala_sekolah' => $request->kepala_sekolah,
+                'npsn' => $request->npsn,
+                'jenjang' => $request->jenjang,
+                'alamat' => $request->alamat,
+            ]);
+    
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => \Hash::make($request->password),
+                'sekolah_id' => $sekolah->id
+            ]);
+    
+            DB::commit();
 
-        $user = User::create([
-            'email' => $request->email,
-            'password' => \Hash::make($request->password),
-            'sekolah_id' => $sekolah->id
-        ]);
-
-        $user->assignRole('admin');
-
-        DB::table('profile_users')->insert([
-            'name' => $request->name,
-            'user_id' => $user->id
-        ]);
-
-        return redirect()->route('sekolah.index')->with('msg_success', "Berhasil Ditambahkan"); 
+            $user->assignRole('admin');
+            return redirect()->route('sekolah.index')->with('msg_success', "Berhasil Ditambahkan"); 
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->route('sekolah.index')->with('msg_error', "Gagal Ditambahkan"); 
+        }
     }
 
     /**

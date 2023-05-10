@@ -1,5 +1,5 @@
 <form class="mt-3"
-    action="{{ (isset($data)) ? route('users.update', ['id' => $data->user_id   , 'role' => $role]) : route('users.store', [$role]) }}"
+    action="{{ (isset($data)) ? route('users.update', ['id' => $data->id   , 'role' => $role]) : route('users.store', [$role]) }}"
     method="POST" enctype="multipart/form-data">
     @if (isset($data))
     @method('patch')
@@ -40,45 +40,6 @@
         @enderror
     </div>
     <div class="mb-3">
-        <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
-        <input type="text" class="form-control @error('tempat_lahir') is-invalid @enderror"
-            placeholder="Masukan Tempat Lahir" name="tempat_lahir"
-            value="{{ isset($data) ? $data->tempat_lahir : old('tempat_lahir') }}"
-            style=" font-size: 15px; height: 6.5vh;" id="tempat_lahir">
-        @error('tempat_lahir')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
-        @enderror
-    </div>
-    <div class="mb-3">
-        <label for="tanggal_lahir" class="form-label">Tanggal Lahir</label>
-        <input type="date" class="form-control @error('tanggal_lahir') is-invalid @enderror"
-            placeholder="Masukan Tanggal Lahir" name="tanggal_lahir"
-            value="{{ isset($data) ? $data->tanggal_lahir : old('tanggal_lahir') }}"
-            style=" font-size: 15px; height: 6.5vh;" id="tanggal_lahir">
-        @error('tanggal_lahir')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
-        @enderror
-    </div>
-    <div class="mb-3">
-        <label for="ref_agama_id" class="form-label">Agama</label>
-        <select class="form-select @error('ref_agama_id') is-invalid @enderror" id="ref_agama_id" name="ref_agama_id"
-            value="{{ old('ref_agama_id') }}" style=" font-size: 15px; height: 6.5vh;">
-            <option value="">Pilih Agama</option>
-            @foreach ($agamas as $agama)
-            <option value="{{ $agama }}">{{ $agama }}</option>
-            @endforeach
-        </select>
-        @error('ref_agama_id')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
-        @enderror
-    </div>
-    <div class="mb-3">
         <label for="jk" class="form-label">Jenis Kelamin</label>
         <select class="form-select @error('jk') is-invalid @enderror" aria-label="Default select example" name="jk"
             value="{{ old('jk') }}" style=" font-size: 15px; height: 6.5vh;" id="jk">
@@ -88,17 +49,6 @@
                 'selected' : '') }}>Perempuan</option>
         </select>
         @error('jk')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
-        @enderror
-    </div>
-    <div class="mb-3">
-        <label for="jalan" class="form-label">Jalan</label>
-        <input type="text" class="form-control @error('jalan') is-invalid @enderror" placeholder="Masukan Jalan"
-            name="jalan" value="{{ isset($data) ? $data->jalan : old('jalan') }}"
-            style=" font-size: 15px; height: 6.5vh;" id="jalan">
-        @error('jalan')
         <div class="invalid-feedback">
             {{ $message }}
         </div>

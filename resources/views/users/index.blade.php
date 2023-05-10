@@ -5,7 +5,6 @@
     <div class="col-md-7">
         <h4><strong>Data {{ $role }}</strong></h4>
     </div>
-    @if (count($tahun_ajarans) > 0)
     <div class="col-md d-flex justify-content-end gap-2">
         @if (auth()->user()->can('export_users'))
         <x-ButtonCustom class="btn btn-primary btn-export" route="/export/users/{{ $role }}">
@@ -23,7 +22,6 @@
         </x-ButtonCustom>
         @endif
     </div>
-    @endif
 </div>
 <div class="card">
     <div class="card-body">
@@ -43,7 +41,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- @dd($users) --}}
                     @foreach ($users as $user)
                     <tr>
                         <th scope="row">{{ $loop->iteration }}</th>
@@ -51,7 +48,7 @@
                             <img src="{{ $user->profil == '/img/profil.png' ? asset($user->profil) : asset('storage/' . $user->profil) }}"
                                 alt="" style="width: 4rem;height: 4rem;object-fit: cover;">
                         </td>
-                        <td>{{ ($user->profile_user ? $user->profile_user->name : '') }}</td>
+                        <td>{{ $user->name }}</td>
                         <td class="col-2">
                             <div class="d-flex flex-wrap gap-2">
                                 <form action="{{ route('users.shows', ['role' => $role, 'id' => $user->id]) }}"

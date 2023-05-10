@@ -38,44 +38,24 @@ class UserController extends Controller
 
     public function create(Request $request, $role)
     {   
-        $agamas = [
-            'Islam',
-            'Kristen',
-            'Katolik',
-            'Hindu',
-            'Buddha',
-            'Kong Hu Chu'
-        ];
-        return view('users.create', compact('agamas', 'role'));
+        return view('users.create', compact('role'));
     }
 
     public function store(StoreUserRequest $request, $role)
     {   
-        $data = [
-            'profil' => isset($data['profil']) ? $data['profil'] : '/img/profil.png',
+        $user = User::create([
+            'profil' => isset($request->profil) ? $request->file('profil')->store('profil') : '/img/profil.png',
             'sekolah_id' => Auth::user()->sekolah_id,
-            'email' => $request->email
-        ];
-
-        $request->validate([
-            'nip' => 'required|unique:users'
+            'email' => $request->email,
+            'nip' => $request->nip,
+            'name' => $request->name,
         ]);
 
-        $data += ['nip' => $request->nip];
-         
-        if ($request->file('profil')) {
-            $data['profil'] = $request->file('profil')->store('profil');
-        }
-        
-        $user = User::create($data);
         $user->assignRole($role);
-
-        app('App\Http\Controllers\ProfileUserController')->store($user, $request, $role);
 
         return redirect()->route('users.index', [$role])->with('msg_success', 'Berhasil menambahkan ' . $role);
     }
 
-    
     public function show(Request $request, $role, $id){
         $this->check_user($id, $role);
         $user = User::findUser($role, $id);
@@ -85,12 +65,9 @@ class UserController extends Controller
     public function edit(Request $request, $role, $id)
     {   
         $this->check_user($id, $role);
-        $tahun_ajaran = TahunAjaran::getTahunAjaran($request);
         $data = User::findUser($role, $id);
-        $provinsis = DB::table('ref_provinsis')->get();
-        $agamas = ref_agama::all();
        
-        return view('users.update', compact('provinsis', 'agamas', 'role', 'data'));
+        return view('users.update', compact('role', 'data'));
     }
 
     /**
@@ -117,8 +94,6 @@ class UserController extends Controller
         }
         
         $user->update($data);
-
-        app('App\Http\Controllers\ProfileUserController')->update($user, $request, $role);
 
         return TahunAjaran::redirectWithTahunAjaranManual(route('users.index', [$role]), $request,  'Berhasil mengupdate ' . $role);
     }
