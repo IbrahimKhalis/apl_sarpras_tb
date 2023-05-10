@@ -15,6 +15,9 @@ class ConfigurasiUserController extends Controller
     public function index(){
         return view('myauth.settings');
     }
+    public function edit(){
+        return view('myauth.editprofile');
+    }
 
     public function update(Request $request){
         $validatedData = $request->validate([
