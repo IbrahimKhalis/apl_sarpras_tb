@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('logs', function (Blueprint $table) {
             $table->id();
-            $table->foreigId('user_id')->contrained();
+            $table->foreignId('user_id')->contrained();
             $table->text('ket');
             $table->timestamps();
         });
