@@ -9,7 +9,11 @@
 @endpush
 
 @section('content')
-<form action="" @method()>
-    
+<form action="{{ route('jurusan.store') }}" method="POST">
+    @csrf
+    @method("patch")
+    <input type="text" name="nama_jurusan">
+    <input type="text" name="nama_kaprog">
+    <button type="submit">Kirim</button>
 </form>
 @endsection

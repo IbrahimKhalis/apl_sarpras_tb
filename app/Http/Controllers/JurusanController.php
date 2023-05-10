@@ -10,12 +10,12 @@ class JurusanController extends Controller
 {
     public function index()
     {
-        return Jurusan::all();
+        return view('jurusan.form');
     }
 
     public function create()
     {
-        //
+        return view('jurusan.form');
     }
 
     public function store(Request $request)
