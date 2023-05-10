@@ -38,9 +38,15 @@ class UserController extends Controller
 
     public function create(Request $request, $role)
     {   
-        $provinsis = DB::table('ref_provinsis')->get();
-        $agamas = ref_agama::all();
-        return view('users.create', compact('provinsis', 'agamas', 'role'));
+        $agamas = [
+            'Islam',
+            'Kristen',
+            'Katolik',
+            'Hindu',
+            'Buddha',
+            'Kong Hu Chu'
+        ];
+        return view('users.create', compact('agamas', 'role'));
     }
 
     public function store(StoreUserRequest $request, $role)

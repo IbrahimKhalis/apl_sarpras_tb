@@ -29,13 +29,7 @@ class StoreUserRequest extends FormRequest
             'jk' => 'required', 
             'tempat_lahir' => 'required', 
             'tanggal_lahir' => 'required', 
-            'ref_agama_id' => 'required', 
-            'ref_provinsi_id' => 'required', 
-            'ref_kabupaten_id' => 'required', 
-            'ref_kecamatan_id' => 'required', 
-            'ref_kelurahan_id' => 'required', 
             'jalan' => 'required', 
-            'rfid_number' => 'unique:rfids',
             'profil' => 'mimes:png,jpg,jpeg|file|max:5024'
         ];
     }

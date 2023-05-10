@@ -69,8 +69,7 @@
             value="{{ old('ref_agama_id') }}" style=" font-size: 15px; height: 6.5vh;">
             <option value="">Pilih Agama</option>
             @foreach ($agamas as $agama)
-            <option value="{{ $agama->id }}" {{ isset($data) ? ($data->ref_agama_id == $agama->id ? 'selected' : '') :
-                (old('ref_agama_id') == $agama->id ? 'selected' : '') }}>{{ $agama->nama}}</option>
+            <option value="{{ $agama }}">{{ $agama }}</option>
             @endforeach
         </select>
         @error('ref_agama_id')
@@ -89,54 +88,6 @@
                 'selected' : '') }}>Perempuan</option>
         </select>
         @error('jk')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
-        @enderror
-    </div>
-    <div class="mb-3">
-        <label for="ref_provinsi_id" class="form-label">Provinsi</label>
-        <select class="between-input-item-select form-control" name="ref_provinsi_id" id="ref_provinsi_id">
-            <option value="">Pilih Provinsi</option>
-            @foreach ($provinsis as $provinsi)
-            <option value="{{ $provinsi->id }}" {{ isset($data) ? ($data->ref_provinsi_id == $provinsi->id ? 'selected'
-                : '') : (old('ref_provinsi_id') == $provinsi->id ? 'selected' : '') }}>{{ $provinsi->nama }}</option>
-            @endforeach
-        </select>
-        @error('ref_provinsi_id')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
-        @enderror
-    </div>
-    <div class="mb-3">
-        <label for="ref_kabupaten_id" class="form-label">Kota/Kabupaten</label>
-        <select class="between-input-item-select form-select" name="ref_kabupaten_id" id="ref_kabupaten_id">
-            <option value="">Pilih Kota/Kabupaten</option>
-        </select>
-        @error('ref_kabupaten_id')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
-        @enderror
-    </div>
-    <div class="mb-3">
-        <label for="ref_kecamatan_id" class="form-label">Kecamatan</label>
-        <select class="between-input-item-select form-select" name="ref_kecamatan_id" id="ref_kecamatan_id">
-            <option value="">Pilih Kecamatan</option>
-        </select>
-        @error('ref_kecamatan_id')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
-        @enderror
-    </div>
-    <div class="mb-3">
-        <label for="ref_kelurahan_id" class="form-label">Kelurahan</label>
-        <select class="between-input-item-select form-select" name="ref_kelurahan_id" id="ref_kelurahan_id">
-            <option value="">Pilih Kelurahan</option>
-        </select>
-        @error('ref_kelurahan_id')
         <div class="invalid-feedback">
             {{ $message }}
         </div>
