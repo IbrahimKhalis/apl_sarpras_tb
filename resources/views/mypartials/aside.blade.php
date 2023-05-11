@@ -179,6 +179,7 @@
       @endcan
 
       @if (auth()->user()->can('view_tahun_ajaran') || auth()->user()->can('view_agama') || auth()->user()->can('view_kelas'))
+
       <li>
         <a href="javascript:;.html" class="side-menu ">
             <div class="side-menu__icon"> <i data-lucide="home"></i> </div>
@@ -217,10 +218,6 @@
       @endif
         </ul>
     </li>  
- 
-        
-
-
       @can('view_users')
         <li class="side-menu">
           <div class="side-menu__icon"> <i data-lucide="inbox"></i></div>
@@ -242,6 +239,7 @@
       <li class="side-menu" style="color: grey">
         <div class="side-menu__icon"> <i data-lucide="inbox"></i></div>
         <div class="side-menu__title">Hak Akses</div>
+
       </li>
       @can('view_roles')
         <li>
@@ -259,8 +257,6 @@
         </a>
       </li>
       <li>
-     
-       
     </li>
   </ul>
 </nav>
