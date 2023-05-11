@@ -19,7 +19,12 @@ class JurusanController extends Controller
 
     public function index()
     {
+<<<<<<< HEAD
+        return Jurusan::all();
+        
+=======
         return view('jurusan.form');
+>>>>>>> 0bee5ffe0bcc32f08d888a54489162aff6f26a04
     }
 
     public function create()

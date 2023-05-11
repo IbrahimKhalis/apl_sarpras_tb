@@ -89,6 +89,7 @@
             }
         })
     </script>
+    
     {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
     <script src="{{ asset('dist/js/app.js') }}"></script>
     @include('mypartials.js')

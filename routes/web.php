@@ -25,6 +25,12 @@ use App\Models\Kategori;
 Route::get('/', function(){
     return view('welcome');
 })->name('index');
+Route::get('/jurusan-pplg', function(){
+    return view('jurusan.jurusan');
+})->name('jurusan');
+Route::get('/edit-jurusan', function(){
+    return view('jurusan.edit');
+})->name('edit-jurusan');
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/register',[App\Http\Controllers\User\SekolahController::class, 'create'])->name('register');
@@ -64,6 +70,7 @@ Route::group(['middleware' => ['auth']], function() {
      // Profil
     Route::prefix('profil')->name('profil.')->group(function () {
         Route::get('/', [ConfigurasiUserController::class, 'index'])->name('index');
+        Route::get('/edit', [ConfigurasiUserController::class, 'edit'])->name('edit');
         Route::patch('/update', [ConfigurasiUserController::class, 'update'])->name('update');
         Route::get('/ubah-password', [ConfigurasiUserController::class, 'ubahPassword'])->name('ubah-password');
         Route::patch('/reset-password', [ConfigurasiUserController::class, 'reset_password'])->name('reset-password');
