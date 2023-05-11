@@ -3,16 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\KelasController;
-use App\Http\Controllers\RefAgamaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TahunAjaranController;
-use App\Http\Controllers\RefKabupatenController;
-use App\Http\Controllers\RefKecamatanController;
-use App\Http\Controllers\RefKelurahanController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\ConfigurasiUserController;
+use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\ProfileController;
 use App\Models\Kategori;
 
 /*
@@ -28,17 +25,16 @@ use App\Models\Kategori;
 Route::get('/', function(){
     return view('welcome');
 })->name('index');
+Route::get('/jurusan-pplg', function(){
+    return view('jurusan.jurusan');
+})->name('jurusan');
+Route::get('/edit-jurusan', function(){
+    return view('jurusan.edit');
+})->name('edit-jurusan');
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/register',[App\Http\Controllers\User\SekolahController::class, 'create'])->name('register');
     Route::post('/register', [App\Http\Controllers\User\SekolahController::class, 'store'])->name('register.store');
-});
-
-Route::prefix('data-master')->group(function () {
-    Route::post('kabupaten', [RefKabupatenController::class, 'index'])->name('kabupaten_list');
-    Route::post('kecamatan', [RefKecamatanController::class, 'index'])->name('kecamatan_list');
-    Route::post('kelurahan', [RefKelurahanController::class, 'index'])->name('kelurahan_list');
-    Route::post('/get-data', [KelasController::class, 'get_data'])->name('kelas.get_data');
 });
 
 Route::group(['middleware' => ['auth']], function() {
@@ -48,9 +44,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('edit/sekolah', [App\Http\Controllers\User\SekolahController::class, 'edit'])->name('sekolah.edit.own');
     Route::patch('update/sekolah', [App\Http\Controllers\User\SekolahController::class, 'update'])->name('sekolah.update.own');
     Route::prefix('data-master')->group(function () {
-        Route::post('kelas/upgrade', [KelasController::class, 'upgrade'])->name('kelas.upgrade');
-        Route::resource('kelas', KelasController::class);
-        Route::resource('agama', RefAgamaController::class);
         Route::resource('tahun-ajaran', TahunAjaranController::class);
     });
     
@@ -77,11 +70,17 @@ Route::group(['middleware' => ['auth']], function() {
      // Profil
     Route::prefix('profil')->name('profil.')->group(function () {
         Route::get('/', [ConfigurasiUserController::class, 'index'])->name('index');
+        Route::get('/edit', [ConfigurasiUserController::class, 'edit'])->name('edit');
         Route::patch('/update', [ConfigurasiUserController::class, 'update'])->name('update');
         Route::get('/ubah-password', [ConfigurasiUserController::class, 'ubahPassword'])->name('ubah-password');
         Route::patch('/reset-password', [ConfigurasiUserController::class, 'reset_password'])->name('reset-password');
     });
 
+    // jurusan
+    Route::resource('/jurusan', JurusanController::class);
+    
+    // update admin 
+    Route::patch('/admin/{id}', [ProfileController::class, 'updateAdmin'])->name('admin.update');
 });
 
 Route::prefix('sementara')->name('sementara.')->group(function(){

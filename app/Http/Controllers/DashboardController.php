@@ -16,12 +16,10 @@ class DashboardController extends Controller
     public function index(Request $request){ 
         if (\Auth::user()->hasRole('super_admin')) {
             $countRole = Role::count() - 1;
-            $countAgama = ref_agama::count();
             $countTahunAjaran = TahunAjaran::count();
 
             return view('dashboard', [
                 'countRole' => $countRole,
-                'countAgama' => $countAgama,
                 'countTahunAjaran' => $countTahunAjaran
             ]);
 

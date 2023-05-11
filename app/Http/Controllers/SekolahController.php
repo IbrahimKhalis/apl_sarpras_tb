@@ -8,6 +8,7 @@ use App\Http\Requests\StoreSekolahRequest;
 use App\Http\Requests\UpdateSekolahRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use DB;
 
 class SekolahController extends Controller
 {
@@ -39,7 +40,7 @@ class SekolahController extends Controller
      */
     public function create()
     {
-        abort(404);
+        return view('sekolah.create');
     }
 
     /**
@@ -48,9 +49,33 @@ class SekolahController extends Controller
      * @param  \App\Http\Requests\StoreSekolahRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreSekolahRequest $request)
     {
-        dd($request);
+        DB::beginTransaction();
+        try {
+            $sekolah = Sekolah::create([
+                'nama' => $request->nama_sekolah,
+                'kepala_sekolah' => $request->kepala_sekolah,
+                'npsn' => $request->npsn,
+                'jenjang' => $request->jenjang,
+                'alamat' => $request->alamat,
+            ]);
+    
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => \Hash::make($request->password),
+                'sekolah_id' => $sekolah->id
+            ]);
+    
+            DB::commit();
+
+            $user->assignRole('admin');
+            return redirect()->route('sekolah.index')->with('msg_success', "Berhasil Ditambahkan"); 
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->route('sekolah.index')->with('msg_error', "Gagal Ditambahkan"); 
+        }
     }
 
     /**
@@ -61,7 +86,7 @@ class SekolahController extends Controller
      */
     public function show(Sekolah $sekolah)
     {
-        abort(404);
+        return view('sekolah.show', compact('sekolah'));
     }
 
     /**

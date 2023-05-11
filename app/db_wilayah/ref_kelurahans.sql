@@ -83503,5 +83503,5 @@ INSERT INTO `ref_kelurahans` (`id`, `nama`, `ref_kecamatan_id`, `created_at`, `u
 (9271091006, 'Klabulu', 927109, NULL, NULL),
 (9271101001, 'Suprau', 927110, NULL, NULL),
 (9271101002, 'Tampa Garam', 927110, NULL, NULL),
-(9271101003, 'Saoka', 927110, NULL, NULL),
+(9271101003, 'Saoka', 9271 10, NULL, NULL),
 (9271101004, 'Tanjung Kasuari', 927110, NULL, NULL);

@@ -107,6 +107,4 @@ class KategoriController extends Controller
 
         return redirect('/'); //Change this
     }
-
-
 }
