@@ -32,8 +32,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(Request $request)
     {
         Schema::defaultStringLength(191);
-        Paginator::useBootstrap();
-        $roles = Role::all();
+        $roles = Role::where('name', '!=', 'admin')->where('name', '!=', 'super_admin')->get();
         View::share('roles', $roles);
 
         config(['app.locale' => 'id']);

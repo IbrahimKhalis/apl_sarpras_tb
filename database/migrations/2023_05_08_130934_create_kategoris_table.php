@@ -16,8 +16,9 @@ return new class extends Migration
         Schema::create('kategoris', function (Blueprint $table) {
             $table->id();
             $table->foreignId('sekolah_id')->constrained();
-            $table->string('kode')->nullable();
+            $table->string('kode')->nullable()->unique();
             $table->string('nama');
+            $table->enum('jenis', ['sarana', 'prasarana']);
             $table->timestamps();
         });
     }

@@ -5,87 +5,94 @@ namespace App\Http\Controllers;
 use App\Models\Kategori;
 use App\Models\Sekolah;
 use App\Models\Subcategory;
+use App\Http\Requests\StoreKategoriRequest;
 use Illuminate\Http\Request;
+use DB, Auth;
 
 class KategoriController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:view_kategori', ['only' => ['index','show']]);
+         $this->middleware('permission:add_kategori', ['only' => ['create','store']]);
+         $this->middleware('permission:edit_kategori', ['only' => ['edit','update']]);
+         $this->middleware('permission:delete_kategori', ['only' => ['destroy']]);
+    }
+
     public function index(){
-        return Kategori::all();
+        $datas = Kategori::all();
+        return view('kategori.index', compact('datas'));
     }
 
-    public function add(){
-        $sekolah = Sekolah::all();
-        return view('kategori.create', compact('sekolah')); //change this
+    public function create(){
+        return view('kategori.form');
     }
 
-    public function create(Request $request){
-        
-        $create = Kategori::create([
-            'nama' => $request->nama,
-            'sekolah_id' => $request->sekolah_id,
-            'kode' => $request->kode,
-        ]);
-
-        $arrayOfSub = array_values(array_filter(explode(PHP_EOL, $request->subCategory)));
-
-        foreach($arrayOfSub as $item){
-            Subcategory::create([
-                'kategori_id' => $create->id,
-                'nama' => $item,
+    public function store(StoreKategoriRequest $request){
+        DB::beginTransaction();
+        try {
+            $kategori = Kategori::create([
+                'nama' => $request->nama,
+                'sekolah_id' => Auth::user()->sekolah_id,
+                'kode' => $request->kode,
+                'jenis' => $request->jenis,
             ]);
+
+            insertLog(Auth::user()->name . ' Berhasil menambahkan kategori ' . $request->nama);
+            if ($request->sub) {
+                foreach($request->sub as $sub){
+                    Subcategory::create([
+                        'kategori_id' => $kategori->id,
+                        'nama' => $sub,
+                    ]);
+                    insertLog(Auth::user()->name . ' Berhasil menambahkan sub kategori ' . $sub);
+                }
+            }
+            DB::commit();
+            return redirect()->route('kategori.index')->with('msg_success', 'Berhasil menambahkan kategori');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->route('kategori.create')->with('msg_error', "Gagal Ditambahkan"); 
         }
-
-        if(!$create){
-            return response()->json([
-                'massages' => "Create Failed!"
-            ], 400);
-        }
-
-        return redirect()->route('sementara.kategori.index'); //change this
-
     }
 
     public function show($id){
         $kategori = Kategori::find($id);
-        
-        return $kategori;//Change This
+        return $kategori;
     }
 
     public function edit($id){
-        $kategori = Kategori::find($id);
-        $sekolah = Sekolah::all();
-        $subCategory = $kategori->subcategory;
-
-        return view('kategori.edit', compact(
-            'kategori',
-            'sekolah',
-            'subCategory'
-        ));
+        $data = Kategori::find($id);
+        return view('kategori.form', compact('data'));
     }
 
     public function update(Request $request, $id){
+        DB::beginTransaction();
+        try {
+            $kategori = Kategori::find($id);
+            $kategori->update([
+                'nama' => $request->nama,
+                'kode' => $request->kode,
+            ]);
 
-        $kategori = Kategori::find($id);
+            insertLog(Auth::user()->name . ' Berhasil mengubah kategori ' . $request->nama);
 
-        if(!$kategori){
-            return response()->json([
-                'massages' => "The data that wanna be updated Not Found!"
-            ], 404);
+            if ($request->sub) {
+                foreach($request->sub as $sub){
+                    Subcategory::create([
+                        'kategori_id' => $kategori->id,
+                        'nama' => $sub,
+                    ]);
+                    insertLog(Auth::user()->name . ' Berhasil menambahkan sub kategori ' . $sub);
+                }
+            }
+            
+            DB::commit();
+            return redirect()->route('kategori.index')->with('msg_success', 'Berhasil mengubah kategori');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->route('kategori.create')->with('msg_error', "Gagal Ditambahkan"); 
         }
-
-        $update = $kategori->update([
-            'nama' => $request->nama,
-            'sekolah_id' => $request->sekolah_id,
-            'kode' => $request->kode,
-        ]);
-
-        if(!$update){
-            return response()->json([
-                'massages' => "Failed to Update!"
-            ], 400);
-        }
-
-        return redirect()->route('sementara.kategori.index'); //change this
     }
 
     public function destroy($id){
@@ -105,6 +112,25 @@ class KategoriController extends Controller
             ], 400);
         }
 
-        return redirect('/'); //Change this
+        return redirect('/');
+    }
+
+    public function updateSub(Request $request, $id){
+        $data = Subcategory::findOrFail($id);
+        $data->update([
+            'nama' => $request->nama
+        ]);
+        insertLog(Auth::user()->name . ' Berhasil mengubah sub kategori');
+        return response()->json([
+            'data' => $data,
+        ], 200);
+    }
+
+    public function deleteSub(Request $request, $id){
+        $data = Subcategory::findOrFail($id)->delete();
+        insertLog(Auth::user()->name . ' Berhasil menghapus sub kategori');
+        return response()->json([
+            'message' => 'Berhasil dihapus'
+        ], 200);
     }
 }
