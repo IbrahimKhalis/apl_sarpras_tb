@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
             ],
             'admin' => [
                 'name_long' => 'Admin',
-                'permission' => ['1', '2', '3', '4', '5', '6']
+                'permission' => ['1', '2', '3', '4', '5', '6', '18', '19', '20', '21', '22', '23', '24', '25']
             ],
             'petugas' => [
                 'name_long' => 'Petugas',

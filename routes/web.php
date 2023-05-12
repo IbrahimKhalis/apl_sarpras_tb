@@ -73,20 +73,13 @@ Route::group(['middleware' => ['auth']], function() {
         Route::patch('/reset-password', [ConfigurasiUserController::class, 'reset_password'])->name('reset-password');
     });
 
-    // jurusan
     Route::resource('/jurusan', JurusanController::class);
-    
-    // update admin 
     Route::patch('/admin/{id}', [ProfileController::class, 'updateAdmin'])->name('admin.update');
-});
-
-Route::prefix('sementara')->name('sementara.')->group(function(){
-    Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori.index');
-    Route::get('/kategori/add', [KategoriController::class, 'add'])->name('kategori.add');
-    Route::post('/kategori/create', [KategoriController::class, 'create'])->name('kategori.create');
-    Route::get('/kategori/edit/{id}', [KategoriController::class, 'edit'])->name('kategori.edit');
-    Route::post('/kategori/update/{id}',[KategoriController::class, 'update'])->name('kategori.update');
-    Route::delete('/kategori/delete/{id}', [KategoriController::class, 'delete'])->name('kategori.delete');
+    Route::resource('kategori', KategoriController::class);
+    Route::prefix('sub-kategori')->name('sub-kategori.')->group(function () {
+        Route::post('update/{id?}', [KategoriController::class, 'updateSub'])->name('update');
+        Route::delete('delete/{id?}', [KategoriController::class, 'deleteSub'])->name('destroy');
+    });
 });
 
 require __DIR__.'/auth.php';

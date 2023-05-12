@@ -19,7 +19,8 @@ class JurusanController extends Controller
 
     public function index()
     {
-        return view('jurusan.index');
+        $datas = Jurusan::where('sekolah_id', Auth::user()->sekolah_id)->get();
+        return view('jurusan.index', compact('datas'));
     }
 
     public function create()
@@ -29,7 +30,6 @@ class JurusanController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             "nama_jurusan" => "required",
             "nama_kaprog" => "required",
@@ -41,21 +41,20 @@ class JurusanController extends Controller
             'sekolah_id'=> Auth::user()->sekolah->id,
         ]);
 
-        return back();
+        insertLog(Auth::user()->name . ' Berhasil menambahkan jurusan ' . $request->nama_jurusan);
+        return redirect()->route('jurusan.index')->with('msg_success', 'Berhasil menambahkan jurusan');
     }
 
     public function show($id)
     {
         $jurusan = Jurusan::find($id);
-
         return $jurusan;
     }
 
     public function edit($id)
     {
-        $jurusan = Jurusan::find($id);
-
-        return $jurusan;
+        $data = Jurusan::find($id);
+        return view('jurusan.form', compact('data'));
     }
 
     public function update(Request $request, $id)
@@ -71,14 +70,13 @@ class JurusanController extends Controller
             'nama_jurusan' => $request->nama_jurusan,
             'nama_kaprog'=> $request->nama_kaprog,
         ]);
-        
-        return $jurusan;
+        insertLog(Auth::user()->name . ' Berhasil mengubah jurusan ' . $request->nama_jurusan);
+        return redirect()->route('jurusan.index')->with('msg_success', 'Berhasil mengubah jurusan');
     }
     
     public function destroy($id)
     {
         $jurusan = Jurusan::find($id);
-
         return $jurusan->delete();
     }
 }

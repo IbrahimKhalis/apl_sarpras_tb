@@ -1,11 +1,11 @@
 @extends('mylayouts.main')
 
 @section('content')
-<div class="d-flex justify-content-between mb-3 align-items-center">
+<div class="flex justify-content-between mb-3 align-items-center">
     <div class="col-md-7">
-        <h4><strong>Data {{ $role }}</strong></h4>
     </div>
-    <div class="col-md d-flex justify-content-end gap-2">
+    <div class="col-md flex justify-end gap-2">
+        <h4><strong>Data {{ $role }}</strong></h4>
         @if (auth()->user()->can('export_users'))
         <x-ButtonCustom class="btn btn-primary btn-export" route="/export/users/{{ $role }}">
             Export

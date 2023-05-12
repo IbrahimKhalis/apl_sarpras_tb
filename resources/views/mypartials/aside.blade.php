@@ -114,7 +114,6 @@
 
     @if (auth()->user()->can('view_tahun_ajaran') || auth()->user()->can('view_agama') ||
     auth()->user()->can('view_kelas'))
-
     <li>
       <a href="javascript:;.html" class="side-menu ">
         <div class="side-menu__icon"> <i data-lucide="home"></i> </div>
@@ -143,24 +142,31 @@
           </a>
         </li>
         @endcan
-        @endif
       </ul>
     </li>
-    @can('view_users')
-    <li class="side-menu">
-      <div class="side-menu__icon"> <i data-lucide="inbox"></i></div>
-      <div class="side-menu__title">Data User</div>
-    </li>
-    @foreach ($roles as $role)
-    @if ($role->name != 'admin' && $role->name != 'super_admin')
-    <li>
-      <a href="/users/{{ $role->name }}" class="side-menu {{ Request::is('users/'.$role->name.'*') ? 'active' : '' }}">
-        <div class="side-menu__icon"><i data-lucide="inbox"></i></div>
-        <div class="side-menu__title">Data {{ str_replace("_", " ", $role->name) }}</div>
-      </a>
-    </li>
     @endif
-    @endforeach
+
+    @can('view_users')
+    <li>
+      <a href="javascript:;.html" class="side-menu ">
+        <div class="side-menu__icon"> <i data-lucide="home"></i> </div>
+        <div class="side-menu__title">
+          Data Master
+          <div class="side-menu__sub-icon"> <i data-lucide="chevron-down"></i> </div>
+        </div>
+      </a>
+      <ul class="side-menu__sub">
+        @foreach ($roles as $role)
+        <li>
+          <a href="{{ route('users.index', $role->name) }}"
+            class="side-menu {{ Request::is('users/'.$role->name.'*') ? 'active' : '' }}">
+            <div class="side-menu__icon"><i data-lucide="inbox"></i></div>
+            <div class="side-menu__title">Data {{ str_replace("_", " ", $role->name) }}</div>
+          </a>
+        </li>
+        @endforeach
+      </ul>
+    </li>
     @endcan
 
     @can(['view_roles'])
@@ -171,11 +177,21 @@
       </a>
     </li>
     @endcan
+
     @can(['view_jurusan'])
     <li>
-      <a href="{{ route('jurusan.index') }}" class="side-menu">
-        <div class="side-menu__icon"><i data-lucide="users"></i></div>
+      <a href="{{ route('jurusan.index') }}" class="side-menu {{ Request::is('jurusan*') ? 'active' : '' }}">
+        <div class="side-menu__icon"> <i data-lucide="users"></i></div>
         <div class="side-menu__title">Jurusan</div>
+      </a>
+    </li>
+    @endcan
+
+    @can(['view_kategori'])
+    <li>
+      <a href="{{ route('kategori.index') }}" class="side-menu {{ Request::is('kategori*') ? 'active' : '' }}">
+        <div class="side-menu__icon"> <i data-lucide="box"></i></div>
+        <div class="side-menu__title">kategori</div>
       </a>
     </li>
     @endcan
