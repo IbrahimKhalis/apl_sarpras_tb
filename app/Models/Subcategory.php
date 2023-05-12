@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Kategori extends Model
+class Subcategory extends Model
 {
     use HasFactory;
 
@@ -13,11 +13,7 @@ class Kategori extends Model
         'id',
     ];
 
-    public function sekolah(){
-        return $this->belongsTo(Sekolah::class);
-    }
-
-    public function subcategory(){
-        return $this->hasMany(Subcategory::class);
+    public function kategori(){
+        return $this->belongsTo(Kategori::class);
     }
 }

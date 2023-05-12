@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kategori;
+use App\Models\Sekolah;
+use App\Models\Subcategory;
 use Illuminate\Http\Request;
 
 class KategoriController extends Controller
@@ -12,7 +14,8 @@ class KategoriController extends Controller
     }
 
     public function add(){
-        return view('stuff'); //change this
+        $sekolah = Sekolah::all();
+        return view('kategori.create', compact('sekolah')); //change this
     }
 
     public function create(Request $request){
@@ -23,26 +26,41 @@ class KategoriController extends Controller
             'kode' => $request->kode,
         ]);
 
+        $arrayOfSub = array_values(array_filter(explode(PHP_EOL, $request->subCategory)));
+
+        foreach($arrayOfSub as $item){
+            Subcategory::create([
+                'kategori_id' => $create->id,
+                'nama' => $item,
+            ]);
+        }
+
         if(!$create){
             return response()->json([
                 'massages' => "Create Failed!"
             ], 400);
         }
 
-        return redirect('/'); //change this
+        return redirect()->route('sementara.kategori.index'); //change this
 
     }
 
     public function show($id){
         $kategori = Kategori::find($id);
         
-        return view('stuff', [
-            'kategori' => $kategori
-        ]); //Change This
+        return $kategori;//Change This
     }
 
-    public function edit(){
-        return view('stuff');//change this
+    public function edit($id){
+        $kategori = Kategori::find($id);
+        $sekolah = Sekolah::all();
+        $subCategory = $kategori->subcategory;
+
+        return view('kategori.edit', compact(
+            'kategori',
+            'sekolah',
+            'subCategory'
+        ));
     }
 
     public function update(Request $request, $id){
@@ -54,7 +72,6 @@ class KategoriController extends Controller
                 'massages' => "The data that wanna be updated Not Found!"
             ], 404);
         }
-
 
         $update = $kategori->update([
             'nama' => $request->nama,
@@ -68,7 +85,7 @@ class KategoriController extends Controller
             ], 400);
         }
 
-        return redirect('/'); //change this
+        return redirect()->route('sementara.kategori.index'); //change this
     }
 
     public function destroy($id){

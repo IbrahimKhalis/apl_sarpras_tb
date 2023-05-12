@@ -25,9 +25,6 @@ use App\Models\Kategori;
 Route::get('/', function(){
     return view('welcome');
 })->name('index');
-Route::get('/jurusan-pplg', function(){
-    return view('jurusan.jurusan');
-})->name('jurusan');
 Route::get('/edit-jurusan', function(){
     return view('jurusan.edit');
 })->name('edit-jurusan');
@@ -84,7 +81,12 @@ Route::group(['middleware' => ['auth']], function() {
 });
 
 Route::prefix('sementara')->name('sementara.')->group(function(){
-    Route::get('/kategori', [KategoriController::class, 'index'])->name('index');
+    Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori.index');
+    Route::get('/kategori/add', [KategoriController::class, 'add'])->name('kategori.add');
+    Route::post('/kategori/create', [KategoriController::class, 'create'])->name('kategori.create');
+    Route::get('/kategori/edit/{id}', [KategoriController::class, 'edit'])->name('kategori.edit');
+    Route::post('/kategori/update/{id}',[KategoriController::class, 'update'])->name('kategori.update');
+    Route::delete('/kategori/delete/{id}', [KategoriController::class, 'delete'])->name('kategori.delete');
 });
 
 require __DIR__.'/auth.php';
