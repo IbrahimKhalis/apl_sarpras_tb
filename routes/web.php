@@ -10,6 +10,7 @@ use App\Http\Controllers\ConfigurasiUserController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProdukController;
 use App\Models\Kategori;
 
 /*
@@ -80,6 +81,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::post('update/{id?}', [KategoriController::class, 'updateSub'])->name('update');
         Route::delete('delete/{id?}', [KategoriController::class, 'deleteSub'])->name('destroy');
     });
+    Route::resource('produk', ProdukController::class);
 });
 
 require __DIR__.'/auth.php';

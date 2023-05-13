@@ -133,4 +133,11 @@ class KategoriController extends Controller
             'message' => 'Berhasil dihapus'
         ], 200);
     }
+
+    public function getSub($kategori_id){
+        $kategori = Kategori::findOrFail($kategori_id);
+        return response()->json([
+            'datas' => $kategori->subkategori
+        ], 200);
+    }
 }
