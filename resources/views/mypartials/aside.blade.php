@@ -178,6 +178,7 @@
     </li>
     @endcan
 
+    @if ( !Auth::user()->hasRole('super_admin') && (Auth::user()->sekolah->jenjang == 'smk' || Auth::user()->sekolah->jenjang == 'sma'))
     @can(['view_jurusan'])
     <li>
       <a href="{{ route('jurusan.index') }}" class="side-menu {{ Request::is('jurusan*') ? 'active' : '' }}">
@@ -186,12 +187,23 @@
       </a>
     </li>
     @endcan
+    @endif
 
     @can(['view_kategori'])
     <li>
       <a href="{{ route('kategori.index') }}" class="side-menu {{ Request::is('kategori*') ? 'active' : '' }}">
         <div class="side-menu__icon"> <i data-lucide="box"></i></div>
         <div class="side-menu__title">kategori</div>
+      </a>
+    </li>
+    @endcan
+
+    
+    @can(['view_produk'])
+    <li>
+      <a href="{{ route('produk.index') }}" class="side-menu {{ Request::is('produk*') ? 'active' : '' }}">
+        <div class="side-menu__icon"> <i data-lucide="box"></i></div>
+        <div class="side-menu__title">Produk</div>
       </a>
     </li>
     @endcan
