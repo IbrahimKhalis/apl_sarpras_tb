@@ -2,42 +2,17 @@
  <div class="mobile-menu md:hidden">
     <div class="mobile-menu-bar">
         <a href="" class="flex mr-auto">
-            <img alt="Midone - HTML Admin Template" class="w-6" src="{{ asset('dist/images/logo.svg') }}">
+            <span class="xl:block text-white text-lg">Sarpras</span>
         </a>
         <a href="javascript:;" id="mobile-menu-toggler"> <i data-lucide="bar-chart-2" class="w-8 h-8 text-white transform -rotate-90"></i> </a>
     </div>
     <ul class="border-t border-white/[0.08] py-5 hidden">
         <li>
-            <a href="javascript:;.html" class="menu menu--active">
+            <a href="javascript:;.html {{ route('dashboard') }}" class="menu menu--active {{ Request::is('dashboard*') ? 'active' : '' }}">
                 <div class="menu__icon"> <i data-lucide="home"></i> </div>
-                <div class="menu__title"> Dashboard mobile <i data-lucide="chevron-down" class="menu__sub-icon transform rotate-180"></i> </div>
+                <div class="menu__title"> Dashboard</div>
             </a>
-            <ul class="menu__sub-open">
-                <li>
-                    <a href="side-menu-dark-dashboard-overview-1.html" class="menu menu--active">
-                        <div class="menu__icon"> <i data-lucide="activity"></i> </div>
-                        <div class="menu__title"> Overview 1 </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="side-menu-dark-dashboard-overview-2.html" class="menu">
-                        <div class="menu__icon"> <i data-lucide="activity"></i> </div>
-                        <div class="menu__title"> Overview 2 </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="side-menu-dark-dashboard-overview-3.html" class="menu">
-                        <div class="menu__icon"> <i data-lucide="activity"></i> </div>
-                        <div class="menu__title"> Overview 3 </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="side-menu-dark-dashboard-overview-4.html" class="menu">
-                        <div class="menu__icon"> <i data-lucide="activity"></i> </div>
-                        <div class="menu__title"> Overview 4 </div>
-                    </a>
-                </li>
-            </ul>
+            
         </li>
         <li>
             <a href="javascript:;" class="menu">
