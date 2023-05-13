@@ -26,7 +26,7 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-md-12">
+                        {{-- <div class="col-md-12">
                             <label for="permission" class="form-label">Hak Akses</label>
                             <select class="fstdropdown-select @error('permission') is-invalid @enderror" name="permission[]" id="permission" multiple>
                                 @foreach ($permissions as $permission)
@@ -50,6 +50,32 @@
                                 {{ $message }}
                               </div>
                               @enderror
+                        </div> --}}
+                        <div class="mt-3">
+                            <label for="crud-form-2" class="form-label">Hak Akses</label>
+                            <select data-placeholder="Pilih Hak Akses Pada Roles Ini" class="tom-select w-full"  multiple  @error('permission') is-invalid @enderror" name="permission[]" id="permission">
+                                @foreach ($permissions as $permission)
+                                @if (old('permission'))
+                                    @if (in_array($permission->id, old('permission')))
+                                        <option value="{{ $permission->id }}" selected>{{ $permission->name }}</option>
+                                    @else
+                                        <option value="{{ $permission->id }}">{{ $permission->name }}</option>
+                                    @endif       
+                                @else
+                                    @if (in_array($permission->id, $rolePermissions))
+                                        <option value="{{ $permission->id }}" selected>{{ $permission->name }}</option>
+                                    @else
+                                        <option value="{{ $permission->id }}">{{ $permission->name }}</option>
+                                    @endif       
+                                @endif
+                                @endforeach
+                              </select>
+                              @error('permission')
+                              <div class="invalid-feedback">
+                                {{ $message }}
+                              </div>
+                              @enderror
+                            </select>
                         </div>
                     </div>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
