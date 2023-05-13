@@ -203,6 +203,8 @@
         </div>
     </div>
 </div>
+
+
 @endcan 
 </div>
 <!-- END: HTML Table Data -->
