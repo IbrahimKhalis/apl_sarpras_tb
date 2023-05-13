@@ -129,7 +129,7 @@
                         <th class="whitespace-nowrap">No</th>
                         <th class="whitespace-nowrap">Role</th>
                         <th class="whitespace-nowrap">Hak Akses</th>
-                        <th class="whitespace-nowrap">Edit</th>
+                        <th class="whitespace-nowrap">Action</th>
                     </tr>
                 </thead>
                 <tbody>
