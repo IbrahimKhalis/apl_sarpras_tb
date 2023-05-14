@@ -11,10 +11,10 @@ class JurusanController extends Controller
 {
     function __construct()
     {
-         $this->middleware('permission:view_users', ['only' => ['index','show']]);
-         $this->middleware('permission:add_users', ['only' => ['create','store']]);
-         $this->middleware('permission:edit_users', ['only' => ['edit','update']]);
-         $this->middleware('permission:delete_users', ['only' => ['destroy']]);
+        $this->middleware('permission:view_users', ['only' => ['index', 'show']]);
+        $this->middleware('permission:add_users', ['only' => ['create', 'store']]);
+        $this->middleware('permission:edit_users', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:delete_users', ['only' => ['destroy']]);
     }
 
     public function index()
@@ -30,19 +30,23 @@ class JurusanController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            "nama_jurusan" => "required",
-            "nama_kaprog" => "required",
-        ]);
+        try {
+            $request->validate([
+                "nama_jurusan" => "required",
+                "nama_kaprog" => "required",
+            ]);
 
-        Jurusan::create([
-            'nama_jurusan' => $request->nama_jurusan,
-            'nama_kaprog'=> $request->nama_kaprog,
-            'sekolah_id'=> Auth::user()->sekolah->id,
-        ]);
+            Jurusan::create([
+                'nama_jurusan' => $request->nama_jurusan,
+                'nama_kaprog' => $request->nama_kaprog,
+                'sekolah_id' => Auth::user()->sekolah->id,
+            ]);
 
-        insertLog(Auth::user()->name . ' Berhasil menambahkan jurusan ' . $request->nama_jurusan);
-        return redirect()->route('jurusan.index')->with('msg_success', 'Berhasil menambahkan jurusan');
+            insertLog(Auth::user()->name . ' Berhasil menambahkan jurusan ' . $request->nama_jurusan);
+            return redirect()->route('jurusan.index')->with('msg_success', 'Berhasil menambahkan jurusan');
+        } catch (\Throwable $th) {
+            return redirect()->route('jurusan.index')->with('msg_error', 'Gagal Ditambahkan');
+        }
     }
 
     public function show($id)
@@ -59,24 +63,42 @@ class JurusanController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'nama_jurusan' => 'required',
-            'nama_kaprog' => 'required',
-        ]);
+        try {
+            $request->validate([
+                'nama_jurusan' => 'required',
+                'nama_kaprog' => 'required',
+            ]);
 
-        $jurusan = Jurusan::find($id);
+            $jurusan = Jurusan::find($id);
 
-        $jurusan->update([
-            'nama_jurusan' => $request->nama_jurusan,
-            'nama_kaprog'=> $request->nama_kaprog,
-        ]);
-        insertLog(Auth::user()->name . ' Berhasil mengubah jurusan ' . $request->nama_jurusan);
-        return redirect()->route('jurusan.index')->with('msg_success', 'Berhasil mengubah jurusan');
+            $jurusan->update([
+                'nama_jurusan' => $request->nama_jurusan,
+                'nama_kaprog' => $request->nama_kaprog,
+            ]);
+            insertLog(Auth::user()->name . ' Berhasil mengubah jurusan ' . $request->nama_jurusan);
+            return redirect()->route('jurusan.index')->with('msg_success', 'Berhasil mengubah jurusan');
+        } catch (\Throwable $th) {
+            return redirect()->route('jurusan.index')->with('msg_error', 'Gagal Diubah');
+        }
     }
-    
+
     public function destroy($id)
     {
-        $jurusan = Jurusan::find($id);
-        return $jurusan->delete();
+        try {
+            $jurusan = Jurusan::find($id);
+
+            if (!$jurusan) {
+                return response()->json([
+                    'message' => 'The data wanna be delete Not Found!'
+                ], 404);
+            }
+
+            $jurusan->delete();
+
+            insertLog(Auth::user()->name. ' Berhasil menghapus jurusan '. $jurusan->nama_jurusan);
+            return redirect()->route('jurusan.index')->with('msg_success', 'Berhasil menghapus jurusan');
+        } catch (\Throwable $th) {
+            return redirect()->route('jurusan.index')->with('msg_error', 'Gagal Dihapus');
+        }
     }
 }
