@@ -61,11 +61,11 @@
         Sekolah
     </h2>
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
+        <a href="{{ route('sekolah.create') }}">
         <button class="btn btn-primary shadow-md mr-2">
-            <a href="{{ route('sekolah.create') }}">
                 Tambah Sekolah
-            </a>
-        </button>
+            </button>
+        </a>
     </div>
 </div>
 

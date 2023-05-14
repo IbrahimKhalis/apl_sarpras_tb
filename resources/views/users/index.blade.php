@@ -4,8 +4,8 @@
 <div class="flex justify-content-between mb-3 align-items-center">
     <div class="col-md-7">
     </div>
-    <div class="col-md flex justify-end gap-2">
-        <h4><strong>Data {{ $role }}</strong></h4>
+    <div class="col-md flex items-center gap-2 mr-auto">
+        <h4 class="font-medium text-lg">Data {{ $role }}</h4>
         @if (auth()->user()->can('export_users'))
         <x-ButtonCustom class="btn btn-primary btn-export" route="/export/users/{{ $role }}">
             Export
@@ -50,7 +50,7 @@
                         </td>
                         <td>{{ $user->name }}</td>
                         <td class="col-2">
-                            <div class="d-flex flex-wrap gap-2">
+                            <div class="d-flex">
                                 <form action="{{ route('users.shows', ['role' => $role, 'id' => $user->id]) }}"
                                     method="get">
                                     @include('mypartials.tahunajaran')
@@ -60,7 +60,7 @@
                                 <form action="{{ route('users.edit', ['role' => $role, 'id' => $user->id]) }}"
                                     method="get">
                                     @include('mypartials.tahunajaran')
-                                    <button class="btn btn-sm btn-warning rounded" style="width: 4rem;">Edit</button>
+                                    <button class="btn btn-sm btn-warning rounded mt-2 mb-2" style="width: 4rem;">Edit</button>
                                 </form>
                                 @endif
                                 @if (auth()->user()->can('delete_users'))

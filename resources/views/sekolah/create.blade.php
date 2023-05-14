@@ -6,7 +6,7 @@
         enctype="multipart/form-data">
         @csrf
         <div class="tab" id="sekolah">
-            <h5>Data Sekolah</h5>
+            <h5 class="text-lg font-normal mr-auto py-3">Data Sekolah:</h5>
             <div class="mb-3">
                 <label for="nama" class="form-label">Nama Sekolah</label>
                 <input type="text" class="form-control @error('nama_sekolah') is-invalid @enderror  "
@@ -71,9 +71,9 @@
                 </div>
                 @enderror
             </div>
-            <h5>Data user admin sekolah</h5>
+            <h5 class="text-lg font-normal mr-auto py-3">Data user admin sekolah:</h5>
             <div class="mb-3">
-                <label for="name  " class="form-label">Nama admin sekolah</label>
+                <label for="name" class="form-label">Nama admin sekolah</label>
                 <input type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Nama"
                     name="name" style="border-radius: 5px; width: 100%" value="{{ old('name') }}" required>
                 @error('name')
