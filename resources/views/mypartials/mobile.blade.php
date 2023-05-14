@@ -8,7 +8,7 @@
     </div>
     <ul class="border-t border-white/[0.08] py-5 hidden">
         <li>
-            <a href="javascript:;.html {{ route('dashboard') }}" class="menu menu--active {{ Request::is('dashboard*') ? 'active' : '' }}">
+            <a href="{{ route('dashboard') }}" class="menu menu--active {{ Request::is('dashboard*') ? 'active' : '' }}">
                 <div class="menu__icon"> <i data-lucide="home"></i> </div>
                 <div class="menu__title"> Dashboard</div>
             </a>
@@ -70,7 +70,8 @@
                     </a>
                 </li>
                 @endforeach
-
+                @endcan
+                
                 @can(['view_roles'])
                 <li>
                     <a href="{{ route('roles.index') }}" class="menu {{ Request::is('roles*') ? 'active' : '' }}">
@@ -81,7 +82,7 @@
                 @endcan
             </ul>
         </li>
-        @endif
+       
 
         @if ( !Auth::user()->hasRole('super_admin') && (Auth::user()->sekolah->jenjang == 'smk' || Auth::user()->sekolah->jenjang == 'sma'))
         @can(['view_jurusan'])
