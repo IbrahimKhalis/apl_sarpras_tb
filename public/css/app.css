@@ -11126,6 +11126,7 @@ a.list-group-item {
 body,
 html {
     height: 100%;
+    display: block;
 }
 body {
     opacity: 1 !important;

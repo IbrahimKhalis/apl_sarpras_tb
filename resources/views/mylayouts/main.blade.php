@@ -6,11 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-
+    
     <link rel="stylesheet" href="{{ asset('css/fstdropdown.css') }}">
 
     <title>Sarpras TB</title>
-
+    
     <link href="{{ asset('dist/css/app.css') }}" rel="stylesheet">
     {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -47,9 +47,12 @@
     }
   </style>
   @stack('css') --}}
+
+  
 </head>
 
-<body class="py-5">
+<body class="py-5" onload="document.body.style.visibility=`visible`;">
+    <script>document.body.style.visibility=`hidden`;</script>
 
     @include('mypartials.mobile')
 
@@ -63,28 +66,21 @@
 
         </div>
     </div>
-
-
-
-
-
-
-
-
-
-
+    <div data-url="#" class="dark-mode-switcher cursor-pointer shadow-md fixed bottom-0 right-0 box border rounded-full w-40 h-12 flex items-center justify-center z-50 mb-10 mr-10">
+       <button class="dark-mode-switcher">Change Theme</button>
+    </div>
     <form action="" class="form-delete" method="POST">
         @csrf
         @method('delete')
         @stack('other_delete')
     </form>
+
+
     <script>
         const sideMenuLinks = document.querySelectorAll('.side-menu');
 
         sideMenuLinks.forEach(link => {
-            // cek apakah URL halaman saat ini sama dengan tautan menu
             if (link.href === window.location.href) {
-                // tambahkan kelas "aktif" ke tautan menu
                 link.classList.add('side-menu--active');
             }
         })
@@ -117,6 +113,54 @@
             })
         }
     </script>
+
+    <script>
+       
+
+
+const themeSwitcher = document.querySelector('.dark-mode-switcher');
+const htmlEl = document.querySelector('html');
+
+
+const currentTheme = localStorage.getItem('theme') || 'dark';
+htmlEl.classList.add(currentTheme);
+
+
+window.addEventListener('load', () => {
+  if (currentTheme === 'dark') {
+    htmlEl.classList.add('dark');
+    htmlEl.classList.remove('light');
+  } else {
+    htmlEl.classList.add('light');
+    htmlEl.classList.remove('dark');
+  }
+});
+
+const buttonEl = themeSwitcher.querySelector('button');
+if (currentTheme === 'dark') {
+  buttonEl.textContent = 'Light Mode';
+} else {
+  buttonEl.textContent = 'Dark Mode';
+}
+
+themeSwitcher.addEventListener('click', () => {
+  htmlEl.classList.toggle('dark');
+  htmlEl.classList.toggle('light');
+
+  const newTheme = htmlEl.classList.contains('dark') ? 'dark' : 'light';
+  localStorage.setItem('theme', newTheme);
+
+ 
+  if (htmlEl.classList.contains('dark')) {
+    buttonEl.textContent = 'Light Mode';
+  } else {
+    buttonEl.textContent = 'Dark Mode';
+  }
+});
+
+    </script>
+
+  
     @stack('js')
 </body>
 
