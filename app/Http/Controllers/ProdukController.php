@@ -9,13 +9,13 @@ use App\Http\Requests\UpdateProdukRequest;
 
 class ProdukController extends Controller
 {
-    function __construct()
-    {
-         $this->middleware('permission:view_produk', ['only' => ['index','show']]);
-         $this->middleware('permission:add_produk', ['only' => ['create','store']]);
-         $this->middleware('permission:edit_produk', ['only' => ['edit','update']]);
-         $this->middleware('permission:delete_produk', ['only' => ['destroy']]);
-    }
+    // function __construct()
+    // {
+    //      $this->middleware('permission:view_produk', ['only' => ['index','show']]);
+    //      $this->middleware('permission:add_produk', ['only' => ['create','store']]);
+    //      $this->middleware('permission:edit_produk', ['only' => ['edit','update']]);
+    //      $this->middleware('permission:delete_produk', ['only' => ['destroy']]);
+    // }
 
     /**
      * Display a listing of the resource.
@@ -46,7 +46,21 @@ class ProdukController extends Controller
      */
     public function store(StoreProdukRequest $request)
     {
-        //
+
+        // dd($request->all());
+        $produk = Produk::create([
+            'kategori_id' => $request->katgori_id,
+            'sub_kategori_id' => $request->sub_katgori_id,
+            'jurusan_id' => $request->jurusan_id,
+            'nama' => $request->nama,
+            'kode' => $request->kode,
+            'merek' => $request->merek,
+            'kondisi' => $request->kondisi,
+            'ket_produk' => $request->ket_produk,
+            'ket_kondisi' => $request->ket_kondisi,
+        ]); 
+
+        return redirect('/produk')->with('success', 'Produk berhasil ddi buat');
     }
 
     /**
@@ -80,7 +94,17 @@ class ProdukController extends Controller
      */
     public function update(UpdateProdukRequest $request, Produk $produk)
     {
-        //
+        $produk->update([
+            'kategori_id' => $request->katgori_id,
+            'sub_kategori_id' => $request->sub_katgori_id,
+            'jurusan_id' => $request->jurusan_id,
+            'nama' => $request->nama,
+            'kode' => $request->kode,
+            'merek' => $request->merek,
+            'kondisi' => $request->kondisi,
+            'ket_produk' => $request->ket_produk,
+            'ket_kondisi' => $request->ket_kondisi,
+        ]); 
     }
 
     /**
@@ -91,6 +115,8 @@ class ProdukController extends Controller
      */
     public function destroy(Produk $produk)
     {
-        //
+        $produk->delete();
+
+        return back();
     }
 }

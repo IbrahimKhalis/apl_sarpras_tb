@@ -13,7 +13,7 @@ class StoreProdukRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,15 @@ class StoreProdukRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'kategori_id' => ['string'],
+            'sub_kategori_id' => ['string'],
+            'jurusan_id' => ['string'],
+            'nama' => ['string'],
+            'kode' => ['string'],
+            'merek' => ['string'],
+            'kondisi' => ['string'],
+            'ket_produk' => ['string'],
+            'ket_kondisi' => ['string'],
         ];
     }
 }
