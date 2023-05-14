@@ -13,7 +13,7 @@ class UpdateProdukRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,15 @@ class UpdateProdukRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'kategori_id' => ['required'],
+            'sub_kategori_id' => ['required'],
+            'jurusan_id' => ['required'],
+            'nama' => ['required'],
+            'kode' => ['required'],
+            'merek' => ['required'],
+            'kondisi' => ['required'],
+            'ket_produk' => ['required'],
+            'ket_kondisi' => ['required'],
         ];
     }
 }

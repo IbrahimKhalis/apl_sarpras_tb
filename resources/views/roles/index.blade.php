@@ -145,7 +145,7 @@
                                 -- Tidak ada hak akses --
                             @endforelse
                         </td> 
-                        <td><a href="{{ route('roles.edit', $role->id) }}" class="btn btn-warning text-white mb-3">Edit</a></td>
+                        <td><a href="{{ route('roles.edit', $role->id) }}" class="btn btn-warning text-white w-12">Edit</a></td>
                     </tr>
                     @endforeach
                 </tbody>

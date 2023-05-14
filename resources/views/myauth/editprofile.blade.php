@@ -121,6 +121,7 @@
           <div class="p-5">
             <form action="{{ route('profil.update') }}" method="POST" style=" width: 100%;" enctype="multipart/form-data">
               @csrf
+              @method('patch')
               <div class="flex flex-col-reverse xl:flex-row flex-col">
                 <div class="flex-1 mt-6 xl:mt-0">
                   
