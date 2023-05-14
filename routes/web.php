@@ -81,7 +81,8 @@ Route::group(['middleware' => ['auth']], function() {
         Route::post('update/{id?}', [KategoriController::class, 'updateSub'])->name('update');
         Route::delete('delete/{id?}', [KategoriController::class, 'deleteSub'])->name('destroy');
     });
-    // Route::resource('produk', ProdukController::class);
+    Route::resource('produk', ProdukController::class);
+    Route::get('getsub/{kategori_id?}', [KategoriController::class, 'getSub'])->name('get.sub');
 });
 
 require __DIR__.'/auth.php';
