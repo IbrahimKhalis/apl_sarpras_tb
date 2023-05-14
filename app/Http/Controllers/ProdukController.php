@@ -46,8 +46,6 @@ class ProdukController extends Controller
      */
     public function store(StoreProdukRequest $request)
     {
-
-        // dd($request->all());
         $produk = Produk::create([
             'kategori_id' => $request->katgori_id,
             'sub_kategori_id' => $request->sub_katgori_id,

@@ -149,7 +149,7 @@
             <div class="mt-3">
                 <label for="crud-form-2" class="form-label">Jenis</label>
                 <select data-placeholder="Pilih Jenis Barangmu" class="tom-select w-full" name="jenis" id="jenis" {{ isset($data) ? 'disabled' : '' }}>
-                    <option value="">Silahkan pilih</option>
+                    <option value="-" selected>Silahkan pilih</option>
                     <option value="sarana" {{ isset($data) ? ($data->jenis == 'sarana' ? 'selected' : '') : '' }}>Sarana
                     </option>
                     <option value="prasarana" {{ isset($data) ? ($data->jenis == 'prasarana' ? 'selected' : '') : ''
@@ -205,8 +205,8 @@
             <div class="sub-${el}">
                 <input type="text" name="sub[]" placeholder="Sub" required>
                 <button class="remove-sub btn btn-danger  w-24 mr-1 mb-2" type="button" onclick="remove(${el})">Hapus</button>
+                <br>
             </div>
-            <br>
         `)
         el++
     })
@@ -266,7 +266,7 @@
     $('#jenis').on('change', function(e){
         if ($(this).val() == 'sarana') {
             $('.parent-kode').append('<input type="text" name="kode" placeholder="Kode">')
-        }else if($(this).val() == 'prasarana' || !$(this).val()){
+        }else if($(this).val() == 'prasarana' || $(this).val() == '-'){
             $('.parent-kode').empty();
         }
     })
