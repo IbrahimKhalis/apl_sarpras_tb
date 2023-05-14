@@ -33,7 +33,14 @@
                 <input class="form-check-input" type="checkbox" name="status" onclick="isChecked()">
                 <label class="form-label message">Tidak Aktif</label>
             </div>
-            <button type="submit" class="btn btn-primary">Simpan</button>
+            <div class="col-span-12 xl:col-span-6 mt-5 flex">
+                <div class="mt-3 xl:mt-0">
+                    <button type="submit" class="btn btn-primary px-5 mr-5">Submit</button>
+                </div>
+                <a href="{{ route('tahun-ajaran.index') }}" class="btn px-5">
+                    Cancel
+                </a>
+            </div>
         </form>
     </div>
 </div>

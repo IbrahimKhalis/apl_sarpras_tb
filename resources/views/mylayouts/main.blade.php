@@ -74,8 +74,7 @@
         @method('delete')
         @stack('other_delete')
     </form>
-
-
+    <script src="//unpkg.com/alpinejs" defer></script>
     <script>
         const sideMenuLinks = document.querySelectorAll('.side-menu');
 
