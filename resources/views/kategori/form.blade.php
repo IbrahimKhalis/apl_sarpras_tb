@@ -173,9 +173,9 @@
             @if (isset($data))
             @foreach ($data->subcategory as $sub)
             <div class="sub-{{ $sub->id }} mt-5">
-                <input type="text" placeholder="Sub" required value="{{ $sub->nama }}">
+                <input id="crud-form-1" type="text" class="form-control w-full mb-5" placeholder="Sub" required value="{{ $sub->nama }}">
                 <button class="btn btn-warning" type="button" onclick="updateAjax({{ $sub->id }})">edit</button>
-                <button class="remove-sub btn btn-danger" type="button" onclick="removeAjax({{ $sub->id }})">-</button>
+                <button class="remove-sub btn btn-danger" type="button" onclick="removeAjax({{ $sub->id }})">Hapus</button>
             </div>
             @endforeach
             @endif
@@ -203,7 +203,7 @@
         e.preventDefault();
         $('.container-sub').append(`
             <div class="sub-${el}">
-                <input type="text" name="sub[]" placeholder="Sub" required>
+                <input id="crud-form-1" type="text" class="form-control w-full mb-5" name="sub[]" placeholder="Sub" required>
                 <button class="remove-sub btn btn-danger  w-24 mr-1 mb-2" type="button" onclick="remove(${el})">Hapus</button>
             </div>
             <br>
@@ -265,7 +265,7 @@
 <script>
     $('#jenis').on('change', function(e){
         if ($(this).val() == 'sarana') {
-            $('.parent-kode').append('<input type="text" name="kode" placeholder="Kode">')
+            $('.parent-kode').append('<input id="crud-form-1" type="text" class="form-control w-full" name="kode" placeholder="Kode">')
         }else if($(this).val() == 'prasarana' || !$(this).val()){
             $('.parent-kode').empty();
         }
