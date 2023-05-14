@@ -28,11 +28,12 @@ class StoreProdukRequest extends FormRequest
             'sub_kategori_id' => ['string'],
             'jurusan_id' => ['string'],
             'nama' => ['string'],
-            'kode' => ['string'],
+            // 'kode' => ['string'],
             'merek' => ['string'],
             'kondisi' => ['string'],
             'ket_produk' => ['string'],
             'ket_kondisi' => ['string'],
+            'jumlah' => ['string'],
         ];
     }
 }
