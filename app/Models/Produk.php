@@ -10,4 +10,19 @@ class Produk extends Model
     use HasFactory;
     
     protected $guarded = ['id'];
+
+    public function kategori()
+    {
+        return $this->belongsTo(Kategori::class);
+    }
+
+    public function subcategorie()
+    {
+        return $this->belongsTo(Subcategory::class);
+    }
+
+    public function jurusan()
+    {
+        return $this->belongsTo(Jurusan::class);
+    }
 }

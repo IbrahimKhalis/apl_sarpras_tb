@@ -130,7 +130,7 @@
 @section('content')
 <div class="intro-y flex items-center mt-8">
     <h2 class="text-lg font-medium mr-auto">
-        Category
+        {{ isset($data) ? 'Edit' : 'Tambah' }} Category
     </h2>
 </div>
 <div class="grid  gap-6 mt-5">
@@ -149,7 +149,7 @@
             <div class="mt-3">
                 <label for="crud-form-2" class="form-label">Jenis</label>
                 <select data-placeholder="Pilih Jenis Barangmu" class="tom-select w-full" name="jenis" id="jenis" {{ isset($data) ? 'disabled' : '' }}>
-                    <option value="">Silahkan pilih</option>
+                    <option value="-" selected>Silahkan pilih</option>
                     <option value="sarana" {{ isset($data) ? ($data->jenis == 'sarana' ? 'selected' : '') : '' }}>Sarana
                     </option>
                     <option value="prasarana" {{ isset($data) ? ($data->jenis == 'prasarana' ? 'selected' : '') : ''
@@ -205,8 +205,8 @@
             <div class="sub-${el}">
                 <input id="crud-form-1" type="text" class="form-control w-full mb-5" name="sub[]" placeholder="Sub" required>
                 <button class="remove-sub btn btn-danger  w-24 mr-1 mb-2" type="button" onclick="remove(${el})">Hapus</button>
+                <br>
             </div>
-            <br>
         `)
         el++
     })

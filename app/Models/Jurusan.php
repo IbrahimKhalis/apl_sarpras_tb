@@ -12,6 +12,6 @@ class Jurusan extends Model
 
     public function sekolah()
     {
-        return $this->hasMany(Sekolah::class);
+        return $this->belongsTo(Sekolah::class);
     }
 }

@@ -83,7 +83,8 @@ class UserController extends Controller
         $data = [
             'sekolah_id' => Auth::user()->sekolah_id,
             'email' => $request->email,
-            'nip' => $request->nip
+            'nip' => $request->nip,
+            'name' => $request->name,
         ];
         
         if ($request->file('profil')) {
