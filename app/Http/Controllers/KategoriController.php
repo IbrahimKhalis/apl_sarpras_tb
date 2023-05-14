@@ -13,22 +13,25 @@ class KategoriController extends Controller
 {
     function __construct()
     {
-         $this->middleware('permission:view_kategori', ['only' => ['index','show']]);
-         $this->middleware('permission:add_kategori', ['only' => ['create','store']]);
-         $this->middleware('permission:edit_kategori', ['only' => ['edit','update']]);
-         $this->middleware('permission:delete_kategori', ['only' => ['destroy']]);
+        $this->middleware('permission:view_kategori', ['only' => ['index', 'show']]);
+        $this->middleware('permission:add_kategori', ['only' => ['create', 'store']]);
+        $this->middleware('permission:edit_kategori', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:delete_kategori', ['only' => ['destroy']]);
     }
 
-    public function index(){
+    public function index()
+    {
         $datas = Kategori::all();
         return view('kategori.index', compact('datas'));
     }
 
-    public function create(){
+    public function create()
+    {
         return view('kategori.form');
     }
 
-    public function store(StoreKategoriRequest $request){
+    public function store(StoreKategoriRequest $request)
+    {
         DB::beginTransaction();
         try {
             $kategori = Kategori::create([
@@ -40,7 +43,7 @@ class KategoriController extends Controller
 
             insertLog(Auth::user()->name . ' Berhasil menambahkan kategori ' . $request->nama);
             if ($request->sub) {
-                foreach($request->sub as $sub){
+                foreach ($request->sub as $sub) {
                     Subcategory::create([
                         'kategori_id' => $kategori->id,
                         'nama' => $sub,
@@ -52,21 +55,24 @@ class KategoriController extends Controller
             return redirect()->route('kategori.index')->with('msg_success', 'Berhasil menambahkan kategori');
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->route('kategori.create')->with('msg_error', "Gagal Ditambahkan"); 
+            return redirect()->route('kategori.create')->with('msg_error', "Gagal Ditambahkan");
         }
     }
 
-    public function show($id){
+    public function show($id)
+    {
         $kategori = Kategori::find($id);
         return $kategori;
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $data = Kategori::find($id);
         return view('kategori.form', compact('data'));
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         DB::beginTransaction();
         try {
             $kategori = Kategori::find($id);
@@ -78,7 +84,7 @@ class KategoriController extends Controller
             insertLog(Auth::user()->name . ' Berhasil mengubah kategori ' . $request->nama);
 
             if ($request->sub) {
-                foreach($request->sub as $sub){
+                foreach ($request->sub as $sub) {
                     Subcategory::create([
                         'kategori_id' => $kategori->id,
                         'nama' => $sub,
@@ -86,19 +92,20 @@ class KategoriController extends Controller
                     insertLog(Auth::user()->name . ' Berhasil menambahkan sub kategori ' . $sub);
                 }
             }
-            
+
             DB::commit();
             return redirect()->route('kategori.index')->with('msg_success', 'Berhasil mengubah kategori');
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->route('kategori.create')->with('msg_error', "Gagal Ditambahkan"); 
+            return redirect()->route('kategori.create')->with('msg_error', "Gagal Ditambahkan");
         }
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $kategori = Kategori::find($id);
 
-        if(!$kategori){
+        if (!$kategori) {
             return response()->json([
                 'massages' => "The data that wanna be deleted Not Found!"
             ], 404);
@@ -106,7 +113,7 @@ class KategoriController extends Controller
 
         $delete = $kategori->delete();
 
-        if(!$delete){
+        if (!$delete) {
             return response()->json([
                 'massages' => "Failed to Delete!"
             ], 400);
@@ -115,7 +122,8 @@ class KategoriController extends Controller
         return redirect('/');
     }
 
-    public function updateSub(Request $request, $id){
+    public function updateSub(Request $request, $id)
+    {
         $data = Subcategory::findOrFail($id);
         $data->update([
             'nama' => $request->nama
@@ -126,7 +134,8 @@ class KategoriController extends Controller
         ], 200);
     }
 
-    public function deleteSub(Request $request, $id){
+    public function deleteSub(Request $request, $id)
+    {
         $data = Subcategory::findOrFail($id)->delete();
         insertLog(Auth::user()->name . ' Berhasil menghapus sub kategori');
         return response()->json([
@@ -134,10 +143,15 @@ class KategoriController extends Controller
         ], 200);
     }
 
-    public function getSub($kategori_id){
-        $kategori = Kategori::findOrFail($kategori_id);
-        return response()->json([
-            'datas' => $kategori->subkategori
-        ], 200);
+    public function getSub($kategori_id)
+    {
+        try {
+            $kategori = Kategori::with(['subcategory'])->findOrFail($kategori_id);
+            return response()->json([
+                'datas' => $kategori->subcategory
+            ], 200);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 }
