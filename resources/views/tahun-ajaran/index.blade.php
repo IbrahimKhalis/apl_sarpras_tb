@@ -43,11 +43,11 @@
         Tahun Ajaran
     </h2>
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
-        <button class="btn btn-primary shadow-md mr-2">
-            <a href="{{ route('tahun-ajaran.create') }}">
+        <a href="{{ route('tahun-ajaran.create') }}">
+            <button class="btn btn-primary shadow-md mr-2">
                 Tambah
-            </a>
-        </button>
+            </button>
+        </a>
     </div>
 </div>
 
