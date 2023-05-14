@@ -47,55 +47,57 @@
 </div>
 <div class="card">
     <div class="card-body">
-        <div class="row container-filter">
-            <div class="col-md-6 mb-3 mt-3">
-                <input type="text" class="form-control" placeholder="Search..." name="search" onkeyup="filter_user()">
+        <div class="intro-y box p-5 mt-5">
+            <div class="row container-filter">
+                <div class="col-md-6 mb-3 mt-3">
+                    <input type="text" class="form-control" placeholder="Search..." name="search" onkeyup="filter_user()">
+                </div>
             </div>
-        </div>
-        <div class="table table-responsive table-hover text-center">
-            <table class="table align-middle table-user">
-                <thead>
-                    <tr>
-                        <th scope="col">No</th>
-                        <th scope="col">Profil</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($users as $user)
-                    <tr>
-                        <th scope="row">{{ $loop->iteration }}</th>
-                        <td>
-                            <img src="{{ $user->profil == '/img/profil.png' ? asset($user->profil) : asset('storage/' . $user->profil) }}"
-                                alt="" style="width: 4rem;height: 4rem;object-fit: cover;">
-                        </td>
-                        <td>{{ $user->name }}</td>
-                        <td class="col-2">
-                            <div class="d-flex">
-                                <form action="{{ route('users.shows', ['role' => $role, 'id' => $user->id]) }}"
-                                    method="get">
-                                    @include('mypartials.tahunajaran')
-                                    <button class="btn btn-sm btn-primary rounded" style="width: 4rem;">Detail</button>
-                                </form>
-                                @if (auth()->user()->can('edit_users'))
-                                <form action="{{ route('users.edit', ['role' => $role, 'id' => $user->id]) }}"
-                                    method="get">
-                                    @include('mypartials.tahunajaran')
-                                    <button class="btn btn-sm btn-warning rounded mt-2 mb-2" style="width: 4rem;">Edit</button>
-                                </form>
-                                @endif
-                                @if (auth()->user()->can('delete_users'))
-                                <button type="submit" class="btn btn-sm btn-danger rounded" style="width: 4rem;"
-                                    onclick="deleteData('{{ route('users.destroy', ['role' => $role, 'id' => $user->id]) }}')">Hapus</button>
-                                @endif
-                            </div>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            {{ $users->links() }}
+            <div class="table table-responsive table-hover text-center">
+                <table class="table align-middle table-user">
+                    <thead>
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Profil</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($users as $user)
+                        <tr>
+                            <th scope="row">{{ $loop->iteration }}</th>
+                            <td>
+                                <img src="{{ $user->profil == '/img/profil.png' ? asset($user->profil) : asset('storage/' . $user->profil) }}"
+                                    alt="" style="width: 4rem;height: 4rem;object-fit: cover;">
+                            </td>
+                            <td>{{ $user->name }}</td>
+                            <td class="col-2">
+                                <div class="d-flex">
+                                    <form action="{{ route('users.shows', ['role' => $role, 'id' => $user->id]) }}"
+                                        method="get">
+                                        @include('mypartials.tahunajaran')
+                                        <button class="btn btn-sm btn-primary rounded" style="width: 4rem;">Detail</button>
+                                    </form>
+                                    @if (auth()->user()->can('edit_users'))
+                                    <form action="{{ route('users.edit', ['role' => $role, 'id' => $user->id]) }}"
+                                        method="get">
+                                        @include('mypartials.tahunajaran')
+                                        <button class="btn btn-sm btn-warning rounded mt-2 mb-2" style="width: 4rem;">Edit</button>
+                                    </form>
+                                    @endif
+                                    @if (auth()->user()->can('delete_users'))
+                                    <button type="submit" class="btn btn-sm btn-danger rounded" style="width: 4rem;"
+                                        onclick="deleteData('{{ route('users.destroy', ['role' => $role, 'id' => $user->id]) }}')">Hapus</button>
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                {{ $users->links() }}
+            </div>
         </div>
     </div>
 </div>

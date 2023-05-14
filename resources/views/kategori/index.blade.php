@@ -81,7 +81,7 @@
 
 <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
     <h2 class="text-lg font-Medium mr-auto">
-        Data Jurusan
+        Data Kategori
     </h2>
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
         <button class="btn btn-primary shadow-md mr-2">

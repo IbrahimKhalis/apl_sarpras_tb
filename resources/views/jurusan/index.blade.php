@@ -47,11 +47,11 @@
         Data Jurusan
     </h2>
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
-        <button class="btn btn-primary shadow-md mr-2">
-            <a href="{{ route('jurusan.create') }}">
+        <a href="{{ route('jurusan.create') }}">
+            <button class="btn btn-primary shadow-md mr-2">
                 Tambah Jurusan
-            </a>
-        </button>
+            </button>
+        </a>
     </div>
 </div>
 

@@ -76,6 +76,11 @@
     </form>
     <script src="//unpkg.com/alpinejs" defer></script>
     <script>
+        function goBack() {
+          window.history.back();
+        }
+        </script>
+    <script>
         const sideMenuLinks = document.querySelectorAll('.side-menu');
 
         sideMenuLinks.forEach(link => {
