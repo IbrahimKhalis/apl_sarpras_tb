@@ -25,7 +25,11 @@ class ProdukController extends Controller
      */
     public function index()
     {
-        return view('produk.index');
+        $produks = DB::table('produks')->select('produks.*')
+                                        ->join('kategoris', 'kategoris.id', 'produks.kategori_id')
+                                        ->where('kategoris.sekolah_id', Auth::user()->sekolah_id)
+                                        ->get();
+        return view('produk.index', compact('produks'));
     }
 
     /**
@@ -35,33 +39,52 @@ class ProdukController extends Controller
      */
     public function create()
     {
-        $kategoris = DB::table('kategoris')->where('sekolah_id', Auth::user()->sekolah_id)->get();
-        $subcategories = DB::table('subcategories')->get();
-        $jurusans = DB::table('jurusans')->get();
+        $kategoris = DB::table('kategoris')
+                        ->where('sekolah_id', Auth::user()->sekolah_id)
+                        ->where('jenis', 'sarana')
+                        ->get();
+        $subcategories = DB::table('subcategories')->select('subcategories.*')
+                                                    ->join('kategoris', 'kategoris.id', 'subcategories.kategori_id')
+                                                    ->where('kategories.sekolah_id', Auth::user()->sekolah_id)
+                                                    ->get();
+        $jurusans = DB::table('jurusans')
+                            ->where('sekolah_id', Auth::user()->sekolah_id)
+                            ->get();
         return view('produk.form', compact('kategoris', 'subcategories', 'jurusans'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreProdukRequest  $request
-     * @return \Illuminate\Http\Response
-     */
+    private function generate_kode($request, $ke){
+        $kategori = DB::table('kategoris')
+                                ->where('id', $request->kategori_id)
+                                ->first();
+
+        $last_kategori = DB::table('produks')
+                                    ->where('kategori_id', $request->kategori_id)
+                                    ->orderByDesc('id')
+                                    ->first();
+
+        $last_sub = DB::table('produks')
+                            ->where('kategori_id', $request->kategori_id)
+                            ->where('sub_kategori_id', $request->sub_kategori_id)
+                            ->orderByDesc('id')
+                            ->first();
+                                    
+        $kode_kategori = sprintf('%0'. 5 .'d', ($last_kategori ? (int)explode('-', $last_kategori->kode)[1] + 1 : 1));
+        $kode_sub = sprintf('%0'. 5 .'d', ($last_sub ? (int)explode('-', $last_sub->kode)[1] + 1 : 1));
+        $result = $kategori->kode . '-' . $kode_kategori . '-' . $kode_sub;
+        return $result;
+    }
+
     public function store(StoreProdukRequest $request)
     {
         try {
-            for ($i = 0; $i < $request->jumlah; $i++) {
-                $getCategorieName = DB::table('kategoris')->where('id', $request->kategori_id)->first()->kode;
-                $countProdSub = count(DB::table('produks')->where('kategori_id', $request->kategori_id)->where('sub_kategori_id', $request->sub_kategori_id)->get()) + 1;
-                $countProdKat = count(DB::table('produks')->where('kategori_id', $request->kategori_id)->get()) + 1;
-                // dd("$getCategorieName".count($countProd) + 1);
-
+            for ($i = 1; $i <= $request->jumlah; $i++) {
                 $produk = Produk::create([
                     'kategori_id' => $request->kategori_id,
                     'sub_kategori_id' => $request->sub_kategori_id,
                     'jurusan_id' => $request->jurusan_id,
                     'nama' => $request->nama,
-                    'kode' => "$getCategorieName-$countProdKat-$countProdSub",
+                    'kode' => $this->generate_kode($request, $i),
                     'merek' => $request->merek,
                     'kondisi' => $request->kondisi,
                     'ket_produk' => $request->ket_produk,
@@ -73,7 +96,6 @@ class ProdukController extends Controller
 
             return redirect()->route('produk.index')->with('msg_success', 'Berhasil menambahkan produk');
         } catch (\Throwable $th) {
-            dd($th);
             return redirect()->route('produk.index')->with('msg_error', 'Gagal Ditambahkan');
         }
     }
@@ -95,9 +117,23 @@ class ProdukController extends Controller
      * @param  \App\Models\Produk  $produk
      * @return \Illuminate\Http\Response
      */
-    public function edit(Produk $produk)
+    public function edit($id)
     {
-        return view('produk.form', compact('produk'));
+        $data = Produk::findOrFail($id);
+        $kategoris = DB::table('kategoris')
+                        ->where('sekolah_id', Auth::user()->sekolah_id)
+                        ->where('jenis', 'sarana')
+                        ->get();
+        $subcategories = DB::table('subcategories')->select('subcategories.*')
+                                                    ->join('kategoris', 'kategoris.id', 'subcategories.kategori_id')
+                                                    ->where('kategoris.sekolah_id', Auth::user()->sekolah_id)
+                                                    ->where('subcategories.kategori_id', $data->kategori_id)
+                                                    ->get();
+        $jurusans = DB::table('jurusans')
+                            ->where('sekolah_id', Auth::user()->sekolah_id)
+                            ->get();
+
+        return view('produk.form', compact('data','kategoris', 'subcategories', 'jurusans'));
     }
 
     /**
@@ -109,18 +145,12 @@ class ProdukController extends Controller
      */
     public function update(UpdateProdukRequest $request, Produk $produk)
     {
-        try {
-            $getCategorieName = DB::table('kategoris')->where('id', $request->kategori_id)->first()->kode;
-            $countProdSub = count(DB::table('produks')->where('kategori_id', $request->kategori_id)->where('sub_kategori_id', $request->sub_kategori_id)->get()) + 1;
-            $countProdKat = count(DB::table('produks')->where('kategori_id', $request->kategori_id)->get()) + 1;
-            // dd("$getCategorieName".count($countProd) + 1);
-
+        // try {
             $produk->update([
                 'kategori_id' => $request->kategori_id,
                 'sub_kategori_id' => $request->sub_kategori_id,
                 'jurusan_id' => $request->jurusan_id,
                 'nama' => $request->nama,
-                'kode' => "$getCategorieName-$countProdKat-$countProdSub",
                 'merek' => $request->merek,
                 'kondisi' => $request->kondisi,
                 'ket_produk' => $request->ket_produk,
@@ -129,9 +159,9 @@ class ProdukController extends Controller
 
             insertLog(Auth::user()->name . " Berhasil mengubah produk " . $request->nama);
             return redirect()->route('produk.index')->with('msg_success', 'Berhasil mengubah produk');
-        } catch (\Throwable $th) {
-            return redirect()->route('produk.index')->with('msg_error', 'Gagal Diubah');
-        }
+        // } catch (\Throwable $th) {
+        //     return redirect()->route('produk.index')->with('msg_error', 'Gagal Diubah');
+        // }
     }
 
     /**

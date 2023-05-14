@@ -33,7 +33,6 @@ class UpdateProdukRequest extends FormRequest
             'kondisi' => ['required'],
             'ket_produk' => ['required'],
             'ket_kondisi' => ['required'],
-            'jumlah' => ['required'],
         ];
     }
 }

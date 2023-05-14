@@ -21,6 +21,13 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach ($produks as $produk)
+                <tr>
+                    <td>
+                        <a href="{{ route('produk.edit', $produk->id) }}">edit</a>
+                    </td>
+                </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

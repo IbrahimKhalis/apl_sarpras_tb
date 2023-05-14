@@ -28,7 +28,7 @@ class StoreProdukRequest extends FormRequest
             'sub_kategori_id' => ['string'],
             'jurusan_id' => ['string'],
             'nama' => ['string'],
-            // 'kode' => ['string'],
+            'kode' => 'unique:produks',
             'merek' => ['string'],
             'kondisi' => ['string'],
             'ket_produk' => ['string'],
