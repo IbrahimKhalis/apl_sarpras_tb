@@ -273,13 +273,11 @@ enctype="multipart/form-data">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-span-12 xl:col-span-6 mt-5 flex">
-                                        <div class="mt-3 xl:mt-0">
-                                            <button type="submit" class="btn btn-primary px-5 mr-5">Submit</button>
-                                        </div>
-                                        <a href="{{ route('sekolah.index') }}" class="btn px-5">
-                                            Cancel
+                                    <div class="text-right mt-5">
+                                        <a href="{{ route('sekolah.index') }}">
+                                            <button type="button" class="btn btn-outline-secondary w-24 mr-1">Cancel</button>
                                         </a>
+                                        <button class="btn btn-primary w-24" type="submit">Save</button>
                                     </div>
                                 </div>
                             </div>

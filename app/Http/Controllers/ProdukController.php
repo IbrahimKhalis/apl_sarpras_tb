@@ -45,7 +45,7 @@ class ProdukController extends Controller
                         ->get();
         $subcategories = DB::table('subcategories')->select('subcategories.*')
                                                     ->join('kategoris', 'kategoris.id', 'subcategories.kategori_id')
-                                                    ->where('kategories.sekolah_id', Auth::user()->sekolah_id)
+                                                    ->where('kategoris.sekolah_id', Auth::user()->sekolah_id)
                                                     ->get();
         $jurusans = DB::table('jurusans')
                             ->where('sekolah_id', Auth::user()->sekolah_id)
