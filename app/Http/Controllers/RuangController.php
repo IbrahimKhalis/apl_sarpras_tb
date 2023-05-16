@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RuangRequest;
+use App\Models\Jurusan;
 use App\Models\Ruang;
 use Illuminate\Http\Request;
 
@@ -27,7 +28,8 @@ class RuangController extends Controller
      */
     public function create()
     {
-        return view('/'); //change this
+        $datas = Jurusan::all();
+        return view('ruang.create', compact('datas')); //change this
     }
 
     /**
@@ -38,9 +40,11 @@ class RuangController extends Controller
      */
     public function store(RuangRequest $request)
     {
+
         $create = Ruang::create([
             'name' => $request->name,
             'jurusan_id' => $request->jurusan_id,
+            'bisa_dipinjam' => $request->bisa_dipinjam == 'on' ? true : false,
         ]);
 
         if(!$create){
@@ -49,7 +53,7 @@ class RuangController extends Controller
             ], 400);
         }
 
-        return redirect('/'); //change this
+        return redirect('/ruang'); //change this
     }   
 
     /**
@@ -60,9 +64,8 @@ class RuangController extends Controller
      */
     public function show($id)
     {
-        $datas = Ruang::find($id);
-
-        return view('/', compact('datas')); //Change This
+        $ruang = Ruang::find($id);
+        return $ruang;
     }
 
     /**
@@ -73,7 +76,10 @@ class RuangController extends Controller
      */
     public function edit($id)
     {
-        
+        $ruang = Ruang::find($id);
+
+        $datas = Jurusan::all();
+        return view('ruang.edit', compact('ruang', 'datas'));
     }
 
     /**
@@ -96,6 +102,7 @@ class RuangController extends Controller
         $update = $find->update([
             'name' => $request->name,
             'jurusan_id' => $request->jurusan_id,
+            'bisa_dipinjam' => $request->bisa_dipinjam == 'on' ? true : false,
         ]);
 
         if(!$update){
