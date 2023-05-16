@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RuangRequest;
 use App\Models\Jurusan;
+use App\Models\Kategori;
 use App\Models\Ruang;
 use Illuminate\Http\Request;
 
@@ -29,7 +30,8 @@ class RuangController extends Controller
     public function create()
     {
         $datas = Jurusan::all();
-        return view('ruang.create', compact('datas')); //change this
+        $kategoris = Kategori::where('jenis', 'prasarana')->get();
+        return view('ruang.create', compact('datas', 'kategoris')); //change this
     }
 
     /**
@@ -43,6 +45,7 @@ class RuangController extends Controller
         $create = Ruang::create([
             'name' => $request->name,
             'jurusan_id' => $request->jurusan_id,
+            'kategori_id' => $request->kategori_id,
             'bisa_dipinjam' => $request->bisa_dipinjam == 'on' ? true : false,
         ]);
 
@@ -78,7 +81,10 @@ class RuangController extends Controller
         $ruang = Ruang::find($id);
 
         $datas = Jurusan::all();
-        return view('ruang.edit', compact('ruang', 'datas'));
+        $kategoris = Kategori::where('jenis', 'prasarana')->get();
+
+
+        return view('ruang.edit', compact('ruang', 'datas', 'kategori'));
     }
 
     /**
@@ -101,6 +107,7 @@ class RuangController extends Controller
         $update = $find->update([
             'name' => $request->name,
             'jurusan_id' => $request->jurusan_id,
+            'kategori_id' => $request->kategori_id,
             'bisa_dipinjam' => $request->bisa_dipinjam == 'on' ? true : false,
         ]);
 

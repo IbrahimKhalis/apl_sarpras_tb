@@ -12,6 +12,12 @@
         @csrf
         <label for="">nama</label>
         <input type="text" name="name" value="{{ $ruang->name }}">
+        <label for="">kategori</label>
+        <select name="kategori_id" id="">
+            @foreach($kategoris as $kategori)
+                <option value="{{ $kategori->id }}" {{ $kategori->id == $ruang->kategori_id ? 'selected' : '' }}>{{ $kategori->nama }}</option>
+            @endforeach
+        </select>
         <label for="">jurusan</label>
         <select name="jurusan_id" id="">
             @foreach($datas as $jurusan)
