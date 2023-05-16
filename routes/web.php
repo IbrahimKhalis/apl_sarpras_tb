@@ -84,8 +84,8 @@ Route::group(['middleware' => ['auth']], function() {
     });
     Route::resource('produk', ProdukController::class);
     Route::get('getsub/{kategori_id?}', [KategoriController::class, 'getSub'])->name('get.sub');
+    Route::resource('/ruang', RuangController::class);
 });
 
-Route::resource('/ruang', RuangController::class);
 
 require __DIR__.'/auth.php';

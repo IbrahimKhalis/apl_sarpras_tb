@@ -40,7 +40,6 @@ class RuangController extends Controller
      */
     public function store(RuangRequest $request)
     {
-
         $create = Ruang::create([
             'name' => $request->name,
             'jurusan_id' => $request->jurusan_id,
