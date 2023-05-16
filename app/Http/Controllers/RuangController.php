@@ -61,7 +61,6 @@ class RuangController extends Controller
     public function show($id)
     {
         $datas = Ruang::find($id);
-
         return view('/', compact('datas')); //Change This
     }
 
