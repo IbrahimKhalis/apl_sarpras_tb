@@ -54,7 +54,8 @@ class SekolahController extends Controller
         DB::beginTransaction();
         try {
             $sekolah = Sekolah::create([
-                'nama' => $request->nama_sekolah,
+                'nama' => $request->nama_sekolah ,
+                'kode' => $request->kode ,
                 'kepala_sekolah' => $request->kepala_sekolah,
                 'npsn' => $request->npsn,
                 'jenjang' => $request->jenjang,
@@ -111,6 +112,7 @@ class SekolahController extends Controller
     {
         $data =[
             'nama' => $request->nama,
+            'kode' => $request->kode,
             'npsn' => $request->npsn,
             'kepala_sekolah' => $request->kepala_sekolah,
             'alamat' => $request->alamat,
