@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('sekolahs', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
+            $table->string('kode');
             $table->string('kepala_sekolah')->nullable();
             $table->string('npsn');
             $table->string('logo')->default('/img/tutwuri.png');

@@ -24,7 +24,7 @@ class UpdateKelasRequest extends FormRequest
     public function rules()
     {
         return [
-            'nama' => 'required'
+            'nama' => ['required']
         ];
     }
 }

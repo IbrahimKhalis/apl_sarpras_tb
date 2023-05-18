@@ -25,6 +25,7 @@ class StoreSekolahRequest extends FormRequest
     {
         return [
             'nama_sekolah' => 'required',
+            'kode' => 'required',
             'npsn' => 'required',
             'kepala_sekolah' => 'required',
             'jenjang' => 'required',
