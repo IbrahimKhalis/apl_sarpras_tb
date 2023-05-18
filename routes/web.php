@@ -9,6 +9,7 @@ use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\ConfigurasiUserController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\KelasController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\RuangController;
@@ -85,6 +86,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('produk', ProdukController::class);
     Route::get('getsub/{kategori_id?}', [KategoriController::class, 'getSub'])->name('get.sub');
     Route::resource('/ruang', RuangController::class);
+
+    // kelas
+    Route::resource('kelas', KelasController::class);
 });
 
 

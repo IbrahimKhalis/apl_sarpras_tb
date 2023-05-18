@@ -18,8 +18,7 @@ class RuangController extends Controller
     public function index()
     {
         $datas = Ruang::all();
-
-        return $datas;
+        return view('ruang.index', compact('datas'));
     }
 
     /**

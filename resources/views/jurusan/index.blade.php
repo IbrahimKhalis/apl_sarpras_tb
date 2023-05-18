@@ -73,14 +73,17 @@
                         <td>{{ $data->nama_jurusan }}</td>
                         <td>{{ $data->nama_kaprog }}</td>
                         <td>
-                            <a class="flex items-center mr-3" href="{{ route('jurusan.edit', $data->id) }}"> <i
-                                data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                            @if (auth()->user()->can('delete_sekolah'))
-                            <button type="submit" class="btn btn-danger btn-sm rounded"
-                                onclick="deleteData('{{ route('jurusan.destroy', [$data->id]) }}')"
-                               >Hapus</button>
-                        </td>
-                        @endif
+                            <div class="flex">
+                                <a class="flex items-center mr-3" href="{{ route('jurusan.edit', $data->id) }}"> <i
+                                    data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
+                                @if (auth()->user()->can('delete_sekolah'))
+                                <button type="submit" class="btn btn-danger btn-sm rounded"
+                                    onclick="deleteData('{{ route('jurusan.destroy', [$data->id]) }}')"
+                                   >Hapus</button>
+                            </td>
+                            @endif
+                            </div>
+                         
                     </tr>
                     @endforeach
             </tbody>
