@@ -207,6 +207,13 @@
       </a>
     </li>
     @endcan
+
+    <li>
+      <a href="{{ route('ruang.index') }}" class="side-menu ">
+        <div class="side-menu__icon"> <i data-lucide="sidebar"></i></div>
+        <div class="side-menu__title">Ruang</div>
+      </a>
+    </li>
   </ul>
 </nav>
 <!-- END: Side Menu -->

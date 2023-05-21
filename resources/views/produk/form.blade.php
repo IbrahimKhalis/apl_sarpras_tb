@@ -172,7 +172,7 @@
                 </div>
                 
                
-                <div class="mt-3">
+                {{-- <div class="mt-3">
                     <label class="form-label">Jumlah</label>
                     <div class="sm:grid grid-cols-3 gap-2">
                         <div class="input-group">
@@ -180,15 +180,15 @@
                             <input type="number" name="jumlah" class="form-control" placeholder="Masukkan Jumlah Unit Barang " aria-describedby="input-group-3">
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 
                 <div class="flex flex-col mt-5">
                     <label for="">Keterangan Produk</label>
-                    <textarea class="mt-3" name="ket_produk" id="" cols="10" rows="6">{{ isset($data) ? ($data->ket_produk) : old('ket_produk') }}</textarea>
+                    <textarea class="form-control mt-3" name="ket_produk" id="" cols="10" rows="6">{{ isset($data) ? ($data->ket_produk) : old('ket_produk') }}</textarea>
                 </div>
                 <div class="flex flex-col mt-5">
                     <label for="">Keterangan Kondisi Produk</label>
-                    <textarea class="mt-3" name="ket_kondisi" id="" cols="10" rows="6">{{ isset($data) ? ($data->ket_kondisi) : old('ket_kondisi') }}</textarea>
+                    <textarea class="form-control mt-3" name="ket_kondisi" id="" cols="10" rows="6">{{ isset($data) ? ($data->ket_kondisi) : old('ket_kondisi') }}</textarea>
                 </div>
                 <div class="text-right mt-5">
                     <a href="">

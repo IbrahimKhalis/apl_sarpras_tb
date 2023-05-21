@@ -88,7 +88,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('/ruang', RuangController::class);
 
     // kelas
-    // Route::resource('kelas', KelasController::class);
+    Route::resource('kelas', KelasController::class);
 });
 
 

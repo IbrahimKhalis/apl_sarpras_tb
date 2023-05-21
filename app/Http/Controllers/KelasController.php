@@ -20,12 +20,13 @@ class KelasController extends Controller
 
     public function index()
     {
-        //
+        $datas = Kelas::all();
+        return view('kelas.index', compact('datas'));
     }
 
     public function create()
     {
-        //
+        return view('kelas.form');
     }
 
     public function store(StoreKelasRequest $request)
