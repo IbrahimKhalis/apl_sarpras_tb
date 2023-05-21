@@ -24,8 +24,10 @@ html {
 
 body {
     line-height: inherit;
+
     margin: 0;
     padding: 0;
+
 }
 
 hr {
@@ -10707,6 +10709,7 @@ html body {
     --tw-bg-opacity: 1;
     background-color: rgb(255 255 255/var(--tw-bg-opacity));
     overflow: hidden;
+<<
     padding: 0;
 }
 
@@ -10718,7 +10721,7 @@ html body {
 
 @media (max-width:calc(1280px - 1px)) {
     .login {
-        --tw-bg-opacity: 1;
+        --tw-bg-opacity: 1
         background-color: rgb(var(--color-primary)/var(--tw-bg-opacity));
     overflow: scroll;
     }

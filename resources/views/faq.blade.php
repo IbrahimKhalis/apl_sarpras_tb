@@ -15,12 +15,7 @@
                 cumque, labore quas provident debitis vitae possimus doloremque tenetur neque odit. Lorem ipsum
                 dolor sit, amet consectetur adipisicing elit. Qui, dolorem? lorem doler adisipet master.</p>
             <div class="button-faq">
-                <!-- <button onclick="">
-                    <div class="text">Lihat lebih banyak</div>
-                    <div class="bx bx-chevron-down"></div>
-                </button> -->
                 <a class="btn" href="#konten">Lihat lebih banyak<div class="bx bx-chevron-down"></div></a>
-
             </div>
         </div>
         <div class="image-bian">
@@ -103,25 +98,6 @@
             <h1>Find your questions</h1>
         </div>
         <div class="cards">
-            <div class="card">
-                <div class="title-card">
-                    <h2>How do i get verified?</h2>
-                </div>
-                <div class="desc-card">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus dolores voluptatum ducimus
-                    tenetur aliquam enim aut? Nulla beatae amet perspiciatis.
-                </div>
-                <button class="learn-more">
-                    <span class="circle" aria-hidden="true">
-                        <span class="icon arrow"></span>
-                    </span>
-                    <span class="button-text">Pelajari lebih</span>
-                </button>
-                <!-- <div class="more">
-                    <div class="bx bx-right-arrow-circle" id="icon"></div>
-                    <h3>Pelajari Selanjutnya</h3>
-                </div> -->
-            </div>
             <div class="card">
                 <div class="title-card">
                     <h2>How do i get verified?</h2>
