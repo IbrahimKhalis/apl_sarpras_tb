@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreKelasRequest;
 use App\Http\Requests\UpdateKelasRequest;
 use App\Models\Kelas;
+use App\Models\Sekolah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,13 +21,14 @@ class KelasController extends Controller
 
     public function index()
     {
-        $datas = Kelas::all();
+        $datas = Kelas::with(['sekolah'])->get();
         return view('kelas.index', compact('datas'));
     }
 
     public function create()
     {
-        return view('kelas.form');
+        $sekolahs = Sekolah::all();
+        return view('kelas.form', compact('sekolahs'));
     }
 
     public function store(StoreKelasRequest $request)
@@ -50,7 +52,9 @@ class KelasController extends Controller
 
     public function edit($id)
     {
-        //
+        $data = Kelas::find($id);
+        $sekolahs = Sekolah::all();
+        return view('kelas.form', compact('data', 'sekolahs'));
     }
 
     public function update(UpdateKelasRequest $request, $id)

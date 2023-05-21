@@ -29,7 +29,7 @@
                 @foreach ($datas as $data)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $data->sekolah_id}}</td>
+                        <td>{{ $data->sekolah->nama}}</td>
                         <td>{{ $data->nama}}</td>
                         <td class="table-report__action w-56">
                             <div class="flex">
