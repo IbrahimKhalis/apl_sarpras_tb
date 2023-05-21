@@ -193,7 +193,7 @@
     <li>
       <a href="{{ route('kategori.index') }}" class="side-menu {{ Request::is('kategori*') ? 'active' : '' }}">
         <div class="side-menu__icon"> <i data-lucide="box"></i></div>
-        <div class="side-menu__title">kategori</div>
+        <div class="side-menu__title">Kategori</div>
       </a>
     </li>
     @endcan

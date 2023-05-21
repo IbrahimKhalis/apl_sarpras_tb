@@ -43,7 +43,7 @@
                 <label for="crud-form-2" class="form-label">Kategori</label>
                 <select name="kategori_id" id="" class="tom-select w-full">
                     @foreach($kategoris as $kategori)
-                        <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
+                        <option {{ isset($data) ? ($kategori->id == $data->kategori_id ? 'selected' : '') :'' }} value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
                     @endforeach
                 </select>
                 </select>
@@ -51,8 +51,9 @@
             <div class="mt-3">
                 <label for="crud-form-2" class="form-label">Jurusan</label>
                 <select name="jurusan_id" id="" class="tom-select w-full">
+                    <option value="">Pilih Jurusan</option>
                     @foreach($datas as $jurusan)
-                    <option value="{{ $jurusan->id }}">{{ $jurusan->nama_jurusan }}</option>
+                    <option {{ isset($data) ? ($jurusan->id == $data->jurusan_id ? 'selected' : '') :'' }} value="{{ $jurusan->id }}">{{ $jurusan->nama_jurusan }}</option>
                     @endforeach
                 </select>
                 </select>
