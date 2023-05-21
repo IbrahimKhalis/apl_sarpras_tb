@@ -3,6 +3,7 @@
     width: 100%;
     min-height: 500px;
     justify-content: center;
+    align-items: center;
     padding: 140px 10px 0px 10px;
     display: flex;
     flex-wrap: wrap;
@@ -47,12 +48,12 @@
 }
 
 .button-faq .btn {
-    width: 250px;
+    width: 220px;
     padding: 8px 20px 8px 20px;
     border-radius: 25px;
-    margin-top: 40px;
+    margin-top: 30px;
     font-weight: 400;
-    font-size: 20px;
+    font-size: 18px;
     border: 2px solid #ffffff;
     justify-content: center;
     align-items: center;
@@ -60,7 +61,7 @@
 }
 
 .button-faq .bx {
-    font-size: 36px;
+    font-size: 28px;
 }
 .btn {
     display: inline-block;
@@ -97,21 +98,22 @@
 .btn:hover{
     color: #1C438C;
 }
-
+.content-card{
+    padding: 0 50px;
+}
 .content-card .title h1 {
     text-align: center;
     font-size: 50px;
     margin-bottom: 55px;
 }
 
-
-
 .cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    row-gap: 70px;
+    display: flex;
+    gap: 85px;
+    justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
-    place-items: center;
+    row-gap: 70px;
 }
 
 @media (max-width:1024px) {

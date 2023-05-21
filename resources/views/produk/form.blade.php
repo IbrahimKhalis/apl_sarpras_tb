@@ -165,9 +165,9 @@
                     
                     <select data-placeholder="Pilih Kondisi Dari Produkmu" class="tom-select w-full" name="kondisi" id="">
                             <option value="">Pilih kondisi</option>
-                            <option value="B" {{ isset($data) ? ($data->kondisi == 'B' ? 'selected' : '') : '' }}>Baik</option>
-                            <option value="KB" {{ isset($data) ? ($data->kondisi == 'KB' ? 'selected' : '') : '' }}>Kurang Baik</option>
-                            <option value="RB" {{ isset($data) ? ($data->kondisi == 'RB' ? 'selected' : '') : '' }}>Rusak Berat</option>
+                            <option value="B" {{ isset($data) ? ($data->kondisi == 'B' ? 'selected' : '') : (old('kondisi') == 'B' ? 'selected' : '') '' }}>Baik</option>
+                            <option value="KB" {{ isset($data) ? ($data->kondisi == 'KB' ? 'selected' : '') : (old('kondisi') == 'KB' ? 'selected' : '') '' }}>Kurang Baik</option>
+                            <option value="RB" {{ isset($data) ? ($data->kondisi == 'RB' ? 'selected' : '') : (old('kondisi') == 'RB' ? 'selected' : '') '' }}>Rusak Berat</option>
                     </select>
                 </div>
                 

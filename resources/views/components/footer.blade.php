@@ -72,7 +72,7 @@
     </div>
     <div class="footer">
         <div class="content-footer">
-            <div class="title">
+            <div class="title-footer">
                 <h1>Sarpras Taruna Bhakti</h1>
             </div>
             <div class="social-buttons">
@@ -84,10 +84,7 @@
                     </svg>
                 </a>
                 <a href="https://www.tiktok.com/@smktarunabhakti" target="_blank" class="social-button linkedin">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="50px" height="50px">
-                        <path
-                            d="M41,4H9C6.243,4,4,6.243,4,9v32c0,2.757,2.243,5,5,5h32c2.757,0,5-2.243,5-5V9C46,6.243,43.757,4,41,4z M37.006,22.323 c-0.227,0.021-0.457,0.035-0.69,0.035c-2.623,0-4.928-1.349-6.269-3.388c0,5.349,0,11.435,0,11.537c0,4.709-3.818,8.527-8.527,8.527 s-8.527-3.818-8.527-8.527s3.818-8.527,8.527-8.527c0.178,0,0.352,0.016,0.527,0.027v4.202c-0.175-0.021-0.347-0.053-0.527-0.053 c-2.404,0-4.352,1.948-4.352,4.352s1.948,4.352,4.352,4.352s4.527-1.894,4.527-4.298c0-0.095,0.042-19.594,0.042-19.594h4.016 c0.378,3.591,3.277,6.425,6.901,6.685V22.323z" />
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill-rule="evenodd" clip-rule="evenodd" image-rendering="optimizeQuality" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" viewBox="0 0 512 512" id="tiktok"><path d="M353.97 0.43c0.03,7.81 2.31,120.68 120.76,127.72 0,32.55 0.04,56.15 0.04,87.21 -8.97,0.52 -77.98,-4.49 -120.93,-42.8l-0.13 169.78c1.63,117.84 -85.09,189.55 -198.44,164.78 -195.46,-58.47 -130.51,-348.37 65.75,-317.34 0,93.59 0.05,-0.03 0.05,93.59 -81.08,-11.93 -108.2,55.52 -86.65,103.81 19.6,43.97 100.33,53.5 128.49,-8.53 3.19,-12.14 4.78,-25.98 4.78,-41.52l0 -337.13 86.28 0.43z"/></svg>
                 </a>
                 <a href="https://www.facebook.com/smktarunabhaktidepok" target="_blank"
                     class="social-button facebook">
@@ -123,7 +120,7 @@
             <div class="list-page">
                 <ul>
                     <li><a href="">Home</a></li>
-                    <li><a href="{{ route('about') }}">About Us</a></li>
+                    <li><a href="{{ route('about') }}">About</a></li>
                     <li><a href="{{ route('faq') }}">FAQ</a></li>
                 </ul>
             </div>

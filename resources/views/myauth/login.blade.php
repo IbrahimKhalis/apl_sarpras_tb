@@ -90,8 +90,10 @@
         </div>
         <!-- END: Login Info -->
         <!-- BEGIN: Login Form -->
+
         <div class="h-full xl:h-auto flex py-5 xl:py-0 my-10 xl:my-0">
             <div class=" xl:ml-20 bg-white dark:bg-darkmode-600 xl:bg-transparent px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-full lg:w-full xl:w-auto" style="padding-top: 5rem; padding-bottom: 2rem" >
+
             
                 <h2 class="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left">
                     Sign In
