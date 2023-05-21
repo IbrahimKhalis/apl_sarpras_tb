@@ -28,6 +28,12 @@ use App\Models\Kategori;
 Route::get('/', function(){
     return view('welcome');
 })->name('index');
+Route::get('/about',function(){
+    return view('about');
+})->name('about');
+Route::get('/faq',function(){
+    return view('faq');
+})->name('faq');
 Route::get('/edit-jurusan', function(){
     return view('jurusan.edit');
 })->name('edit-jurusan');

@@ -43,7 +43,8 @@
       <nav class="nav-menu d-none d-lg-block">
         <ul>
           <li class="active"><a href="{{ route('index') }}#hero">Home</a></li>
-          <li class=""><a href="{{ route('index') }}#fitur">Service</a></li>
+          <li class=""><a href="{{ route('index') }}#fitur">About Us</a></li>
+          <li class=""><a href="{{ route('index') }}#fitur">FAQ</a></li>
           <li class=""><a href="{{ route('login') }}" class="btn btn-primary-self text-white">{{ Auth::user() ? 'Dashboard' : 'Sign In' }}</a></li>
         </ul>
       </nav>
