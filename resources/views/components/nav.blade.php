@@ -10,7 +10,7 @@
         </ul>
         <div class="left-nav">
             <div class="main">
-                <a href="">Login</a>
+                <a href="{{ route('login') }}">Login</a>
             </div>
             <div class="bx bx-menu" id="menu-icon"></div>
         </div>
