@@ -51,6 +51,11 @@ class PermissionTableSeeder extends Seeder
             'add_produk',
             'edit_produk',
             'delete_produk',
+
+            'view_kelas',
+            'add_kelas',
+            'edit_kelas',
+            'delete_kelas',
         ];
 
         foreach ($permissions as $permission) {

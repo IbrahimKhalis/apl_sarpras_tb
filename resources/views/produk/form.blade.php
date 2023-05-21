@@ -134,7 +134,7 @@
                     <input type="text" class="form-control w-full"  name="merek" value="{{ isset($data) ? ($data->merek) : old('merek') }}" placeholder="Masukkan Merek Produkmu">
                 </div>
                 <div class="mt-3">
-                    <label for="crud-form-2" class="form-label">Katgori</label>
+                    <label for="crud-form-2" class="form-label">Kategori</label>
                     <select data-placeholder="Pilih Kategori Produkmu" class="tom-select w-full" name="kategori_id" id="kategori">
                         <option value="">Pilih Kategori</option>
                         @foreach ($kategoris as $kategori)
@@ -144,7 +144,7 @@
                 </div>
                 <div class="mt-3">
                     <label for="crud-form-2" class="form-label">Sub Kategori</label>
-                    <select name="sub_kategori_id" id="subkategori" {{ !isset($data) ? 'disabled' : '' }}  class="w-full">
+                    <select name="sub_kategori_id" id="subkategori" {{ !isset($data) ? 'disabled' : '' }}  class=" w-full ">
                         <option value="">Pilih Sub Kategori</option>
                         @foreach ($subcategories as $subcategorie)
                             <option value="{{ $subcategorie->id }}" {{ isset($data) ? ($data->sub_kategori_id == $subcategorie->id ? 'selected' : '') : '' }}>{{ $subcategorie->nama }}</option>
@@ -172,23 +172,23 @@
                 </div>
                 
                
-                <div class="mt-3">
+                {{-- <div class="mt-3">
                     <label class="form-label">Jumlah</label>
                     <div class="sm:grid grid-cols-3 gap-2">
                         <div class="input-group">
                             <div id="input-group-3" class="input-group-text">Unit</div>
-                            <input type="number" class="form-control" placeholder="Masukkan Jumlah Unit Barang " aria-describedby="input-group-3">
+                            <input type="number" name="jumlah" class="form-control" placeholder="Masukkan Jumlah Unit Barang " aria-describedby="input-group-3">
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 
                 <div class="flex flex-col mt-5">
                     <label for="">Keterangan Produk</label>
-                    <textarea class="mt-3" name="ket_produk" id="" cols="10" rows="6">{{ isset($data) ? ($data->ket_produk) : old('ket_produk') }}</textarea>
+                    <textarea class="form-control mt-3" name="ket_produk" id="" cols="10" rows="6">{{ isset($data) ? ($data->ket_produk) : old('ket_produk') }}</textarea>
                 </div>
                 <div class="flex flex-col mt-5">
                     <label for="">Keterangan Kondisi Produk</label>
-                    <textarea class="mt-3" name="ket_kondisi" id="" cols="10" rows="6">{{ isset($data) ? ($data->ket_kondisi) : old('ket_kondisi') }}</textarea>
+                    <textarea class="form-control mt-3" name="ket_kondisi" id="" cols="10" rows="6">{{ isset($data) ? ($data->ket_kondisi) : old('ket_kondisi') }}</textarea>
                 </div>
                 <div class="text-right mt-5">
                     <a href="">
@@ -222,6 +222,7 @@
                         success: function(response) {
                             items = response.datas
                             if (response.datas) {
+                                console.log(response.datas)
                                 items.forEach(item => {
                                     $('#subkategori').append(`
                                     <option value="${item.id}">${item.nama}</option>

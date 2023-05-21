@@ -117,9 +117,9 @@
                             <div class="flex">
                                 <a class="flex items-center mr-3" href="{{ route('kategori.edit', $data->id) }}"> <i
                                         data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                <a class="flex items-center text-danger" href="javascript:;" data-tw-toggle="modal"
-                                    data-tw-target="#delete-confirmation-modal"> <i data-lucide="trash-2"
-                                        class="w-4 h-4 mr-1"></i> Delete </a>
+                                        <button type="submit" class="btn btn-danger btn-sm rounded"
+                                        onclick="deleteData('{{ route('kategori.destroy', [$data->id]) }}')"
+                                       >Hapus</button>
                             </div>
                         </td>
                     </tr>

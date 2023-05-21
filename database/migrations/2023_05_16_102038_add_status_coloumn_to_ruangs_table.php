@@ -13,12 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ruangs', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->foreignId('kategori_id');
-            $table->foreignId('jurusan_id')->nullable();
-            $table->timestamps();
+        Schema::table('ruangs', function (Blueprint $table) {
+            $table->boolean('bisa_dipinjam');
         });
     }
 
@@ -29,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ruangs');
+        Schema::table('ruangs', function (Blueprint $table) {
+            $table->dropColumn('bisa_dipinjam');
+        });
     }
 };

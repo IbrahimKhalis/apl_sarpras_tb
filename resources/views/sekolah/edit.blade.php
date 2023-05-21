@@ -23,6 +23,19 @@
                 </div>
                 @enderror
             </div>
+            <div>
+                <h2 class="font-normal text-xs mr-auto mt-3">Kode Sekolah:</h2>
+                <input type="text"
+                    class="form-control @error('kode') is-invalid @enderror  "
+                    placeholder="Kode Sekolah" name="kode"
+                    style="border-radius: 5px; width: 100%" value="{{ old('kode') }}"
+                    required>
+                @error('kode')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
+            </div>
             <div class="mb-3">
                 <label for="npsn">NPSN</label>
                 <input class="form-control form-control-sm @error('npsn') is-invalid @enderror" type="text"

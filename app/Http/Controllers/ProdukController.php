@@ -62,16 +62,9 @@ class ProdukController extends Controller
                                     ->where('kategori_id', $request->kategori_id)
                                     ->orderByDesc('id')
                                     ->first();
-
-        $last_sub = DB::table('produks')
-                            ->where('kategori_id', $request->kategori_id)
-                            ->where('sub_kategori_id', $request->sub_kategori_id)
-                            ->orderByDesc('id')
-                            ->first();
                                     
         $kode_kategori = sprintf('%0'. 5 .'d', ($last_kategori ? (int)explode('-', $last_kategori->kode)[1] + 1 : 1));
-        $kode_sub = sprintf('%0'. 5 .'d', ($last_sub ? (int)explode('-', $last_sub->kode)[1] + 1 : 1));
-        $result = $kategori->kode . '-' . $kode_kategori . '-' . $kode_sub;
+        $result = $kategori->kode . '-' . $kode_kategori;
         return $result;
     }
 
