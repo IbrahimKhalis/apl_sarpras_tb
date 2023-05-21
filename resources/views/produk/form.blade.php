@@ -156,7 +156,7 @@
                     <select data-placeholder="Pilih Jurusan Dari Produk ini" class="tom-select w-full" name="jurusan_id" id="">
                         <option value="">Piilih Jurusan Yang Sesuai Produkmu</option>
                         @foreach ($jurusans as $jurusan)
-                    <option value="{{ $jurusan->id }}" {{ isset($data) ? ($data->jurusan_id == $jurusan->id ? 'selected' : '') : '' }}>{{ $jurusan->nama_jurusan }}</option>
+                        <option value="{{ $jurusan->id }}" {{ isset($data) ? ($data->jurusan_id == $jurusan->id ? 'selected' : '') : '' }}>{{ $jurusan->nama_jurusan }}</option>
                     @endforeach
                     </select>
                 </div>
