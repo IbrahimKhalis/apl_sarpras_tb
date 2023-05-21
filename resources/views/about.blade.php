@@ -9,7 +9,7 @@
     <div class="container">
         <div class="text-header">
             <h2>About Us</h2>
-            <h1>About Sarana Prasarana</h1>
+            <h1>Sarana Prasarana</h1>
             <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi ut id tempora accusantium quis sed
                 natus saepe maxime libero iste. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Culpa
                 cumque, labore quas provident debitis vitae possimus doloremque tenetur neque odit. Lorem ipsum
@@ -100,26 +100,26 @@
             </div>
             <div class="cards">
                 <div class="card">
-                    <a class="card1" href="#">
-                     <p>Fleksibilitas</p>
-                     <p class="small">Card description with lots of great facts and interesting details. Lorem ipsum dolor sit amet.</p>
+                    <a class="card1">
+                     <h2>Fleksibilitas</h2>
+                     <p class="small">Card description with lots of great facts and interesting details. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</p>
                      <div class="go-corner" href="#"></div>
                    </a>
-                 </div>
+                </div>
                 <div class="card">
-                    <a class="card1" href="#">
-                     <p>Simple</p>
-                     <p class="small">Card description with lots of great facts and interesting details. Lorem ipsum dolor sit amet.</p>
+                    <a class="card1">
+                     <h2>Simple</h2>
+                     <p class="small">Card description with lots of great facts and interesting details. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</p>
                      <div class="go-corner" href="#"></div>
                    </a>
-                 </div>
+                </div>
                 <div class="card">
-                    <a class="card1" href="#">
-                     <p>Faster</p>
-                     <p class="small">Card description with lots of great facts and interesting details. Lorem ipsum dolor sit amet.</p>
+                    <a class="card1">
+                     <h2>Faster</h2>
+                     <p class="small">Card description with lots of great facts and interesting details. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</p>
                      <div class="go-corner" href="#"></div>
                    </a>
-                 </div>
+                </div>
             </div>
         </div>
         <div class="slider">
