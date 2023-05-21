@@ -150,10 +150,9 @@
                 <label for="crud-form-2" class="form-label">Jenis</label>
                 <select data-placeholder="Pilih Jenis Barangmu" class="tom-select w-full" name="jenis" id="jenis" {{ isset($data) ? 'disabled' : '' }}>
                     <option value="-" selected>Silahkan pilih</option>
-                    <option value="sarana" {{ isset($data) ? ($data->jenis == 'sarana' ? 'selected' : '') : '' }}>Sarana
+                    <option value="sarana" {{ isset($data) ? ($data->jenis == 'sarana' ? 'selected' : '') : (old('jenis') == 'sarana' ? 'selected' : '')}}>Sarana
                     </option>
-                    <option value="prasarana" {{ isset($data) ? ($data->jenis == 'prasarana' ? 'selected' : '') : ''
-                        }}>Prasarana</option>
+                    <option value="prasarana" {{ isset($data) ? ($data->jenis == 'prasarana' ? 'selected' : '') : (old('jenis') == 'prasarana' ? 'selected' : '')}}>Prasarana</option>
                 </select>
                 </select>
             </div>
