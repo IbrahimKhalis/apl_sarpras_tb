@@ -19,12 +19,14 @@ class JurusanController extends Controller
 
     public function index()
     {
+        abort(404);
         $datas = Jurusan::where('sekolah_id', Auth::user()->sekolah_id)->get();
         return view('jurusan.index', compact('datas'));
     }
 
     public function create()
     {
+        abort(404);
         return view('jurusan.form');
     }
 
@@ -57,6 +59,7 @@ class JurusanController extends Controller
 
     public function edit($id)
     {
+        abort(404);
         $data = Jurusan::find($id);
         return view('jurusan.form', compact('data'));
     }

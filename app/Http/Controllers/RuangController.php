@@ -7,9 +7,17 @@ use App\Models\Jurusan;
 use App\Models\Kategori;
 use App\Models\Ruang;
 use Illuminate\Http\Request;
+use Auth, DB;
 
 class RuangController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:view_ruang', ['only' => ['index', 'show']]);
+        $this->middleware('permission:add_ruang', ['only' => ['create', 'store']]);
+        $this->middleware('permission:edit_ruang', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:delete_ruang', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -28,9 +36,8 @@ class RuangController extends Controller
      */
     public function create()
     {
-        $datas = Jurusan::all();
-        $kategoris = Kategori::where('jenis', 'prasarana')->get();
-        return view('ruang.create', compact('datas', 'kategoris')); //change this
+        $kategoris = Kategori::where('sekolah_id', Auth::user()->sekolah_id)->get();
+        return view('ruang.form', compact('kategoris'));
     }
 
     /**
@@ -41,20 +48,16 @@ class RuangController extends Controller
      */
     public function store(RuangRequest $request)
     {
-        $create = Ruang::create([
+        $data = Ruang::create([
             'name' => $request->name,
-            'jurusan_id' => $request->jurusan_id,
             'kategori_id' => $request->kategori_id,
-            'bisa_dipinjam' => $request->bisa_dipinjam == 'on' ? true : false,
+            'bisa_dipinjam' => $request->bisa_dipinjam ? true : false,
+            'sekolah_id' => Auth::user()->sekolah_id
         ]);
 
-        if(!$create){
-            return response()->json([
-                'massages' => "Failed To Be Created"
-            ], 400);
-        }
-
-        return redirect('/ruang'); //change this
+        return response()->json([
+            'data' => $data
+        ], 200);
     }   
 
     /**
@@ -77,13 +80,12 @@ class RuangController extends Controller
      */
     public function edit($id)
     {
-        $ruang = Ruang::find($id);
-
-        $datas = Jurusan::all();
+        $data = Ruang::find($id);
+        if ($data->sekolah_id != Auth::user()->sekolah_id) {
+            abort(403);
+        }
         $kategoris = Kategori::where('jenis', 'prasarana')->get();
-
-
-        return view('ruang.edit', compact('ruang', 'datas', 'kategori'));
+        return view('ruang.form', compact('data', 'kategoris'));
     }
 
     /**
@@ -95,28 +97,17 @@ class RuangController extends Controller
      */
     public function update(RuangRequest $request, $id)
     {
-        $find = Ruang::find($id);
+        $data = Ruang::findOrFail($id);
 
-        if(!$find){
-            return response()->json([
-                'massages' => "Updated data not found"
-            ], 404);
-        }
-
-        $update = $find->update([
+        $data->update([
             'name' => $request->name,
-            'jurusan_id' => $request->jurusan_id,
             'kategori_id' => $request->kategori_id,
-            'bisa_dipinjam' => $request->bisa_dipinjam == 'on' ? true : false,
+            'bisa_dipinjam' => $request->bisa_dipinjam ? true : false,
         ]);
-
-        if(!$update){
-            return response()->json([
-                'massages' => "data failed to update"
-            ], 400);
-        }
-
-        return redirect('/'); //change this
+        
+        return response()->json([
+            'data' => $data
+        ], 200);
     }
 
     /**
@@ -144,5 +135,17 @@ class RuangController extends Controller
         }
 
         return redirect('/'); //change this!
+    }
+
+    public function tambah_produk(Request $request){
+        foreach ($request->produk_id as $key => $produk_id) {
+            DB::table('produks')->where('id', $produk_id)->update([
+                'ruang_id' => $request->ruang_id
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Berhasil ditambahkan'
+        ], 200);
     }
 }

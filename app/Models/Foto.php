@@ -5,15 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Ruang extends Model
+class Foto extends Model
 {
     use HasFactory;
 
-    protected $guarded = [
-        'id',
-    ];
-
-    public function kategori(){
-        return $this->belongsTo(Kategori::class);
+    protected $guarded = ['id'];
+    
+    public function produk(){
+        return $this->belongsTo(Produk::class);
     }
 }

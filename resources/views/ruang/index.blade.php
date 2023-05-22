@@ -22,7 +22,6 @@
                     <th class="whitespace-nowrap">No.</th>
                     <th class="whitespace-nowrap">Ruang</th>
                     <th class="whitespace-nowrap">Kategori</th>
-                    <th class="whitespace-nowrap">Jurusan</th>
                     <th class="whitespace-nowrap">Status</th>
                     <th class="whitespace-nowrap">Action</th>
                 </tr>
@@ -32,16 +31,15 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $data->name}}</td>
-                        <td>{{ $data->kategori_id}}</td>
-                        <td>{{ $data->jurusan_id}}</td>
+                        <td>{{ $data->kategori ? $data->kategori->nama : '' }}</td>
                         <td>{{ $data->bisa_dipinjam}}</td>
                         <td class="table-report__action w-56">
                             <div class="flex">
-                                <a class="flex items-center mr-3" href="{{ route('kelas.edit', $data->id) }}"> <i
+                                <a class="flex items-center mr-3" href="{{ route('ruang.edit', $data->id) }}"> <i
                                         data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                        @if (auth()->user()->can('delete_kelas'))
+                                        @if (auth()->user()->can('delete_ruang'))
                                         <button type="submit" class="btn btn-danger btn-sm rounded"
-                                            onclick="deleteData('{{ route('kelas.destroy', [$data->id]) }}')"
+                                            onclick="deleteData('{{ route('ruang.destroy', [$data->id]) }}')"
                                            >Hapus</button>
                                     </td>
                                     @endif
