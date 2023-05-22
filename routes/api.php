@@ -25,4 +25,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // Route::resource('produk', ProdukController::class);
 
-Route::resource('kelas', KelasController::class);
+// Route::resource('kelas', KelasController::class);
+
+// Route::resource('sekolah', App\Http\Controllers\SekolahController::class);
