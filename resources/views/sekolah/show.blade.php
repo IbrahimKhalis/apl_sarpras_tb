@@ -68,7 +68,7 @@
                     <div class="col-span-12 xl:col-span-6">
                         <div class="mt-3 xl:mt-0">
                             <h2 class="font-normal text-xs mr-auto">Alamat:</h2>
-                            <h2 class="text-lg font-normal mr-auto">{{ $sekolah->Alamat }}</h2>
+                            <h2 class="text-lg font-normal mr-auto">{{ $sekolah->alamat }}</h2>
                         </div>
                     </div>
                 </div>

@@ -20,9 +20,3 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-// Route::resource('/jurusan', JurusanController::class);
-
-// Route::resource('produk', ProdukController::class);
-
-// Route::resource('kelas', KelasController::class);
