@@ -144,7 +144,7 @@
                 </div>
                 <div class="mt-3">
                     <label for="crud-form-2" class="form-label">Sub Kategori</label>
-                    <select name="sub_kategori_id" id="subkategori" {{ !isset($data) ? 'disabled' : '' }}  class=" w-full ">
+                    <select name="sub_kategori_id" id="subkategori" {{ !isset($data) ? 'disabled' : '' }}  class="form-select w-full ">
                         <option value="">Pilih Sub Kategori</option>
                         @foreach ($subcategories as $subcategorie)
                             <option value="{{ $subcategorie->id }}" {{ isset($data) ? ($data->sub_kategori_id == $subcategorie->id ? 'selected' : '') : '' }}>{{ $subcategorie->nama }}</option>
@@ -156,7 +156,7 @@
                     <select data-placeholder="Pilih Jurusan Dari Produk ini" class="tom-select w-full" name="jurusan_id" id="">
                         <option value="">Piilih Jurusan Yang Sesuai Produkmu</option>
                         @foreach ($jurusans as $jurusan)
-                    <option value="{{ $jurusan->id }}" {{ isset($data) ? ($data->jurusan_id == $jurusan->id ? 'selected' : '') : '' }}>{{ $jurusan->nama_jurusan }}</option>
+                        <option value="{{ $jurusan->id }}" {{ isset($data) ? ($data->jurusan_id == $jurusan->id ? 'selected' : '') : '' }}>{{ $jurusan->nama_jurusan }}</option>
                     @endforeach
                     </select>
                 </div>
