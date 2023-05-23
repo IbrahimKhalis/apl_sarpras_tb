@@ -260,21 +260,22 @@
                 </div>
             </form>
         </section>
-        <section id="step-2" class="form-step d-none">
-            <div class="mt-3">
-                <a href="javascript:;" data-tw-toggle="modal" data-tw-target="#modalAddProduk"
-                    class="btn btn-primary">Tambah Produk</a>
-            </div>
-            <div class="mt-3">
-                <button class="button btn-navigate-form-step" type="button" step_number="1">Prev</button>
-                <button class="button submit-btn" type="submit">Save</button>
-            </div>
-        </section>
+       <section id="step-2" class="form-step d-none place-items-center">
+    <div class="mt-3" style="margin-left: 40%">
+        <a href="javascript:;" data-tw-toggle="modal" data-tw-target="#modalAddProduk"
+            class="btn btn-outline-primary">Tambah Produk</a>
+    </div>
+    <div class="mt-5 flex gap-3">
+        <button class="button btn-navigate-form-step">Prev</button>
+        <button class="button submit-btn" >Save</button>
+    </div>
+</section>
+
     </div>
 </div>
 
 <div class="modalkey modal fade" id="modalAddProduk" tabindex="-1" aria-labelledby="role" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <form>
             <div class="modal-content">
                 <div class="modal-header">
@@ -297,13 +298,13 @@
                         </div>
                         <div class="col-md-12">
                             <label for="subkategori" class="form-label">Sub Kategori</label>
-                            <select name="subkategori_id" class="w-full" id="subkategori">
+                            <select name="subkategori_id" class="tom-select w-full" id="subkategori">
                                 <option value="">Pilih Sub Kategori</option>
                             </select>
                         </div>
                         <div class="col-md-12">
                             <label for="produk" class="form-label">Produk</label>
-                            <select name="produk_id[]" id="produk" class="w-full" multiple>
+                            <select name="produk_id[]" id="produk" class="tom-select w-full" multiple>
                                 <option value="">Pilih Produk</option>
                             </select>
                         </div>
