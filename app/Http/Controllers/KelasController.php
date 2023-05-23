@@ -21,7 +21,7 @@ class KelasController extends Controller
 
     public function index()
     {
-        $datas = Kelas::where('sekolah_id', Auth::user()->sekolah_id)->get();
+        $datas = Kelas::where('sekolah_id', Auth::user()->sekolah_id)->paginate(10);
         return view('kelas.index', compact('datas'));
     }
 

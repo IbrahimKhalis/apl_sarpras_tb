@@ -19,7 +19,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th class="whitespace-nowrap">Kode</th>
+                    <th class="whitespace-nowrap">No.</th>
                     <th class="whitespace-nowrap">Nama</th>
                     <th class="whitespace-nowrap">Kategori</th>
                     <th class="whitespace-nowrap">Sub</th>
@@ -29,7 +29,7 @@
             <tbody>
                 @foreach ($datas as $data)
                     <tr>
-                        <td>{{ $data->kode }}</td>
+                        <td>{{ $loop->iteration }}</td>
                         <td>{{ $data->nama }}</td>
                         <td>{{ $data->jenis}}</td>
                         <td>  @foreach ($data->subcategory as $sub)
@@ -50,4 +50,8 @@
         </table>
     </div>
 </div>
+    <div class="mt-5">
+        {{ $datas->links() }}
+    </div>
+
 @endsection
