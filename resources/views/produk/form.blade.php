@@ -174,7 +174,7 @@
             },
             success: function (response) {
                 console.log(response)
-                // showAlert('Berhasil dihapus', 'success')
+                showAlert('Berhasil dihapus', 'success')
             },
             error: function (response) {
                 console.log(response)
