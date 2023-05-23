@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('kepala_sekolah')->nullable();
             $table->string('npsn');
             $table->string('logo')->default('/img/tutwuri.png');
+            $table->string('alamat');
             // $table->foreignId('ref_provinsi_id')->constrained();
             // $table->foreignId('ref_kabupaten_id')->constrained();
             // $table->foreignId('ref_kecamatan_id')->constrained();

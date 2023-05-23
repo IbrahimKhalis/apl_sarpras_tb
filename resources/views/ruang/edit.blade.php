@@ -7,25 +7,19 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="{{ url('/ruang', $ruang->id) }}" method="post">
+    <form action="{{ url('/ruang', $data->id) }}" method="post">
         @method('PUT')
         @csrf
         <label for="">nama</label>
-        <input type="text" name="name" value="{{ $ruang->name }}">
+        <input type="text" name="name" value="{{ $data->name }}">
         <label for="">kategori</label>
         <select name="kategori_id" id="">
             @foreach($kategoris as $kategori)
-                <option value="{{ $kategori->id }}" {{ $kategori->id == $ruang->kategori_id ? 'selected' : '' }}>{{ $kategori->nama }}</option>
-            @endforeach
-        </select>
-        <label for="">jurusan</label>
-        <select name="jurusan_id" id="">
-            @foreach($datas as $jurusan)
-                <option value="{{ $jurusan->id }}" {{ $jurusan->id == $ruang->jurusan_id ? 'selected' : '' }}>{{ $jurusan->nama_jurusan }}</option>
+                <option value="{{ $kategori->id }}" {{ $kategori->id == $data->kategori_id ? 'selected' : '' }}>{{ $kategori->nama }}</option>
             @endforeach
         </select>
         <label for="">status</label>
-        <input type="checkbox" name="bisa_dipinjam"  {{ $ruang->bisa_dipinjam == true ? 'checked' : '' }}>
+        <input type="checkbox" name="bisa_dipinjam"  {{ $data->bisa_dipinjam == true ? 'checked' : '' }}>
     
         <button type="submit">Submit</button>
     </form>

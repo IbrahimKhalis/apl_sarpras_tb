@@ -14,10 +14,10 @@ class SekolahController extends Controller
 {
     function __construct()
     {
-         $this->middleware('permission:view_sekolah', ['only' => ['index','show']]);
-         $this->middleware('permission:add_sekolah', ['only' => ['create','store']]);
-         $this->middleware('permission:edit_sekolah', ['only' => ['edit','update']]);
-         $this->middleware('permission:delete_sekolah', ['only' => ['destroy']]);
+        $this->middleware('permission:view_sekolah', ['only' => ['index', 'show']]);
+        $this->middleware('permission:add_sekolah', ['only' => ['create', 'store']]);
+        $this->middleware('permission:edit_sekolah', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:delete_sekolah', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -54,28 +54,30 @@ class SekolahController extends Controller
         DB::beginTransaction();
         try {
             $sekolah = Sekolah::create([
-                'nama' => $request->nama_sekolah ,
-                'kode' => $request->kode ,
+                'nama' => $request->nama_sekolah,
+                'kode' => $request->kode,
                 'kepala_sekolah' => $request->kepala_sekolah,
                 'npsn' => $request->npsn,
                 'jenjang' => $request->jenjang,
                 'alamat' => $request->alamat,
+                'jam_masuk' => $request->jam_masuk,
+                'jam_pulang' => $request->jam_pulang,
             ]);
-    
+
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => \Hash::make($request->password),
                 'sekolah_id' => $sekolah->id
             ]);
-    
+
             DB::commit();
 
             $user->assignRole('admin');
-            return redirect()->route('sekolah.index')->with('msg_success', "Berhasil Ditambahkan"); 
+            return redirect()->route('sekolah.index')->with('msg_success', "Berhasil Ditambahkan");
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->route('sekolah.index')->with('msg_error', "Gagal Ditambahkan"); 
+            return redirect()->route('sekolah.index')->with('msg_error', "Gagal Ditambahkan");
         }
     }
 
@@ -98,7 +100,7 @@ class SekolahController extends Controller
      */
     public function edit(Sekolah $sekolah)
     {
-       abort(404);
+        abort(404);
     }
 
     /**
@@ -110,12 +112,14 @@ class SekolahController extends Controller
      */
     public function update(UpdateSekolahRequest $request, Sekolah $sekolah)
     {
-        $data =[
+        $data = [
             'nama' => $request->nama,
             'kode' => $request->kode,
             'npsn' => $request->npsn,
             'kepala_sekolah' => $request->kepala_sekolah,
             'alamat' => $request->alamat,
+            'jam_masuk' => $request->jam_masuk,
+            'jam_pulang' => $request->jam_pulang,
         ];
 
         if ($request->logo) {
@@ -125,9 +129,7 @@ class SekolahController extends Controller
             $data += ['logo' => $request->file('logo')->store('logo')];
         }
 
-        dd($data);
-
-        $sekolah->update($data);
+        // dd($data);
 
         return redirect('/dashboard')->with('msg_success', 'Berhasil di update');
     }
@@ -147,7 +149,7 @@ class SekolahController extends Controller
         foreach ($sekolah->kelas as $key => $kelas) {
             $kelas->delete();
         }
-        
+
         $sekolah->delete();
 
         return redirect()->back()->with('msg_success', 'Sekolah berhasil dihapus');

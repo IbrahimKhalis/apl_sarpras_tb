@@ -20,4 +20,8 @@ class Kategori extends Model
     public function subcategory(){
         return $this->hasMany(Subcategory::class);
     }
+
+    public function ruang(){
+        return $this->hasMany(Ruang::class);
+    }
 }

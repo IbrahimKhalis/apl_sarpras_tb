@@ -21,8 +21,12 @@ class Produk extends Model
         return $this->belongsTo(Subcategory::class);
     }
 
-    public function jurusan()
-    {
-        return $this->belongsTo(Jurusan::class);
+    public function fotos(){
+        return $this->hasMany(Foto::class);
     }
+
+    // public function jurusan()
+    // {
+    //     return $this->belongsTo(Jurusan::class);
+    // }
 }

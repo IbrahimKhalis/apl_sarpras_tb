@@ -201,6 +201,30 @@ enctype="multipart/form-data">
                                     </div>
                                     @enderror
                                 </div>
+                                <div class="mt-3">
+                                    <h2 class="font-normal text-xs mr-auto">Jam Masuk:</h2>
+                                    <input type="time" class="form-control @error('jam_masuk') is-invalid @enderror"
+                                        placeholder="Masukan jam_masuk" name="jam_masuk"
+                                        value="{{ isset($data) ? $data->jam_masuk : old('jam_masuk') }}"
+                                        style=" font-size: 15px;" id="jam_masuk">
+                                    @error('jam_masuk')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                                <div class="mt-3">
+                                    <h2 class="font-normal text-xs mr-auto">Jam Pulang:</h2>
+                                    <input type="time" class="form-control @error('jam_pulang') is-invalid @enderror"
+                                        placeholder="Masukan jam_pulang" name="jam_pulang"
+                                        value="{{ isset($data) ? $data->jam_pulang : old('jam_pulang') }}"
+                                        style=" font-size: 15px;" id="jam_pulang">
+                                    @error('jam_pulang')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
                             </div>
                             <div class="col-span-12 xl:col-span-6">
                                 <h5 class="text-lg font-normal mr-auto">Data user admin sekolah:</h5>

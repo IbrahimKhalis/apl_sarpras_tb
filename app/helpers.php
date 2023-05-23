@@ -2,7 +2,7 @@
 
 use App\Models\{
     Log,
-    Jurusan,
+    TahunAjaran,
 };
 
 if(! function_exists('insertLog')){
@@ -14,3 +14,11 @@ if(! function_exists('insertLog')){
         ]);
     }
 }
+
+if(! function_exists('getTahunAjararan')){
+    function getTahunAjararan()
+    {
+        return TahunAjaran::where('status', 'aktif')->first();
+    }
+}
+

@@ -13,9 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('ruangs', function (Blueprint $table) {
-            $table->boolean('ruang_dipinjam');
-            $table->boolean('produk_dipinjam');
+        Schema::create('fotos', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('produk_id')->constrained('produks');
+            $table->string('file');
+            $table->timestamps();
         });
     }
 
@@ -26,9 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('ruangs', function (Blueprint $table) {
-            $table->dropColumn('ruang_dipinjam');
-            $table->dropColumn('produk_dipinjam');
-        });
+        Schema::dropIfExists('fotos');
     }
 };
