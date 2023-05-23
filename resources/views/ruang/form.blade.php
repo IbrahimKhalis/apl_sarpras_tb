@@ -255,16 +255,17 @@
                 </div>
             </form>
         </section>
-        <section id="step-2" class="form-step d-none">
-            <div class="mt-3 mx-auto">
-                <a href="javascript:;" data-tw-toggle="modal" data-tw-target="#modalAddProduk"
-                    class="btn btn-primary">Tambah Produk</a>
-            </div>
-            <div class="mt-3">
-                <button class="button btn-navigate-form-step" type="button" step_number="1">Prev</button>
-                <button class="button submit-btn" type="submit">Save</button>
-            </div>
-        </section>
+       <section id="step-2" class="form-step d-none place-items-center">
+    <div class="mt-3" style="margin-left: 40%">
+        <a href="javascript:;" data-tw-toggle="modal" data-tw-target="#modalAddProduk"
+            class="btn btn-outline-primary">Tambah Produk</a>
+    </div>
+    <div class="mt-5 flex gap-3">
+        <button class="button btn-navigate-form-step">Prev</button>
+        <button class="button submit-btn" >Save</button>
+    </div>
+</section>
+
     </div>
 </div>
 
