@@ -26,7 +26,7 @@ class UpdateProdukRequest extends FormRequest
         return [
             'kategori_id' => ['required'],
             'sub_kategori_id' => ['required'],
-            'jurusan_id' => ['required'],
+            // 'jurusan_id' => ['required'],
             'nama' => ['required'],
             // 'kode' => ['required'],
             'merek' => ['required'],

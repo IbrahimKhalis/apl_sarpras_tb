@@ -21,28 +21,23 @@ class KelasController extends Controller
 
     public function index()
     {
-        $datas = Kelas::with(['sekolah'])->get();
+        $datas = Kelas::where('sekolah_id', Auth::user()->sekolah_id)->paginate(10);
         return view('kelas.index', compact('datas'));
     }
 
     public function create()
     {
-        $sekolahs = Sekolah::all();
-        return view('kelas.form', compact('sekolahs'));
+        return view('kelas.form');
     }
 
     public function store(StoreKelasRequest $request)
     {
-        try {
-            $kelas = Kelas::create([
-                'sekolah_id' => $request->sekolah_id,
-                'nama' => $request->nama,
-            ]);
-            insertLog(Auth::user()->name. " Berhasil menambahkan kelas ". $kelas['nama']);
-            return redirect()->route('kelas.index')->with('msg_success', 'Berhasil menambahkan kelas');
-        } catch (\Throwable $th) {
-            return redirect()->route('kelas.index')->with('msg_error', 'Gagal menambahkan kelas');
-        }
+        $kelas = Kelas::create([
+            'sekolah_id' => Auth::user()->sekolah_id,
+            'nama' => $request->nama,
+        ]);
+        insertLog(Auth::user()->name. " Berhasil menambahkan kelas ". $kelas['nama']);
+        return redirect()->route('kelas.index')->with('msg_success', 'Berhasil menambahkan kelas');
     }
 
     public function show($id)
@@ -53,23 +48,17 @@ class KelasController extends Controller
     public function edit($id)
     {
         $data = Kelas::find($id);
-        $sekolahs = Sekolah::all();
-        return view('kelas.form', compact('data', 'sekolahs'));
+        return view('kelas.form', compact('data'));
     }
 
     public function update(UpdateKelasRequest $request, $id)
     {
-        try {
-            $kelas = Kelas::with(['sekolah'])->find($id);
-            $kelas->update([
-                'sekolah_id' => $request->sekolah_id,
-                'nama' => $request->nama,
-            ]);
-            insertLog(Auth::user()->name. " Berhasil mengubah kelas ". $kelas['nama']);
-            return redirect()->route('kelas.index')->with('msg_success', 'Berhasil mengubah kelas');
-        } catch (\Throwable $th) {
-            return redirect()->route('kelas.index')->with('msg_error', 'Gagal mengubah kelas');
-        }
+        $kelas = Kelas::find($id);
+        $kelas->update([
+            'nama' => $request->nama,
+        ]);
+        insertLog(Auth::user()->name. " Berhasil mengubah kelas ". $kelas['nama']);
+        return redirect()->route('kelas.index')->with('msg_success', 'Berhasil mengubah kelas');
     }
 
     public function destroy($id)

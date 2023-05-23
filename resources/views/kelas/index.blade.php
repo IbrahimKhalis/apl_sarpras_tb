@@ -49,4 +49,7 @@
             </table>
         </div>
     </div>
+    <div class="mt-5">
+        {{ $datas->links() }}
+    </div>
 @endsection

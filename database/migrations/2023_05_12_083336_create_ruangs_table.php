@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->foreignId('kategori_id');
-            $table->foreignId('jurusan_id')->nullable();
+            $table->foreignId('sekolah_id')->constrained();
+            // $table->foreignId('jurusan_id')->nullable();
             $table->timestamps();
         });
     }
