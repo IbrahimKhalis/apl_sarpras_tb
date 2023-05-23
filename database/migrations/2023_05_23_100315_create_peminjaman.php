@@ -1,0 +1,52 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('peminjamans', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama');
+            $table->string('email');
+            // $table->foreignId('kategori_id')->constrained();
+            // $table->foreignId('sub_kategori_id')->constrained('subcategories');
+            $table->foreignId('kelas_id')->constrained('kelas');
+            $table->foreignId('tahun_ajaran_id')->constrained('tahun_ajarans');
+            $table->string('status');
+            $table->date('tgl_peminjaman');
+            $table->date('tgl_pengembalian');
+            $table->boolean('email_penagihan');
+            $table->string('ttd');
+            $table->string('foto_peminjaman');
+            $table->string('foto_pengembalian');
+            $table->timestamps();
+        });
+
+        Schema::create('peminjaman_produk', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('peminjaman_id')->constrained('peminjamans');
+            $table->foreignId('kelas_id')->constrained('kelas');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('peminjaman');
+        Schema::dropIfExists('peminjaman_produk');
+    }
+};

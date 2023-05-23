@@ -245,9 +245,14 @@
                         </select>
                     </div>
                     <div class="mt-3">
-                        <label for="crud-form-2" class="form-label">Bisa Dipinjam</label>
-                        <input type="checkbox" name="bisa_dipinjam" class="form-check-input" {{ isset($data) ?
-                            ($data->bisa_dipinjam == 1 ? 'checked' : '') : '' }}>
+                        <label for="crud-form-2" class="form-label">Ruang Bisa Dipinjam</label>
+                        <input type="checkbox" name="ruang_dipinjam" class="form-check-input" {{ isset($data) ?
+                            ($data->ruang_dipinjam == 1 ? 'checked' : '') : '' }}>
+                    </div>
+                    <div class="mt-3">
+                        <label for="crud-form-2" class="form-label">Produk Bisa Dipinjam</label>
+                        <input type="checkbox" name="produk_dipinjam" class="form-check-input" {{ isset($data) ?
+                            ($data->produk_dipinjam == 1 ? 'checked' : '') : '' }}>
                     </div>
                 </div>
                 <div class="mt-3">

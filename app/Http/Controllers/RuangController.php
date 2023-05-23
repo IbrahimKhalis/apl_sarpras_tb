@@ -51,7 +51,8 @@ class RuangController extends Controller
         $data = Ruang::create([
             'name' => $request->name,
             'kategori_id' => $request->kategori_id,
-            'bisa_dipinjam' => $request->bisa_dipinjam ? true : false,
+            'ruang_dipinjam' => $request->ruang_dipinjam ? true : false,
+            'produk_dipinjam' => $request->produk_dipinjam ? true : false,
             'sekolah_id' => Auth::user()->sekolah_id
         ]);
 
@@ -102,7 +103,8 @@ class RuangController extends Controller
         $data->update([
             'name' => $request->name,
             'kategori_id' => $request->kategori_id,
-            'bisa_dipinjam' => $request->bisa_dipinjam ? true : false,
+            'ruang_dipinjam' => $request->ruang_dipinjam ? true : false,
+            'produk_dipinjam' => $request->produk_dipinjam ? true : false,
         ]);
         
         return response()->json([
