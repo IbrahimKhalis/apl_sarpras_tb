@@ -70,10 +70,13 @@ class ProdukController extends Controller
                                 ->where('kategori_id', $request->kategori_id)
                                 ->orderByDesc('id')
                                 ->first();
+
+            $tahun_ajaran = getTahunAjararan();
                                 
             for ($i = 0; $i < $request->jumlah; $i++) {
                 $produk = Produk::create([
                     'kategori_id' => $request->kategori_id,
+                    'tahun_ajaran_id' => $tahun_ajaran->id,
                     'sub_kategori_id' => $request->sub_kategori_id,
                     'nama' => ($request->name_increment ? ($request->start_increment ? ($request->nama . ' ' . $request->start_increment + $i) : ($request->nama . ' ' . $i)) : $request->nama),
                     'kode' => $this->generate_kode(($last_kategori ? (int)explode($kategori->kode, $last_kategori->kode)[1] + ($i + 1) : 1),$kategori, $i + 1),

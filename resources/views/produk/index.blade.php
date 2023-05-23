@@ -30,41 +30,36 @@
             </thead>
             <tbody>
                 @foreach ($produks as $data)
-                    <tr>
-                        <td>
-                            <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                <img alt="Gambar Tidak Ditemuka" class="tooltip rounded-full" src="{{ $data->gambar }}">
-                            </div>
-                            
-                        
-                        </td>
-                        <td>{{ $data->nama }}</td>
-                        <td>
-                            <a href="" class="font-medium whitespace-nowrap">{{$data->kategori}}</a> 
-                            <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">@foreach ($data->subcategory as $sub)
-                                {{ $sub->nama }},
-                            @endforeach</div>
-                        </td>
-                        <td>{{ $data->merek }}</td>
-                        <td>{{ $data->kondisi }}</td>
-                        <td>{{ $data->jumlah }}</td>
-                        <td class="table-report__action w-56">
-                            <div class="flex">
-                                <a class="flex items-center mr-3" href="{{ route('produk.edit', $data->id) }}"> <i
-                                        data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                        <button type="submit" class="btn btn-danger btn-sm rounded"
-                                        onclick="deleteData('{{ route('produk.destroy', [$data->id]) }}')"
-                                       >Hapus</button>
-                            </div>
-                        </td>
-                    </tr>
-                    @endforeach
+                <tr>
+                    <td>
+                        <div class="w-10 h-10 image-fit zoom-in -ml-5">
+                            {{-- <img alt="Gambar Tidak Ditemuka" class="tooltip rounded-full" src="{{ $data->gambar }}"> --}}
+                        </div>
+                    </td>
+                    <td>{{ $data->nama }}</td>
+                    <td>
+                        {{-- <a href="" class="font-medium whitespace-nowrap">{{$data->kategori}}</a> --}}
+                     
+                    </td>
+                    <td>{{ $data->merek }}</td>
+                    <td>{{ $data->kondisi }}</td>
+                    {{-- <td>{{ $data->jumlah }}</td> --}}
+                    <td class="table-report__action w-56">
+                        <div class="flex">
+                            <a class="flex items-center mr-3" href="{{ route('produk.edit', $data->id) }}"> <i
+                                    data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
+                            <button type="submit" class="btn btn-danger btn-sm rounded"
+                                onclick="deleteData('{{ route('produk.destroy', [$data->id]) }}')">Hapus</button>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
 </div>
-    <div class="mt-5">
-        {{ $produks->links() }}
-    </div>
+<div class="mt-5">
+    {{ $produks->links() }}
+</div>
 
 @endsection
