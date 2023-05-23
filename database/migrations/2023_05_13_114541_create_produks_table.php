@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('kategori_id')->constrained();
             $table->foreignId('sub_kategori_id')->constrained('subcategories');
             $table->foreignId('ruang_id')->nullable()->constrained('ruangs');
+            $table->foreignId('tahun_ajaran_id')->constrained('tahun_ajarans');
             // $table->foreignId('jurusan_id')->constrained('jurusans')->nullable();
             $table->string('nama');
             $table->string('kode');

@@ -21,7 +21,7 @@ class Produk extends Model
         return $this->belongsTo(Subcategory::class);
     }
 
-    public function foto(){
+    public function fotos(){
         return $this->hasMany(Foto::class);
     }
 

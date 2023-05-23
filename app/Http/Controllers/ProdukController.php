@@ -8,9 +8,11 @@ use App\Models\{
     Subcategory,
     Foto
 };
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreProdukRequest;
 use App\Http\Requests\UpdateProdukRequest;
 use App\Models\Kategori;
+use Illuminate\Support\Facades\Storage;
 
 class ProdukController extends Controller
 {
@@ -58,8 +60,9 @@ class ProdukController extends Controller
 
     public function store(StoreProdukRequest $request)
     {
-        DB::beginTransaction();
-        try {
+        // DB::beginTransaction();
+        // try {
+            $tahun_ajaran = getTahunAjararan();
             $kategori = DB::table('kategoris')
                                 ->where('id', $request->kategori_id)
                                 ->first();
@@ -67,7 +70,7 @@ class ProdukController extends Controller
                                 ->where('kategori_id', $request->kategori_id)
                                 ->orderByDesc('id')
                                 ->first();
-                                
+            
             for ($i = 0; $i < $request->jumlah; $i++) {
                 $produk = Produk::create([
                     'kategori_id' => $request->kategori_id,
@@ -78,10 +81,11 @@ class ProdukController extends Controller
                     'kondisi' => $request->kondisi,
                     'ket_produk' => $request->ket_produk,
                     'ket_kondisi' => $request->ket_kondisi,
+                    'tahun_ajaran_id' => $tahun_ajaran->id
                 ]);
                 
                 foreach ($request->fotos as $key => $foto) {
-                    $path = $foto->store('produk');
+                    $path = Storage::disk('public')->putFile('produk', $foto);
                     Foto::create([
                         'produk_id' => $produk->id,
                         'file' => $path
@@ -90,12 +94,12 @@ class ProdukController extends Controller
 
                 insertLog(Auth::user()->name . " Berhasil menambahkan produk " . $produk['nama']);
             }
-            DB::commit();
+            // DB::commit();
             return redirect()->route('produk.index')->with('msg_success', 'Berhasil menambahkan produk');
-        } catch (\Throwable $th) {
-                DB::rollback();
-            return redirect()->route('produk.index')->with('msg_error', 'Gagal Ditambahkan');
-        }
+        // } catch (\Throwable $th) {
+        //         DB::rollback();
+        //     return redirect()->route('produk.index')->with('msg_error', 'Gagal Ditambahkan');
+        // }
     }
 
     /**
@@ -198,6 +202,27 @@ class ProdukController extends Controller
         $data = Subcategory::findOrFail($sub);
         return response()->json([
             'datas' => $data->produk()->whereNull('ruang_id')->get()
+        ], 200);
+    }
+
+    public function hapus_foto(Request $request){
+        $request->validate([
+            'produk_id' => 'required',
+            'foto_id' => 'required',
+        ]);
+
+        $foto = Foto::where('produk_id', $request->produk_id)
+                        ->where('id', $request->foto_id)
+                        ->first();
+
+        if (Storage::disk('public')->exists("$foto->file")) {
+            return Storage::disk('public')->delete("$foto->file");
+        }
+
+        $foto->delete();
+
+        return response()->json([
+            'message' => 'Berhasil dihapus'
         ], 200);
     }
 }

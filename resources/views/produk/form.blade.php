@@ -104,6 +104,14 @@
                     <label for="crud-form-1" class="form-label">Foto</label>
                     <input type="file" class="form-control w-full" name="fotos[]" multiple accept="image/*">
                 </div>
+                @if (isset($data))
+                @foreach ($data->fotos as $foto)
+                    <div class="div-foto-{{ $foto->id }}">
+                        <img src="{{ asset('storage/' . $foto->file) }}" alt="">
+                        <button type="button" onclick="hapusFoto({{ $foto->id }})">Hapus</button>
+                    </div>
+                @endforeach
+                @endif
                 <div class="text-right mt-5">
                     <a href="">
                         <button type="button" class="btn btn-outline-secondary w-24 mr-1">Cancel</button>
@@ -146,6 +154,33 @@
             $('.div-name-increment input[type="number"]').remove()
         }
     })
+</script>
+@endif
+@if (isset($data))
+<script>
+    function hapusFoto(id){
+        $.ajax({
+            type: "DELETE",
+            url: "{{ route('produk.hapus_foto') }}",
+            data: {
+                'produk_id' : '{{ $data->id }}',
+                'foto_id' : id
+            },
+            dataType: "json",
+            beforeSend: function (e) {
+                if (e && e.overrideMimeType) {
+                    e.overrideMimeType("application/json;charset=UTF-8");
+                }
+            },
+            success: function (response) {
+                console.log(response)
+                // showAlert('Berhasil dihapus', 'success')
+            },
+            error: function (response) {
+                console.log(response)
+            },
+        });
+    }
 </script>
 @endif
 @endpush
