@@ -13,7 +13,9 @@
     
     <link href="{{ asset('dist/css/app.css') }}" rel="stylesheet">
     {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
+    <link href="https://unpkg.com/tailwindcss@1.2.0/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
     {{-- <style>
     .fstdropdown>.fstlist {
       min-height: 10rem !important;
@@ -75,6 +77,7 @@
         @stack('other_delete')
     </form>
     <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="path/to/vanilla.js"></script>
     <script>
         function goBack() {
           window.history.back();
