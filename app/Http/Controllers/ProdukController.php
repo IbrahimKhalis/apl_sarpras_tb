@@ -13,6 +13,7 @@ use App\Http\Requests\StoreProdukRequest;
 use App\Http\Requests\UpdateProdukRequest;
 use App\Models\Kategori;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProdukController extends Controller
 {
@@ -85,7 +86,8 @@ class ProdukController extends Controller
                 ]);
                 
                 foreach ($request->fotos as $key => $foto) {
-                    $path = Storage::disk('public')->putFile('produk', $foto);
+                    $randName = Str::random(24);
+                    $path = Storage::disk('public')->putFileAs('produk', $foto, $randName.'_'.$i.'.'.$foto->getClientOriginalExtension());
                     Foto::create([
                         'produk_id' => $produk->id,
                         'file' => $path
