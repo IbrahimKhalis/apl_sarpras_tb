@@ -11,6 +11,11 @@ class Produk extends Model
     
     protected $guarded = ['id'];
 
+    public function sekolah()
+    {
+        return $this->belongsTo(Sekolah::class);
+    }
+
     public function kategori()
     {
         return $this->belongsTo(Kategori::class);

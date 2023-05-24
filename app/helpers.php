@@ -22,3 +22,12 @@ if(! function_exists('getTahunAjararan')){
     }
 }
 
+if(! function_exists('validateSekolah')){
+    function validateSekolah($id)
+    {
+        if ($id != Auth::user()->sekolah_id) {
+            return abort(403);
+        }
+    }
+}
+
