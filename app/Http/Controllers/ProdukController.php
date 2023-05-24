@@ -13,7 +13,7 @@ use App\Http\Requests\UpdateProdukRequest;
 use App\Models\Kategori;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-
+use Illuminate\Http\Request;
 
 class ProdukController extends Controller
 {
@@ -46,6 +46,11 @@ class ProdukController extends Controller
      */
     public function create()
     {
+        $tahun_ajaran = getTahunAjararan();
+        if (!$tahun_ajaran) {
+            return redirect()->route('produk.index')->with('msg_error', 'Tidak ada tahun ajaran ditemukan');
+        }
+
         $kategoris = DB::table('kategoris')
                         ->where('sekolah_id', Auth::user()->sekolah_id)
                         ->where('jenis', 'sarana')
@@ -61,6 +66,11 @@ class ProdukController extends Controller
 
     public function store(StoreProdukRequest $request)
     {
+        $tahun_ajaran = getTahunAjararan();
+        if (!$tahun_ajaran) {
+            return redirect()->route('produk.index')->with('msg_error', 'Tidak ada tahun ajaran ditemukan');
+        }
+
         DB::beginTransaction();
         try {
             $kategori = DB::table('kategoris')
@@ -71,7 +81,6 @@ class ProdukController extends Controller
                                 ->orderByDesc('id')
                                 ->first();
 
-            $tahun_ajaran = getTahunAjararan();
                                 
             for ($i = 0; $i < $request->jumlah; $i++) {
                 $produk = Produk::create([
@@ -100,7 +109,7 @@ class ProdukController extends Controller
             DB::commit();
             return redirect()->route('produk.index')->with('msg_success', 'Berhasil menambahkan produk');
         } catch (\Throwable $th) {
-                DB::rollback();
+            DB::rollback();
             return redirect()->route('produk.index')->with('msg_error', 'Gagal Ditambahkan');
         }
     }
@@ -147,6 +156,7 @@ class ProdukController extends Controller
      */
     public function update(UpdateProdukRequest $request, Produk $produk)
     {
+        DB::beginTransaction();
         try {
             $update = [
                 'kategori_id' => $request->kategori_id,
@@ -173,9 +183,20 @@ class ProdukController extends Controller
 
             $produk->update($update);
 
+            foreach ($request->fotos as $key => $foto) {
+                $randName = Str::random(24);
+                $path = Storage::disk('public')->putFileAs('produk', $foto, $randName.'_'.$produk->id.'.'.$foto->getClientOriginalExtension());
+                Foto::create([
+                    'produk_id' => $produk->id,
+                    'file' => $path
+                ]);
+            }
+
             insertLog(Auth::user()->name . " Berhasil mengubah produk " . $request->nama);
+            DB::commit();
             return redirect()->route('produk.index')->with('msg_success', 'Berhasil mengubah produk');
         } catch (\Throwable $th) {
+                DB::rollback();
             return redirect()->route('produk.index')->with('msg_error', 'Gagal Diubah');
         }
     }
@@ -205,6 +226,27 @@ class ProdukController extends Controller
         $data = Subcategory::findOrFail($sub);
         return response()->json([
             'datas' => $data->produk()->whereNull('ruang_id')->get()
+        ], 200);
+    }
+
+    public function hapus_foto(Request $request){
+        $request->validate([
+            'produk_id' => 'required',
+            'foto_id' => 'required',
+        ]);
+
+        $foto = Foto::where('produk_id', $request->produk_id)
+                        ->where('id', $request->foto_id)
+                        ->first();
+
+        if (Storage::disk('public')->exists("$foto->file")) {
+            return Storage::disk('public')->delete("$foto->file");
+        }
+
+        $foto->delete();
+
+        return response()->json([
+            'message' => 'Berhasil dihapus'
         ], 200);
     }
 }

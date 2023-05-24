@@ -36,8 +36,9 @@ Route::get('/faq',function(){
     return view('faq');
 })->name('faq');
 
-Route::prefix('public')->name('public.')->group(function () {
-    Route::get('/peminjaman', [PeminjamanPublic::class, 'create'])->name('peminjaman.create');
+Route::prefix('peminjaman')->name('peminjaman.')->group(function () {
+    Route::get('/', [PeminjamanPublic::class, 'create'])->name('create');
+    Route::post('/cek-kode', [PeminjamanPublic::class, 'cek_kode'])->name('cek_kode');
 });
 
 Route::group(['middleware' => ['auth']], function() {

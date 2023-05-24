@@ -26,6 +26,7 @@ return new class extends Migration
             $table->enum('kondisi', ['B', 'KB', "RB"]);
             $table->text('ket_produk');
             $table->text('ket_kondisi');
+            $table->boolean('dipinjam');
             $table->timestamps();
         });
     }

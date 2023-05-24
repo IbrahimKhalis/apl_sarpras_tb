@@ -203,7 +203,7 @@
                 <span class="form-stepper-circle">
                     <span>1</span>
                 </span>
-                <div class="label">Membuat Ruang</div>
+                <div class="label">Pilih Sekolah</div>
             </a>
         </li>
         <li class="form-stepper-unfinished text-center form-stepper-list" step="2">
@@ -211,59 +211,54 @@
                 <span class="form-stepper-circle text-muted">
                     <span>2</span>
                 </span>
-                <div class="label text-muted">Tambah Produk</div>
+                <div class="label text-muted">Peminjaman</div>
             </a>
         </li>
     </ul>
     <section id="step-1" class="form-step">
-        <form action="{{ isset($data) ? route('ruang.update', [$data->id]) : route('ruang.store') }}" method="POST">
-            @csrf
-            @if (isset($data))
-            @method('patch')
-            @endif
-            <div class="mt-3">
-                <div>
-                    <label for="crud-form-1" class="form-label">Nama Ruang</label>
-                    <input id="crud-form-1" type="text" class="form-control w-full" name="name"
-                        value="{{ isset($data) ? $data->name : old('nama') }}" placeholder="Nama">
-                </div>
-                <div class="mt-3">
-                    <label for="crud-form-2" class="form-label">Kategori</label>
-                    <select name="kategori_id" id="" class="tom-select w-full">
-                        @foreach($kategoris as $kategori)
-                        @if ($kategori->jenis == 'prasarana')
-                        <option {{ isset($data) ? ($kategori->id == $data->kategori_id ? 'selected' : '') :'' }}
-                            value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
-                        @endif
-                        @endforeach
-                    </select>
-                </div>
-                <div class="mt-3">
-                    <label for="crud-form-2" class="form-label">Ruang Bisa Dipinjam</label>
-                    <input type="checkbox" name="ruang_dipinjam" class="form-check-input" {{ isset($data) ?
-                        ($data->ruang_dipinjam == 1 ? 'checked' : '') : '' }}>
-                </div>
-                <div class="mt-3">
-                    <label for="crud-form-2" class="form-label">Produk Bisa Dipinjam</label>
-                    <input type="checkbox" name="produk_dipinjam" class="form-check-input" {{ isset($data) ?
-                        ($data->produk_dipinjam == 1 ? 'checked' : '') : '' }}>
-                </div>
-            </div>
-            <div class="mt-3">
-                <button class="button btn-navigate-form-step" type="button" step_number="2">Next</button>
-            </div>
-        </form>
+        @foreach ($sekolahs as $sekolah)
+        <a href="javascript:;" data-tw-toggle="modal" data-tw-target="#modalSekolah" class="btn btn-primary"
+            data-id="{{ $sekolah->id }}">{{ $sekolah->nama }}</a>
+        @endforeach
+        <div class="mt-3">
+            <button class="button btn-navigate-form-step" type="button" step_number="2">Next</button>
+        </div>
     </section>
     <section id="step-2" class="form-step d-none place-items-center">
         <div class="mt-3" style="margin-left: 40%">
-            <a href="javascript:;" data-tw-toggle="modal" data-tw-target="#modalAddProduk"
-                class="btn btn-outline-primary">Tambah Produk</a>
         </div>
         <div class="mt-5 flex gap-3">
             <button class="button btn-navigate-form-step">Prev</button>
             <button class="button submit-btn">Save</button>
         </div>
     </section>
+</div>
+
+<div class="modalkey modal fade" id="modalSekolah" tabindex="-1" aria-labelledby="role" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{{ route('roles.store') }}" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="role">Kode Sekolah</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @csrf
+                    <input type="hidden" name="sekolah_id">
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="kode" class="form-label">Kode</label>
+                            <input class="form-control" type="text" id="kode" placeholder="Masukan Kode Sekolah"
+                                name="kode" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Kirim</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 @endsection
 
@@ -328,5 +323,36 @@ document.querySelectorAll(".btn-navigate-form-step").forEach((formNavigationBtn)
         }
     });
 });
+</script>
+
+<script>
+    $('a[data-tw-target="#modalSekolah"]').on('click', function(){
+        $('input[name="sekolah_id"]').val($(this).attr('data-id'))
+    })
+
+    $('#modalSekolah form').on('submit', function(e){
+        e.preventDefault();
+        let form = new FormData($(this)[0]);
+        $.ajax({
+            type: "POST",
+            url: "{{ route('peminjaman.cek_kode') }}",
+            data: form,
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            beforeSend: function (e) {
+                if (e && e.overrideMimeType) {
+                    e.overrideMimeType("application/json;charset=UTF-8");
+                }
+            },
+            success: function (response) {
+                $('.sub-' + id + ' input').val(response.data.nama)
+                showAlert('Berhasil diubah', 'success')
+            },
+            error: function (response) {
+                console.log(response)
+            },
+        });
+    })
 </script>
 @endsection

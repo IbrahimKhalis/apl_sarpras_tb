@@ -47,7 +47,6 @@
       color: #e9ecef;
     }
   </style> --}}
-
   @stack('css')
 </head>
 
@@ -57,15 +56,11 @@
   </script>
 
   @include('mypartials.mobile')
-
-
   <div class="flex">
     @include('mypartials.aside')
     <div class="content">
       @include('mypartials.navbar')
       @yield('content')
-
-
     </div>
   </div>
   <div data-url="#"

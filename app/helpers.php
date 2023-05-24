@@ -18,7 +18,7 @@ if(! function_exists('insertLog')){
 if(! function_exists('getTahunAjararan')){
     function getTahunAjararan()
     {
-        return TahunAjaran::where('status', 'aktif')->first();
+        return TahunAjaran::where('status', 'a')->first();
     }
 }
 

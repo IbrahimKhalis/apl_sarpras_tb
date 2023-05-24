@@ -33,6 +33,7 @@ class UpdateProdukRequest extends FormRequest
             'kondisi' => ['required'],
             'ket_produk' => ['required'],
             'ket_kondisi' => ['required'],
+            'fotos.*' => 'file|max:5025|image'
         ];
     }
 }
