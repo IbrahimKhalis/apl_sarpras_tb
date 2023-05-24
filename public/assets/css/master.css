@@ -10,6 +10,7 @@
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 100px;
+    overflow-x: hidden;
 }
 
 :root {
@@ -54,7 +55,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 8%;
+    padding: 20px 4%;
     transition: all .50s ease;
     background-color: var(--white);
 

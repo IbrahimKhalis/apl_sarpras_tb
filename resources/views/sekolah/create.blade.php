@@ -264,7 +264,7 @@ enctype="multipart/form-data">
                                 <div class="mt-3">
                                     <h2 class="font-normal text-xs mr-auto">Logo Sekolah:</h2>
                                     <div class="">
-                                        <div class="flex flex-col flex-grow mb-3">
+                                        {{-- <div class="flex flex-col flex-grow mb-3">
                                             <div x-data="{ files: null }" id="FileUpload"
                                                 class="block w-full py-2 px-3 relative bg-white appearance-none border-2 border-gray-300 border-solid rounded-md hover:shadow-outline-gray">
                                                 <input type="file" multiple
@@ -306,8 +306,8 @@ enctype="multipart/form-data">
                                                     </div>
                                                 </template>
                                             </div>
-                                        </div>
-                                        {{-- <div class="">
+                                        </div> --}}
+                                        <div class="">
                                             <main class="container mx-auto max-w-screen-lg h-full">
                                                 <!-- file upload modal -->
                                                 <article aria-label="File Upload Modal"
@@ -376,10 +376,10 @@ enctype="multipart/form-data">
                                                     </footer>
                                                 </article>
                                             </main>
-                                        </div> --}}
+                                        </div>
 
                                         <!-- using two similar templates for simplicity in js code -->
-                                        {{-- <template id="file-template">
+                                        <template id="file-template">
                                             <li class="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-1/8 h-24">
                                                 <article tabindex="0"
                                                     class="group rounded-md focus:outline-none focus:shadow-outline elative bg-gray-100 cursor-pointer relative shadow-sm">
@@ -452,7 +452,6 @@ enctype="multipart/form-data">
                                             </li>
                                         </template>
                                     </div>
-
 
                                     <script>
                                         const fileTempl = document.getElementById("file-template"),
@@ -607,7 +606,8 @@ enctype="multipart/form-data">
                                             color: #2b6cb0;
                                         }
 
-                                    </style> --}}
+                                    </style>
+                                    
                                     <div class="text-right mt-5">
                                         <a href="{{ route('sekolah.index') }}">
                                             <button type="button"
