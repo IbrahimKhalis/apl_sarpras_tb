@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('produks', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('sekolah_id')->constrained();
             $table->foreignId('kategori_id')->constrained();
             $table->foreignId('sub_kategori_id')->constrained('subcategories');
             $table->foreignId('ruang_id')->nullable()->constrained('ruangs');
