@@ -21,13 +21,13 @@ return new class extends Migration
             // $table->foreignId('sub_kategori_id')->constrained('subcategories');
             $table->foreignId('kelas_id')->constrained('kelas');
             $table->foreignId('tahun_ajaran_id')->constrained('tahun_ajarans');
-            $table->string('status');
-            $table->date('tgl_peminjaman');
-            $table->date('tgl_pengembalian');
-            $table->boolean('email_penagihan');
-            $table->string('ttd');
-            $table->string('foto_peminjaman');
-            $table->string('foto_pengembalian');
+            $table->string('status')->default('pengajuan');
+            $table->date('tgl_peminjaman')->nullable();
+            $table->date('tgl_pengembalian')->nullable();
+            $table->boolean('email_penagihan')->nullable();
+            $table->string('ttd')->nullable();
+            $table->string('foto_peminjaman')->nullable();
+            $table->string('foto_pengembalian')->nullable();
             $table->timestamps();
         });
 

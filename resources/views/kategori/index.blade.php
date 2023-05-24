@@ -19,7 +19,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th class="whitespace-nowrap">Kode</th>
+                    <th class="whitespace-nowrap">No.</th>
                     <th class="whitespace-nowrap">Nama</th>
                     <th class="whitespace-nowrap">Kategori</th>
                     <th class="whitespace-nowrap">Sub</th>
@@ -28,26 +28,28 @@
             </thead>
             <tbody>
                 @foreach ($datas as $data)
-                    <tr>
-                        <td>{{ $data->kode }}</td>
-                        <td>{{ $data->nama }}</td>
-                        <td>{{ $data->jenis}}</td>
-                        <td>  @foreach ($data->subcategory as $sub)
-                            {{ $sub->nama }},
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $data->nama }}</td>
+                    <td>{{ $data->jenis}}</td>
+                    <td> @foreach ($data->subcategory as $sub)
+                        {{ $sub->nama }},
                         @endforeach</td>
-                        <td class="table-report__action w-56">
-                            <div class="flex">
-                                <a class="flex items-center mr-3" href="{{ route('kategori.edit', $data->id) }}"> <i
-                                        data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                        <button type="submit" class="btn btn-danger btn-sm rounded"
-                                        onclick="deleteData('{{ route('kategori.destroy', [$data->id]) }}')"
-                                       >Hapus</button>
-                            </div>
-                        </td>
-                    </tr>
-                    @endforeach
+                    <td class="table-report__action w-56">
+                        <div class="flex">
+                            <a class="flex items-center mr-3" href="{{ route('kategori.edit', $data->id) }}"> <i
+                                    data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
+                            <button type="submit" class="btn btn-danger btn-sm rounded"
+                                onclick="deleteData('{{ route('kategori.destroy', [$data->id]) }}')">Hapus</button>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
+</div>
+<div class="mt-5">
+    {{ $datas->links() }}
 </div>
 @endsection
