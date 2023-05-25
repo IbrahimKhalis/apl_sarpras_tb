@@ -1,0 +1,247 @@
+.container {
+    background-color: #1C438C;
+    width: 100%;
+    min-height: 500px;
+    justify-content: center;
+    align-items: center;
+    padding: 140px 10px 0px 10px;
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    z-index: 2;
+}
+
+.text-header {
+    max-width: 700px;
+}
+
+.text-header h2 {
+    color: var(--white);
+    font-size: 28px;
+    font-weight: 400;
+}
+
+.text-header h1 {
+    color: var(--white);
+    font-size: 56px;
+    font-weight: 700;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.text-header p {
+    color: #F5F6FA;
+    font-size: 20px;
+    font-weight: 300;
+}
+
+.image-bian img {
+    max-width: 500px;
+    height: auto;
+    margin-top: -70px;
+}
+
+@media (max-width:1260px) {
+    .image-bian img {
+        margin-top: 0px;
+        width: 350px;
+    }
+}
+
+.button-faq .btn {
+    width: 220px;
+    padding: 8px 20px 8px 20px;
+    border-radius: 25px;
+    margin-top: 30px;
+    font-weight: 400;
+    font-size: 18px;
+    border: 2px solid #ffffff;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.button-faq .bx {
+    font-size: 28px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.9rem 1.8rem;
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+    border: 3px solid rgb(255, 255, 255);
+    cursor: pointer;
+    position: relative;
+    background-color: transparent;
+    text-decoration: none;
+    overflow: hidden;
+    z-index: 1;
+    font-family: inherit;
+}
+
+.btn::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+    transform: translateX(-100%);
+    transition: all .3s;
+    z-index: -1;
+}
+
+.btn:hover::before {
+    transform: translateX(0);
+}
+
+.btn:hover {
+    color: #1C438C;
+}
+
+.content-landing {
+    padding: 0 45px;
+}
+
+.text-content {
+    max-width: 500px;
+}
+
+.text-content .subjudul {
+    font-size: 3.1rem;
+    color: #1C438C;
+}
+
+.text-content p {
+    font-size: 20px;
+    font-family: 300;
+    color: #808080;
+    margin: 15px 0 25px 0;
+}
+
+.text-content ul {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.text-content ul li {
+    font-size: 24px;
+    color: black;
+    display: flex;
+    gap: 12px;
+}
+
+.text-content ul li i {
+    font-size: 30px;
+    color: #1C438C;
+}
+
+.content-2 .text-content ul li:last-child button,
+.content-3 .text-content ul li:last-child button,
+.content-4 .text-content ul li:last-child button{
+    background-color: #1C438C;
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+}
+.more-button .btn-more {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+.more-button .bx {
+    font-size: 20px;
+}
+
+.btn-more {
+    display: inline-block;
+    padding: 0.7rem 1.2rem;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1C438C;
+    border: 3px solid #1C438C;
+    border-radius: 25px;
+    cursor: pointer;
+    position: relative;
+    background-color: transparent;
+    text-decoration: none;
+    overflow: hidden;
+    z-index: 1;
+    font-family: inherit;
+}
+
+.btn-more::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #1C438C;
+    transform: translateX(-100%);
+    transition: all .3s;
+    z-index: -1;
+}
+
+.btn-more:hover::before {
+    transform: translateX(0);
+}
+
+.btn-more:hover {
+    color: #ffffff;
+}
+
+.content-1,.content-2,.content-3,.content-4 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 200px;
+    margin-bottom: 200px;
+}
+
+.content-1 .img-content img,
+.content-2 .img-content img,
+.content-3 .img-content img,
+.content-4 .img-content img {
+    width: 25vw;
+    /* min-width: 25vw; */
+}
+
+@media (max-width:1035px) {
+    .content-landing{
+        padding: 0 10px;
+    }
+    .content-1,.content-3 {
+        display: flex;
+        flex-direction: column;
+        gap: 35px;
+    }
+    .content-2,.content-4{
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 35px;
+    }
+    .content-1 .img-content img {
+        width: 35vw;
+    }
+    .content-2 .img-content img,
+    .content-3 .img-content img,
+    .content-4 .img-content img{
+        width: 35vw;
+    }
+    .content-1 .text-content h1 {
+        text-align: center;
+    }
+}
+@media (max-width:550px) {
+    .content-1 .img-content img,
+    .content-2 .img-content img,
+    .content-3 .img-content img {
+        width: 55vw;
+    }
+}

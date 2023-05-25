@@ -7,15 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-  <link rel="stylesheet" href="{{ asset('css/fstdropdown.css') }}">
-
-  <title>Sarpras TB</title>
-
-  <link href="{{ asset('dist/css/app.css') }}" rel="stylesheet">
-  {{--
-  <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-  {{-- <style>
+    <title>Sarpras TB</title>
+    
+    <link href="{{ asset('dist/css/app.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
+    <link href="https://unpkg.com/tailwindcss@1.2.0/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    {{-- <style>
     .fstdropdown>.fstlist {
       min-height: 10rem !important;
     }
@@ -62,19 +61,18 @@
       @include('mypartials.navbar')
       @yield('content')
     </div>
-  </div>
-  <div data-url="#"
-    class="dark-mode-switcher cursor-pointer shadow-md fixed bottom-0 right-0 box border rounded-full w-40 h-12 flex items-center justify-center z-50 mb-10 mr-10">
-    <button class="dark-mode-switcher">Change Theme</button>
-  </div>
-  <form action="" class="form-delete" method="POST">
-    @csrf
-    @method('delete')
-    @stack('other_delete')
-  </form>
-  <script src="//unpkg.com/alpinejs" defer></script>
-  <script>
-    function goBack() {
+    <div data-url="#" class="dark-mode-switcher cursor-pointer shadow-md fixed bottom-0 right-0 box border rounded-full w-40 h-12 flex items-center justify-center z-50 mb-10 mr-10">
+       <button class="dark-mode-switcher">Change Theme</button>
+    </div>
+    <form action="" class="form-delete" method="POST">
+        @csrf
+        @method('delete')
+        @stack('other_delete')
+    </form>
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="path/to/vanilla.js"></script>
+    <script>
+        function goBack() {
           window.history.back();
         }
   </script>

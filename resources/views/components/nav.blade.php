@@ -4,7 +4,7 @@
             <a href="#" class="logo">Sarpras</a>
         </div>
         <ul class="navbar">
-            <li><a href="" class="#active">Home</a></li>
+            <li><a href="{{ route('index') }}">Home</a></li>
             <li><a href="{{ route('about') }}">About</a></li>
             <li><a href="{{ route('faq') }}">FAQ</a></li>
         </ul>
