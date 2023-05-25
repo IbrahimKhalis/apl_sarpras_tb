@@ -18,7 +18,16 @@ if(! function_exists('insertLog')){
 if(! function_exists('getTahunAjararan')){
     function getTahunAjararan()
     {
-        return TahunAjaran::where('status', 'aktif')->first();
+        return TahunAjaran::where('status', 'a')->first();
+    }
+}
+
+if(! function_exists('validateSekolah')){
+    function validateSekolah($id)
+    {
+        if ($id != Auth::user()->sekolah_id) {
+            return abort(403);
+        }
     }
 }
 

@@ -52,7 +52,8 @@
         </li>
         @endcan
 
-        {{-- @if (!Auth::user()->hasRole('super_admin') && (Auth::user()->sekolah->jenjang == 'smk' || Auth::user()->sekolah->jenjang == 'sma'))    
+        {{-- @if (!Auth::user()->hasRole('super_admin') && (Auth::user()->sekolah->jenjang == 'smk' ||
+        Auth::user()->sekolah->jenjang == 'sma'))
         @can('view_jurusan')
         <li>
           <a href="{{ route('jurusan.index') }}"
@@ -67,7 +68,8 @@
     </li>
     @endif
 
-    @if (auth()->user()->can('view_kategori') || auth()->user()->can('view_produk') || auth()->user()->can('view_ruang'))
+    @if (auth()->user()->can('view_kategori') || auth()->user()->can('view_produk') ||
+    auth()->user()->can('view_ruang'))
     <li>
       <a href="javascript:;.html" class="side-menu ">
         <div class="side-menu__icon"> <i data-lucide="home"></i> </div>
@@ -107,7 +109,7 @@
       </ul>
     </li>
     @endif
-    
+
 
     @can('view_users')
     <li>

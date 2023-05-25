@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('ruangs', function (Blueprint $table) {
-            $table->boolean('bisa_dipinjam');
+            $table->boolean('ruang_dipinjam');
+            $table->boolean('produk_dipinjam');
         });
     }
 
@@ -26,7 +27,8 @@ return new class extends Migration
     public function down()
     {
         Schema::table('ruangs', function (Blueprint $table) {
-            $table->dropColumn('bisa_dipinjam');
+            $table->dropColumn('ruang_dipinjam');
+            $table->dropColumn('produk_dipinjam');
         });
     }
 };

@@ -15,17 +15,18 @@ return new class extends Migration
     {
         Schema::create('produks', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('sekolah_id')->constrained();
             $table->foreignId('kategori_id')->constrained();
             $table->foreignId('sub_kategori_id')->constrained('subcategories');
             $table->foreignId('ruang_id')->nullable()->constrained('ruangs');
             $table->foreignId('tahun_ajaran_id')->constrained('tahun_ajarans');
-            // $table->foreignId('jurusan_id')->constrained('jurusans')->nullable();
             $table->string('nama');
             $table->string('kode');
             $table->string('merek');
             $table->enum('kondisi', ['B', 'KB', "RB"]);
             $table->text('ket_produk');
             $table->text('ket_kondisi');
+            $table->boolean('dipinjam');
             $table->timestamps();
         });
     }

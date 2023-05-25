@@ -245,9 +245,14 @@
                         </select>
                     </div>
                     <div class="mt-3">
-                        <label for="crud-form-2" class="form-label">Bisa Dipinjam</label>
-                        <input type="checkbox" name="bisa_dipinjam" class="form-check-input" {{ isset($data) ?
-                            ($data->bisa_dipinjam == 1 ? 'checked' : '') : '' }}>
+                        <label for="crud-form-2" class="form-label">Ruang Bisa Dipinjam</label>
+                        <input type="checkbox" name="ruang_dipinjam" class="form-check-input" {{ isset($data) ?
+                            ($data->ruang_dipinjam == 1 ? 'checked' : '') : '' }}>
+                    </div>
+                    <div class="mt-3">
+                        <label for="crud-form-2" class="form-label">Produk Bisa Dipinjam</label>
+                        <input type="checkbox" name="produk_dipinjam" class="form-check-input" {{ isset($data) ?
+                            ($data->produk_dipinjam == 1 ? 'checked' : '') : '' }}>
                     </div>
                 </div>
                 <div class="mt-3">
@@ -255,16 +260,16 @@
                 </div>
             </form>
         </section>
-       <section id="step-2" class="form-step d-none place-items-center">
-    <div class="mt-3" style="margin-left: 40%">
-        <a href="javascript:;" data-tw-toggle="modal" data-tw-target="#modalAddProduk"
-            class="btn btn-outline-primary">Tambah Produk</a>
-    </div>
-    <div class="mt-5 flex gap-3">
-        <button class="button btn-navigate-form-step">Prev</button>
-        <button class="button submit-btn" >Save</button>
-    </div>
-</section>
+        <section id="step-2" class="form-step d-none place-items-center">
+            <div class="mt-3" style="margin-left: 40%">
+                <a href="javascript:;" data-tw-toggle="modal" data-tw-target="#modalAddProduk"
+                    class="btn btn-outline-primary">Tambah Produk</a>
+            </div>
+            <div class="mt-5 flex gap-3">
+                <button class="button btn-navigate-form-step">Prev</button>
+                <button class="button submit-btn">Save</button>
+            </div>
+        </section>
 
     </div>
 </div>
@@ -316,7 +321,7 @@
 
 @push('js')
 <script>
-let id = ''
+    let id = ''
 const url_update = '{{ route("ruang.update", ":id") }}'
 const url_sub = '{{ route("get.sub", ":id") }}'
 const url_produk = '{{ route("produk.get", ":id") }}'

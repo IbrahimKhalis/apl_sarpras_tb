@@ -13,6 +13,7 @@ use App\Http\Controllers\KelasController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\RuangController;
+use App\Http\Controllers\Public\PeminjamanController as PeminjamanPublic;
 use App\Models\Kategori;
 
 /*
@@ -35,9 +36,9 @@ Route::get('/faq',function(){
     return view('faq');
 })->name('faq');
 
-Route::middleware(['guest'])->group(function () {
-    Route::get('/register',[App\Http\Controllers\User\SekolahController::class, 'create'])->name('register');
-    Route::post('/register', [App\Http\Controllers\User\SekolahController::class, 'store'])->name('register.store');
+Route::prefix('peminjaman')->name('peminjaman.')->group(function () {
+    Route::get('/', [PeminjamanPublic::class, 'create'])->name('create');
+    Route::post('/cek-kode', [PeminjamanPublic::class, 'cek_kode'])->name('cek_kode');
 });
 
 Route::group(['middleware' => ['auth']], function() {

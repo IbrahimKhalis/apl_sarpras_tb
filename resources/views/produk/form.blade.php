@@ -70,7 +70,6 @@
                 </div>
                 <div class="mt-3">
                     <label for="crud-form-2" class="form-label">Kondisi</label>
-
                     <select data-placeholder="Pilih Kondisi Dari Produkmu" class="tom-select w-full" name="kondisi"
                         id="">
                         <option value="">Pilih kondisi</option>
@@ -224,8 +223,8 @@ previewImages(this, 'a.images-preview-div');
                 }
             },
             success: function (response) {
-                console.log(response)
-                // showAlert('Berhasil dihapus', 'success')
+                $('.div-foto-' + id).remove();
+                showAlert('Berhasil dihapus', 'success')
             },
             error: function (response) {
                 console.log(response)

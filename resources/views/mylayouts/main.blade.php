@@ -6,22 +6,18 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="csrf-token" content="{{ csrf_token() }}" />
-   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+
+    <title>Sarpras TB</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
     <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
   <link href="https://unpkg.com/tailwindcss@1.2.0/dist/tailwind.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="{{ asset('css/fstdropdown.css') }}">
-
-  <title>Sarpras TB</title>
- 
-  <link
-  rel="stylesheet"
-  href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css"type="text/css"/>
-  <link href="{{ asset('dist/css/app.css') }}" rel="stylesheet">
-  {{--
-  <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-  {{-- <style>
+    <link href="{{ asset('dist/css/app.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
+    <link href="https://unpkg.com/tailwindcss@1.2.0/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    {{-- <style>
     .fstdropdown>.fstlist {
       min-height: 10rem !important;
     }
@@ -53,7 +49,6 @@
       color: #e9ecef;
     }
   </style> --}}
-
   @stack('css')
 </head>
 
@@ -63,29 +58,24 @@
   </script>
 
   @include('mypartials.mobile')
-
-
   <div class="flex">
     @include('mypartials.aside')
     <div class="content">
       @include('mypartials.navbar')
       @yield('content')
-
-
     </div>
-  </div>
-  <div data-url="#"
-    class="dark-mode-switcher cursor-pointer shadow-md fixed bottom-0 right-0 box border rounded-full w-40 h-12 flex items-center justify-center z-50 mb-10 mr-10">
-    <button class="dark-mode-switcher">Change Theme</button>
-  </div>
-  <form action="" class="form-delete" method="POST">
-    @csrf
-    @method('delete')
-    @stack('other_delete')
-  </form>
-  <script src="//unpkg.com/alpinejs" defer></script>
-  <script>
-    function goBack() {
+    <div data-url="#" class="dark-mode-switcher cursor-pointer shadow-md fixed bottom-0 right-0 box border rounded-full w-40 h-12 flex items-center justify-center z-50 mb-10 mr-10">
+       <button class="dark-mode-switcher">Change Theme</button>
+    </div>
+    <form action="" class="form-delete" method="POST">
+        @csrf
+        @method('delete')
+        @stack('other_delete')
+    </form>
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="path/to/vanilla.js"></script>
+    <script>
+        function goBack() {
           window.history.back();
         }
   </script>
@@ -115,6 +105,10 @@
   <script>
     setFstDropdown();
   </script>
+
+
+
+
   <script>
     function deleteData(url) {
             Swal.fire({
@@ -172,7 +166,7 @@
         buttonEl.textContent = 'Dark Mode';
       }
     });
-  </script>
+  </scrip>
   @stack('js')
 </body>
 
