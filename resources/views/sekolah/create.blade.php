@@ -307,7 +307,7 @@ enctype="multipart/form-data">
                                                 </template>
                                             </div>
                                         </div> --}}
-                                        <div class="">
+                                        {{-- <div class="">
                                             <main class="container mx-auto max-w-screen-lg h-full">
                                                 <!-- file upload modal -->
                                                 <article aria-label="File Upload Modal"
@@ -376,10 +376,10 @@ enctype="multipart/form-data">
                                                     </footer>
                                                 </article>
                                             </main>
-                                        </div>
+                                        </div> --}}
 
                                         <!-- using two similar templates for simplicity in js code -->
-                                        <template id="file-template">
+                                        {{-- <template id="file-template">
                                             <li class="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-1/8 h-24">
                                                 <article tabindex="0"
                                                     class="group rounded-md focus:outline-none focus:shadow-outline elative bg-gray-100 cursor-pointer relative shadow-sm">
@@ -413,9 +413,9 @@ enctype="multipart/form-data">
                                                     </section>
                                                 </article>
                                             </li>
-                                        </template>
+                                        </template> --}}
 
-                                        <template id="image-template">
+                                        {{-- <template id="image-template">
                                             <li class="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-1/8 h-24">
                                                 <article tabindex="0"
                                                     class="group hasImage w-96 h-full rounded-md focus:outline-none focus:shadow-outline bg-gray-100 cursor-pointer relative text-transparent hover:text-white shadow-sm">
@@ -450,7 +450,7 @@ enctype="multipart/form-data">
                                                     </section>
                                                 </article>
                                             </li>
-                                        </template>
+                                        </template> --}}
                                     </div>
 
                                     <script>

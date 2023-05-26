@@ -218,19 +218,64 @@
     <section id="step-1" class="form-step">
         @foreach ($sekolahs as $sekolah)
         <a href="javascript:;" data-tw-toggle="modal" data-tw-target="#modalSekolah" class="btn btn-primary"
-            data-id="{{ $sekolah->id }}">{{ $sekolah->nama }}</a>
+            onclick="set_identifier({{ $sekolah->id }})">{{ $sekolah->nama }}</a>
         @endforeach
-        <div class="mt-3">
-            <button class="button btn-navigate-form-step" type="button" step_number="2">Next</button>
-        </div>
     </section>
-    <section id="step-2" class="form-step d-none place-items-center">
-        <div class="mt-3" style="margin-left: 40%">
-        </div>
-        <div class="mt-5 flex gap-3">
-            <button class="button btn-navigate-form-step">Prev</button>
-            <button class="button submit-btn">Save</button>
-        </div>
+    <section id="step-2" class="form-step d-none place-items-center form-stepper-active">
+        <form action="{{ route('peminjaman.store') }}" class="form-peminjaman" method="POST">
+            <div class="mt-3">
+                <div class="col-md-12">
+                    <label for="nama" class="form-label">Nama</label>
+                    <input type="text" name="nama" id="nama">
+                </div>
+            </div>
+            <div class="mt-3">
+                <div class="col-md-12">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" name="email" id="email">
+                </div>
+            </div>
+            <div class="mt-3">
+                <div class="col-md-12">
+                    <label for="kelas" class="form-label">Kelas</label>
+                    <select name="kelas" class="w-full" id="kelas">
+                        <option value="">Pilih Kelas</option>
+                    </select>
+                </div>
+            </div>
+            <div class="mt-3">
+                <div class="col-md-12">
+                    <label for="jenis" class="form-label">Kategori Peminjaman</label>
+                    <select name="jenis" class="w-full" id="jenis">
+                        <option value="">Pilih Kategori</option>
+                        <option value="sarana">Sarana</option>
+                        <option value="prasaran">Prasarana</option>
+                    </select>
+                </div>
+            </div>
+            <div class="mt-3">
+                <div class="col-md-12">
+                    <label for="kategori" class="form-label">Kategori</label>
+                    <select name="kategori_id" class="w-full" id="kategori">
+                        <option value="">Pilih Kategori</option>
+                    </select>
+                </div>
+            </div>
+            <div class="mt-3 div-jml-peminjaman">
+
+            </div>
+            <div class="mt-3 div-subkategori">
+                <div class="col-md-12">
+                    <label for="subkategori" class="form-label">Sub Kategori</label>
+                    <select name="sub_kategori_id" class="w-full" id="subkategori">
+                        <option value="">Pilih Sub Kategori</option>
+                    </select>
+                </div>
+            </div>
+            <div class="mt-5 flex gap-3">
+                <button class="button submit-btn" type="submit" disabled>Kirim</button>
+            </div>
+        </form>
     </section>
 </div>
 
@@ -289,15 +334,21 @@
         }
     }
 };
+</script>
 
-document.querySelectorAll(".btn-navigate-form-step").forEach((formNavigationBtn) => {
-    formNavigationBtn.addEventListener("click", () => {
-        const stepNumber = parseInt(formNavigationBtn.getAttribute("step_number"));
-        if (stepNumber == 2) {
-            let form = new FormData($('#step-1 form')[0]);
+<script>
+    let identifier;
+    function set_identifier(identifier) {
+        $('input[name="sekolah_id"]').val(identifier)
+    }
+
+    $('#modalSekolah form').on('submit', function(e){
+        e.preventDefault();
+        if (!identifier) {
+            let form = new FormData($(this)[0]);
             $.ajax({
                 type: "POST",
-                url: $('#step-1 form').attr('action'),
+                url: "{{ route('peminjaman.cek_kode') }}",
                 data: form,
                 dataType: "json",
                 processData: false,
@@ -308,34 +359,159 @@ document.querySelectorAll(".btn-navigate-form-step").forEach((formNavigationBtn)
                     }
                 },
                 success: function (response) {
-                    id = response.data.id
-                    $('#step-1 form').attr('action', url_update.replace(':id', id)).append('<input type="hidden" name="_method" value="patch">')
-                    showAlert('Berhasil tersimpan', 'success')
-                    navigateToFormStep(stepNumber);
+                    identifier = response.identifier;
+                    $('#modalSekolah').slideUp(300)
+                    showAlert(response.message, 'success');
+                    $('.form-peminjaman #kelas').empty()
+                    $('.form-peminjaman #kelas').append('<option value="">Pilih Kelas</option>')
+                    $.each(response.kelas, function(i,e){
+                        $('.form-peminjaman #kelas').append(`<option value="${e.id}">${e.nama}</option>`);
+                    })
+                    navigateToFormStep(2)
                 },
-                error: function (response) {
-                    console.log(response)
-                    showAlert('Gagal simpan ruang', 'error')
+                error: function (errors) {
+                    showAlert(errors.responseJSON.message, 'error')
                 },
             });
         }else{
-            navigateToFormStep(stepNumber);
+            showAlert('Anda sudah memilih sekolah', 'error')
         }
-    });
-});
+    })
 </script>
 
 <script>
-    $('a[data-tw-target="#modalSekolah"]').on('click', function(){
-        $('input[name="sekolah_id"]').val($(this).attr('data-id'))
-    })
-
-    $('#modalSekolah form').on('submit', function(e){
-        e.preventDefault();
-        let form = new FormData($(this)[0]);
-        $.ajax({
+    let count_produk = null;
+    $('#jenis').on('change', function(){
+    $.ajax({
             type: "POST",
-            url: "{{ route('peminjaman.cek_kode') }}",
+            url: "{{ route('peminjaman.get.kategori') }}",
+            data: {
+                jenis: $(this).val(),
+                identifier: identifier
+            },
+            dataType: "json",
+            beforeSend: function (e) {
+                if (e && e.overrideMimeType) {
+                    e.overrideMimeType("application/json;charset=UTF-8");
+                }
+            },
+            success: function (response) {
+                $('.form-peminjaman #kategori').empty();
+                $('.form-peminjaman #subkategori').empty();
+                $('.form-peminjaman #subkategori').append('<option value="">Pilih Sub Kategori</option>');
+                $('.form-peminjaman #kategori').append('<option value="">Pilih Kategori</option>');
+                $.each(response.datas, function(i,e){
+                    $('.form-peminjaman #kategori').append(`<option value="${e.id}">${e.nama}</option>`);
+                })
+            },
+            error: function (errors) {
+                console.log(errors)
+            },
+        });
+    
+        if ($(this).val() == 'sarana') {
+            $('.div-jml-peminjaman').append(`
+                <div class="col-md-12">
+                    <label for="jml_peminjaman" class="form-label">Jumlah Peminjaman</label>
+                    <input type="number" name="jml_peminjaman" id="jml_peminjaman" min="1" onkeyup="compare()">
+                </div>
+            `)
+        }else{
+            $('.div-jml-peminjaman').empty();
+        }
+})
+
+$('#kategori').on('change', function(){
+    $.ajax({
+            type: "POST",
+            url: "{{ route('peminjaman.get.subcategori') }}",
+            data: {
+                kategori_id: $(this).val(),
+                identifier: identifier
+            },
+            dataType: "json",
+            beforeSend: function (e) {
+                if (e && e.overrideMimeType) {
+                    e.overrideMimeType("application/json;charset=UTF-8");
+                }
+            },
+            success: function (response) {
+                $('.form-peminjaman #subkategori').empty();
+                $('.form-peminjaman #subkategori').append('<option value="">Pilih Sub Kategori</option>');
+                $.each(response.datas, function(i,e){
+                    $('.form-peminjaman #subkategori').append(`<option value="${e.id}">${e.nama}</option>`);
+                })
+
+                if ($('#jenis').val() == 'sarana') {
+                    $('.form-peminjaman #subkategori').attr('disabled', 'disabled');
+                } else {
+                    $('.form-peminjaman #subkategori').removeAttr('disabled');
+                }
+            },
+            error: function (errors) {
+                console.log(errors)
+            },
+        });
+})
+
+$('#subkategori').on('change', function(){
+    if ($(this).val()) {
+        $.ajax({
+                type: "POST",
+                url: "{{ route('peminjaman.cek_produk') }}",
+                data: {
+                    id: $(this).val(),
+                },
+                dataType: "json",
+                beforeSend: function (e) {
+                    if (e && e.overrideMimeType) {
+                        e.overrideMimeType("application/json;charset=UTF-8");
+                    }
+                },
+                success: function (response) {
+                    $('.div-subkategori .jml-produk') ? $('.div-subkategori .jml-produk').remove() : ''
+                    $('.div-subkategori').append(`<span class="jml-produk ${response.count < 1 ? 'text-red-500' : ''}">Jumlah Produk pada kategori: ${response.count}</span>`)
+                    if (response.count > 0) {
+                        $('.form-peminjaman .submit-btn').removeAttr('disabled')
+                    }else{
+                        $('.form-peminjaman .submit-btn').attr('disabled', 'disabled')
+                    }
+                    count_produk = response.count;
+                    compare();
+                },
+                error: function (errors) {
+                    console.log(errors)
+                },
+            });
+    }else{
+        $('.div-subkategori .jml-produk') ? $('.div-subkategori .jml-produk').remove() : ''
+        $('.form-peminjaman .submit-btn').attr('disabled', 'disabled')
+    }
+})
+
+function compare(){
+    if ($('input#jml_peminjaman').val() > 0 && count_produk == null) {
+        $('#subkategori').removeAttr('disabled')
+    }else if($('input#jml_peminjaman').val() > 0 && count_produk != null){
+        $('.div-jml-peminjaman .result-compare').remove()
+        if ($('input#jml_peminjaman').val() > count_produk) {
+            $('.div-jml-peminjaman').append(`<span class="result-compare text-red-500">Jumlah produk yang tersedia tidak mencukupi jumlah permintaan</span>`)
+            $('.form-peminjaman .submit-btn').attr('disabled', 'disabled')
+        }else{
+            $('.form-peminjaman .submit-btn').removeAttr('disabled')
+        }
+    }else{
+        $('.form-peminjaman .submit-btn').attr('disabled', 'disabled')
+    }
+}
+
+$('.form-peminjaman').on('submit', function(e){
+    e.preventDefault()
+    let form = new FormData($(this)[0])
+    form.set('identifier', identifier)
+    $.ajax({
+            type: "POST",
+            url: "{{ route('peminjaman.store') }}",
             data: form,
             dataType: "json",
             processData: false,
@@ -346,13 +522,12 @@ document.querySelectorAll(".btn-navigate-form-step").forEach((formNavigationBtn)
                 }
             },
             success: function (response) {
-                $('.sub-' + id + ' input').val(response.data.nama)
-                showAlert('Berhasil diubah', 'success')
-            },
-            error: function (response) {
                 console.log(response)
             },
+            error: function (errors) {
+                console.log(errors)
+            },
         });
-    })
+})
 </script>
 @endsection

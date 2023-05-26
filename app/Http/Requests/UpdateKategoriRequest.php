@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreKategoriRequest extends FormRequest
+class UpdateKategoriRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,16 +25,8 @@ class StoreKategoriRequest extends FormRequest
     {
         return [
             'nama' => 'required', 
-            'jenis' => 'required|min:2', 
             'sub.*' => 'required',
             'kode.*' => 'unique:subcategories,kode' 
-        ];
-    }
-
-    public function messages(): array
-    {
-        return [
-            'jenis' => 'Choose a type',
         ];
     }
 }

@@ -38,7 +38,14 @@ Route::get('/faq',function(){
 
 Route::prefix('peminjaman')->name('peminjaman.')->group(function () {
     Route::get('/', [PeminjamanPublic::class, 'create'])->name('create');
+    Route::get('/{kode}', [PeminjamanPublic::class, 'show'])->name('show');
     Route::post('/cek-kode', [PeminjamanPublic::class, 'cek_kode'])->name('cek_kode');
+    Route::prefix('get')->name('get.')->group(function () {
+        Route::post('/kategori', [PeminjamanPublic::class, 'get_kategori'])->name('kategori');
+        Route::post('/sub-categori', [PeminjamanPublic::class, 'get_subcategori'])->name('subcategori');
+    });
+    Route::post('/cek-produk', [PeminjamanPublic::class, 'cek_produk'])->name('cek_produk');
+    Route::post('/store', [PeminjamanPublic::class, 'store'])->name('store');
 });
 
 Route::group(['middleware' => ['auth']], function() {

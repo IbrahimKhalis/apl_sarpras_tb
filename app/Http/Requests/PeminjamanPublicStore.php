@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreKategoriRequest extends FormRequest
+class PeminjamanPublicStore extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,17 +24,13 @@ class StoreKategoriRequest extends FormRequest
     public function rules()
     {
         return [
-            'nama' => 'required', 
-            'jenis' => 'required|min:2', 
-            'sub.*' => 'required',
-            'kode.*' => 'unique:subcategories,kode' 
-        ];
-    }
-
-    public function messages(): array
-    {
-        return [
-            'jenis' => 'Choose a type',
+            'identifier' => 'required',
+            'email' => 'required',
+            'kelas' => 'required',
+            'kategori_id' => 'required',
+            'jml_peminjaman' => 'required',
+            'sub_kategori_id' => 'required',
+            'nama' => 'required',
         ];
     }
 }
