@@ -23,9 +23,15 @@ class RuangController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $datas = Ruang::paginate(10);
+        $search = $request->query('search');
+        if(!empty($search)){
+            $datas = Ruang::where('name', 'LIKE', '%' .$request->search.'%')->paginate(10);
+        }else{
+            $datas = Ruang::paginate(10);
+        }
+        
         return view('ruang.index', compact('datas'));
     }
 

@@ -13,7 +13,11 @@
         </button>
     </div>
 </div>
-
+<div class="mt-3">
+    <div class="search hidden sm:block">
+        <input type="text" class="search__input form-control border-transparent" placeholder="Search...">
+    </div>
+</div>
 <div class="intro-y box p-5 mt-5">
     <div class="overflow-x-auto">
         <table class="table table-striped">
