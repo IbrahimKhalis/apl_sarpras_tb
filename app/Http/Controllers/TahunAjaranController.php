@@ -22,7 +22,7 @@ class TahunAjaranController extends Controller
      */
     public function index()
     {
-        $tahun_ajarans = TahunAjaran::latest()->get();
+        $tahun_ajarans = TahunAjaran::latest()->paginate(10);
         return view('tahun-ajaran.index', [
             'tahun_ajarans' => $tahun_ajarans
         ]);

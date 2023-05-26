@@ -13,10 +13,20 @@
         </button>
     </div>
 </div>
-
+<div class="search hidden sm:block">
+    <form action="{{ route('ruang.index') }}" method="GET">
+        <input type="search" class="search__input form-control border-transparent" id="myInput" name="search"title="Cari Ruangan" placeholder="Search..">
+    </form>
+   
+    
+</div>
+<div class="mt-3">
+   
+    
+</div>
 <div class="intro-y box p-5 mt-5">
     <div class="overflow-x-auto">
-        <table class="table table-striped">
+        <table class="table table-striped" id="myTable">
             <thead>
                 <tr>
                     <th class="whitespace-nowrap">No.</th>
