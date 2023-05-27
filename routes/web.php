@@ -98,5 +98,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('produk/{sub_id}', [ProdukController::class, 'get'])->name('produk.get');
 });
 
+Route::get('ruang/updateLokasiBarang/{id}', [RuangController::class, 'transfer_produk']);
+
+Route::patch('ruang/updateLokasiBarang/{id}', [RuangController::class, 'updateLokasiBarang'])->name('ruang.updateLokasiBarang');
 
 require __DIR__.'/auth.php';
