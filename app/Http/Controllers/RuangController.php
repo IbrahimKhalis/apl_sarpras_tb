@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RuangRequest;
 use App\Models\Jurusan;
 use App\Models\Kategori;
+use App\Models\Produk;
 use App\Models\Ruang;
 use Illuminate\Http\Request;
 use Auth, DB;
@@ -76,7 +77,12 @@ class RuangController extends Controller
     public function show($id)
     {
         $ruang = Ruang::find($id);
-        return $ruang;
+
+        $produks_dalam_ruang = $ruang->produk;
+
+        $kategori = $ruang->kategori;
+
+        return view('ruang.show', compact('ruang', 'produks_dalam_ruang', 'kategori'));
     }
 
     /**
@@ -155,5 +161,38 @@ class RuangController extends Controller
         return response()->json([
             'message' => 'Berhasil ditambahkan'
         ], 200);
+    }
+
+    public function transfer_produk($idBarang){
+        $barang = Produk::find($idBarang);
+
+        $ruang = $barang->ruang;
+
+        $ruangs = Ruang::all();
+
+        return view('ruang.produk.transfer', compact('barang', 'ruang', 'ruangs'));
+    }
+
+    public function updateLokasiBarang(Request $request, $id){
+
+        $find = Produk::find($id);
+
+        if(!$find){
+            return response()->json([
+                'massages' => "Updated data not found"
+            ], 404);
+        } 
+
+        $update = $find->update([
+            'ruang_id' => $request->ruang_baru
+        ]);
+
+        if(!$update){
+            return response()->json([
+                'massages' => "Update ERROR"
+            ], 400);
+        }
+
+        return redirect('/'); //change this!!
     }
 }
