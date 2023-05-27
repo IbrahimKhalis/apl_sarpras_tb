@@ -1,28 +1,6 @@
 @extends('mylayouts.main')
 
 @section('content')
-{{-- <div class="flex justify-content-between mb-3 align-items-center">
-    <div class="col-md-7">
-    </div>
-    <div class="col-md flex items-center gap-2 mr-auto">
-        <h4 class="font-medium text-lg">Data {{ $role }}</h4>
-        @if (auth()->user()->can('export_users'))
-        <x-ButtonCustom class="btn btn-primary btn-export" route="/export/users/{{ $role }}">
-            Export
-        </x-ButtonCustom>
-        @endif
-        @if (auth()->user()->can('import_users'))
-        <x-ButtonCustom class="btn btn-primary" route="/import/users/{{ $role }}">
-            Import
-        </x-ButtonCustom>
-        @endif
-        @if (auth()->user()->can('add_users'))
-        <x-ButtonCustom class="btn btn-primary" route="{{ route('users.create', [$role]) }}">
-            Tambah
-        </x-ButtonCustom>
-        @endif
-    </div>
-</div> --}}
 <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
     <h2 class="text-lg font-Medium mr-auto">
         Data {{ $role }}

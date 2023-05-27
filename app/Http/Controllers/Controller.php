@@ -51,4 +51,28 @@ class Controller extends BaseController
 
         return $return;
     }
+
+    private function uploadCam($img, $name_folder){
+        $folderPath = $name_folder . "/";
+        $image_parts = explode(";base64,", $img);
+        foreach ($image_parts as $key => $image){
+            $image_base64 = base64_decode($image);
+        }
+        $fileName = uniqid() . '.png';
+        $file = $folderPath . $fileName;
+        file_put_contents($file, $image_base64);
+        return $fileName;
+    }
+
+    private function uploadTtd(){
+        $folderPath = "ttd/";
+        $img_parts =  explode(";base64,", $signed);
+        $img_type_aux = explode("image/", $img_parts[0]);
+        $img_type = $img_type_aux[1];
+        $img_base64 = base64_decode($img_parts[1]);
+        $namaTandaTangan =   uniqid() . '.'.$img_type;
+        $file = $folderPath . $namaTandaTangan;
+        file_put_contents($file, $img_base64);
+        return $namaTandaTangan;
+    }
 }

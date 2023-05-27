@@ -445,7 +445,6 @@ $('#modalAddProduk form').on('submit', function(e){
             }
         },
         success: function (response) {
-            
             console.log(response)
         },
         error: function (response) {

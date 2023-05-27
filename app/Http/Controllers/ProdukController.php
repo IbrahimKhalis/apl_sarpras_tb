@@ -61,7 +61,7 @@ class ProdukController extends Controller
 
     private function generate_kode($request, $kode){   
         $last_produk = DB::table('produks')
-                            ->where('sub_kategori_id', $request->kategori_id)
+                            ->where('sub_kategori_id', $request->sub_kategori_id)
                             ->orderByDesc('id')
                             ->first();
         $kode_kategori = sprintf('%0'. 5 .'d', ($last_produk ? (int)explode($kode, $last_produk->kode)[1] + 1 : 1));
@@ -94,6 +94,7 @@ class ProdukController extends Controller
                     'kondisi' => $request->kondisi,
                     'ket_produk' => $request->ket_produk,
                     'ket_kondisi' => $request->ket_kondisi,
+                    'sekali_pakai' => ($request->sekali_pakai ? true : false)
                 ]);
             
                 if ($request->fotos) {

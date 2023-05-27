@@ -28,9 +28,8 @@ class PeminjamanPublicStore extends FormRequest
             'email' => 'required',
             'kelas' => 'required',
             'kategori_id' => 'required',
-            'jml_peminjaman' => 'required',
-            'sub_kategori_id' => 'required',
             'nama' => 'required',
+            'jenis' => 'required',
         ];
     }
 }

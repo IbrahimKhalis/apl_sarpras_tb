@@ -11,4 +11,8 @@ class Peminjaman extends Model
 
     protected $table = 'peminjamans';
     protected $guarded = ['id'];
+
+    public function kelas(){
+        return $this->belongsTo(Kelas::class);
+    }
 }

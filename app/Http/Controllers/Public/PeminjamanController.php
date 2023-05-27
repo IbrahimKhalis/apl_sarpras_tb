@@ -64,6 +64,7 @@ class PeminjamanController extends Controller
                             ->where('sekolah_id', decodeText($request->identifier)['identifier'])
                             ->where('jenis', $request->jenis)
                             ->get();
+
         return response()->json([
             'datas' => $datas,
         ], 200);
@@ -73,10 +74,17 @@ class PeminjamanController extends Controller
         $request->validate([
             'identifier' => 'required',
             'kategori_id' => 'required',
+            'jenis' => 'required'
         ]);
 
-        $datas = DB::table('subcategories')
-                            ->select('id', 'nama')
+        $datas = DB::table(($request->jenis == 'sarana' ? 'subcategories' : 'ruangs'))
+                            ->when($request->jenis == 'sarana', function($q) use($request){
+                                $q->select('id', 'nama');
+                            })
+                            ->when($request->jenis == 'prasarana', function($q) use($request){
+                                $q->select('id', 'name')
+                                    ->where('ruang_dipinjam', 1);
+                            })
                             ->where('sekolah_id', decodeText($request->identifier)['identifier'])
                             ->where('kategori_id', $request->kategori_id)
                             ->get();
@@ -91,7 +99,13 @@ class PeminjamanController extends Controller
             'id' => 'required'
         ]);
 
-        $count = Subcategory::where('id', $request->id)->first()->produk()->where('dipinjam', 0)->count();
+        $count = Subcategory::select('produks.id')
+                            ->join('produks', 'subcategories.id', 'produks.sub_kategori_id')
+                            ->join('ruangs', 'ruangs.id', 'produks.ruang_id')
+                            ->where('subcategories.id', $request->id)
+                            ->where('ruangs.produk_dipinjam', 1)
+                            ->count();
+                            
         return response()->json([
             'count' => $count
         ], 200);
@@ -107,23 +121,48 @@ class PeminjamanController extends Controller
         DB::beginTransaction();
         try {
             $tahun_ajaran = getTahunAjaran();
-            $peminjaman = Peminjaman::create([
+            $data = [
                 'nama' => $request->nama,
+                'jenis' => $request->jenis,
                 'email' => $request->email,
                 'kelas_id' => $request->kelas,
                 'tahun_ajaran_id' => $tahun_ajaran->id,
                 'kategori_id' => $request->kategori_id,
-                'sub_kategori_id' => $request->sub_kategori_id,
-                'jml_peminjaman' => $request->jml_peminjaman,
                 'sekolah_id' => decodeText($request->identifier)['identifier'],
-                'status' => 'pending',
                 'kode' => $this->genereate_kode(decodeText($request->identifier)['identifier'])
-            ]);
+            ];
+            
+            if ($request->jenis == 'sarana') {
+                $request->validate([
+                    'sub_kategori_id' => 'required',
+                    'jml_peminjaman' => 'required',
+                ]);
+
+                $data += [
+                    'sub_kategori_id' => $request->sub_kategori_id,
+                    'jml_peminjaman' => $request->jml_peminjaman,
+                ];
+            }else{
+                $request->validate([
+                    'ruang_id' => 'required',
+                ]);
+
+                $data += [
+                    'ruang_id' => $request->ruang_id
+                ];
+            }
+
+            $peminjaman = Peminjaman::create($data);
             Mail::to($request->email)->send(new PeminjamanMail(encodeText($peminjaman->kode)));
             DB::commit();
+            return response()->json([
+                'message' => 'Berhasil dikirim'
+            ], 200);
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->route('kategori.create')->with('msg_error', "Gagal Ditambahkan");
+            return response()->json([
+                'message' => 'Gagal'
+            ], 401);
         }
     }
 

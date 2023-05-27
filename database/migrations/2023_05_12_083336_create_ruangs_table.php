@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->foreignId('kategori_id');
             $table->foreignId('sekolah_id')->constrained();
+            $table->boolean('dipinjam')->default(0);
             // $table->foreignId('jurusan_id')->nullable();
             $table->timestamps();
         });

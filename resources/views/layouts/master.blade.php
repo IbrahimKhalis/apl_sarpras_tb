@@ -12,7 +12,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="http://keith-wood.name/css/jquery.signature.css">
     <link href="{{ asset('dist/css/app.css') }}" rel="stylesheet">
     @yield('css')
 </head>
@@ -27,8 +26,6 @@
     <script src="{{ asset('dist/js/app.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <script src="{{ asset('assets/js/script.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"></script>
-    <script type="text/javascript" src="http://keith-wood.name/js/jquery.signature.js"></script>
     @include('mypartials.js')
     @yield('js')
 </body>
