@@ -101,7 +101,9 @@ class SekolahController extends Controller
      */
     public function edit(Sekolah $sekolah)
     {
-        abort(404);
+        $sekolah = Sekolah::with('user')->find($sekolah->id);
+        return view('sekolah.create', compact('sekolah'));
+        // abort(404);
     }
 
     /**
@@ -113,6 +115,7 @@ class SekolahController extends Controller
      */
     public function update(UpdateSekolahRequest $request, Sekolah $sekolah)
     {
+        $admin = User::where('sekolah_id', $sekolah->id)->first();
         $data = [
             'nama' => $request->nama,
             'kode' => $request->kode,
@@ -123,6 +126,24 @@ class SekolahController extends Controller
             'jam_pulang' => $request->jam_pulang,
         ];
 
+        $user = [
+            'name' => $request->name,
+            'email' => $request->email,
+        ];
+
+        $request->password ? $user['password'] = \Hash::make($request->password) : '';
+
+        if($request->profile){
+            $path = Storage::disk('public')->putFile('profile', $request->profile);
+            $user['profil'] = $path;
+        }
+
+        if (Storage::disk('public')->exists("$admin->profil")) {
+            Storage::disk('public')->delete("$admin->profil");
+        }
+
+        $admin->update($user);
+
         if ($request->logo) {
             if ($sekolah->logo != '/img/tutwuri.png	') {
                 Storage::delete($sekolah->logo);
@@ -130,9 +151,11 @@ class SekolahController extends Controller
             $data += ['logo' => $request->file('logo')->store('logo')];
         }
 
+        // $sekolah->update($data);
+
         // dd($data);
 
-        return redirect('/dashboard')->with('msg_success', 'Berhasil di update');
+        return redirect()->route('sekolah.index')->with('msg_success', 'Berhasil di update');
     }
 
     /**
