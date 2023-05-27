@@ -26,7 +26,7 @@ class RuangController extends Controller
      */
     public function index()
     {
-        $datas = Ruang::all();
+        $datas = Ruang::paginate(10);
         return view('ruang.index', compact('datas'));
     }
 
