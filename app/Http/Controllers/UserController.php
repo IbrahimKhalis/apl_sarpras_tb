@@ -26,6 +26,7 @@ class UserController extends Controller
          $this->middleware('permission:add_users', ['only' => ['create','store']]);
          $this->middleware('permission:edit_users', ['only' => ['edit','update']]);
          $this->middleware('permission:delete_users', ['only' => ['destroy']]);
+         $this->middleware('permission:edit_sekolah', ['only' => ['edit', 'update']]);
          $this->middleware('permission:import_users', ['only' => ['import', 'saveimport']]);
          $this->middleware('permission:export_users', ['only' => ['export']]);
     }

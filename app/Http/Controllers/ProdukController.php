@@ -46,7 +46,8 @@ class ProdukController extends Controller
      */
     public function create()
     {
-        $tahun_ajaran = getTahunAjararan();
+        $tahun_ajaran = getTahunAjaran();
+
         if (!$tahun_ajaran) {
             return redirect()->route('produk.index')->with('msg_error', 'Tidak ada tahun ajaran ditemukan');
         }
@@ -58,30 +59,29 @@ class ProdukController extends Controller
         return view('produk.form', compact('kategoris'));
     }
 
-    private function generate_kode($kode, $kategori, $ke){                            
-        $kode_kategori = sprintf('%0'. 5 .'d', $kode);
-        $result = $kategori->kode . $kode_kategori;
+    private function generate_kode($request, $kode){   
+        $last_produk = DB::table('produks')
+                            ->where('sub_kategori_id', $request->sub_kategori_id)
+                            ->orderByDesc('id')
+                            ->first();
+        $kode_kategori = sprintf('%0'. 5 .'d', ($last_produk ? (int)explode($kode, $last_produk->kode)[1] + 1 : 1));
+        $result = $kode . $kode_kategori;
         return $result;
     }
 
     public function store(StoreProdukRequest $request)
     {
-        $tahun_ajaran = getTahunAjararan();
+        $tahun_ajaran = getTahunAjaran();
         if (!$tahun_ajaran) {
             return redirect()->route('produk.index')->with('msg_error', 'Tidak ada tahun ajaran ditemukan');
         }
 
         DB::beginTransaction();
-        try {
-            $kategori = DB::table('kategoris')
-                                ->where('id', $request->kategori_id)
-                                ->first();
-            $last_kategori = DB::table('produks')
-                                ->where('kategori_id', $request->kategori_id)
-                                ->orderByDesc('id')
-                                ->first();
+        try {                    
+            $sub_kategori = DB::table('subcategories')
+                            ->where('id', $request->sub_kategori_id)
+                            ->first();
 
-                                
             for ($i = 0; $i < $request->jumlah; $i++) {
                 $produk = Produk::create([
                     'sekolah_id' => Auth::user()->sekolah_id,
@@ -89,20 +89,23 @@ class ProdukController extends Controller
                     'tahun_ajaran_id' => $tahun_ajaran->id,
                     'sub_kategori_id' => $request->sub_kategori_id,
                     'nama' => ($request->name_increment ? ($request->start_increment ? ($request->nama . ' ' . $request->start_increment + $i) : ($request->nama . ' ' . $i)) : $request->nama),
-                    'kode' => $this->generate_kode(($last_kategori ? (int)explode($kategori->kode, $last_kategori->kode)[1] + ($i + 1) : 1),$kategori, $i + 1),
+                    'kode' => $this->generate_kode($request, $sub_kategori->kode),
                     'merek' => $request->merek,
                     'kondisi' => $request->kondisi,
                     'ket_produk' => $request->ket_produk,
                     'ket_kondisi' => $request->ket_kondisi,
+                    'sekali_pakai' => ($request->sekali_pakai ? true : false)
                 ]);
-                
-                foreach ($request->fotos as $key => $foto) {
-                    $randName = Str::random(24);
-                    $path = Storage::disk('public')->putFileAs('produk', $foto, $randName.'_'.$i.'.'.$foto->getClientOriginalExtension());
-                    Foto::create([
-                        'produk_id' => $produk->id,
-                        'file' => $path
-                    ]);
+            
+                if ($request->fotos) {
+                    foreach ($request->fotos as $key => $foto) {
+                        $randName = Str::random(24);
+                        $path = Storage::disk('public')->putFileAs('produk', $foto, $randName.'_'.$i.'.'.$foto->getClientOriginalExtension());
+                        Foto::create([
+                            'produk_id' => $produk->id,
+                            'file' => $path
+                        ]);
+                    }
                 }
 
                 insertLog(Auth::user()->name . " Berhasil menambahkan produk " . $produk['nama']);
@@ -123,7 +126,7 @@ class ProdukController extends Controller
      */
     public function show(Produk $produk)
     {
-        $tahun_ajaran = getTahunAjararan();
+        $tahun_ajaran = getTahunAjaran();
         validateSekolah($produk->sekolah_id);
         return isset($tahun_ajaran) ? $produk : abort(403);
 
@@ -163,7 +166,7 @@ class ProdukController extends Controller
     {
         DB::beginTransaction();
         try {
-            // $tahun_ajaran = getTahunAjararan();
+            // $tahun_ajaran = getTahunAjaran();
             validateSekolah($produk->sekolah_id);
             $update = [
                 'kategori_id' => $request->kategori_id,

@@ -1,15 +1,12 @@
 @extends('mylayouts.main')
 
 @push('css')
-
-<link rel="stylesheet" href="/fancybox/jquery.fancybox-1.3.4.css" type="text/css" media="screen" />
+{{-- <link rel="stylesheet" href="/fancybox/jquery.fancybox-1.3.4.css" type="text/css" media="screen" /> --}}
 <style>
     .title {
         font-weight: 500;
     }
-
 </style>
-
 @endpush
 
 @section('content')
@@ -62,7 +59,7 @@
                         <option value="">Pilih Sub Kategori</option>
                         @if (isset($subcategories))
                         @foreach ($subcategories as $subcategorie)
-                        <option  value="{{ $subcategorie->id }}" {{ isset($data) ? ($data->sub_kategori_id ==
+                        <option value="{{ $subcategorie->id }}" {{ isset($data) ? ($data->sub_kategori_id ==
                             $subcategorie->id ? 'selected' : '') : '' }} clas>{{ $subcategorie->nama }}</option>
                         @endforeach
                         @endif
@@ -103,73 +100,70 @@
                     <textarea class="form-control mt-3" name="ket_kondisi" id="" cols="10"
                         rows="6">{{ isset($data) ? ($data->ket_kondisi) : old('ket_kondisi') }}</textarea>
                 </div>
-                {{-- <div class="mt-3">
+                <div class="mt-3">
+                    <label for="crud-form-1" class="form-label">Sekali Pakai</label>
+                    <input type="checkbox" class="form-control" name="sekali_pakai">
+                </div>
+                <div class="mt-3">
                     <label for="crud-form-1" class="form-label">Foto</label>
                     <input type="file" class="form-control w-full" name="fotos[]" multiple accept="image/*">
                 </div>
                 @if (isset($data))
                 @foreach ($data->fotos as $foto)
-                    <div class="div-foto-{{ $foto->id }}">
-                <img src="{{ asset('storage/' . $foto->file) }}" alt="">
-                <button type="button" onclick="hapusFoto({{ $foto->id }})">Hapus</button>
-        </div>
-        @endforeach
-        @endif --}}
-         <div class="mt-3">
+                <div class="div-foto-{{ $foto->id }}">
+                    <img src="{{ asset('storage/' . $foto->file) }}" alt="">
+                    <button type="button" onclick="hapusFoto({{ $foto->id }})">Hapus</button>
+                </div>
+                @endforeach
+                @endif
+                {{-- <div class="mt-3">
                     <label class="form-label">Upload Image</label>
                     <div class="border-2 border-dashed dark:border-darkmode-400 rounded-md pt-4">
                         <div class="px-4 pb-4 flex items-center cursor-pointer relative">
-                            <i data-lucide="image" class="w-4 h-4 mr-2"></i> <span class="text-primary mr-1">Upload a file</span> or drag and drop 
-                            <input type="file" class="w-full h-full top-0 left-0 absolute opacity-0 cursor-pointer" id="images" name="fotos[]" multiple accept="image/*">
+                            <i data-lucide="image" class="w-4 h-4 mr-2"></i> <span class="text-primary mr-1">Upload a
+                                file</span> or drag and drop
+                            <input type="file" class="w-full h-full top-0 left-0 absolute opacity-0 cursor-pointer"
+                                id="images" name="fotos[]" multiple accept="image/*">
                         </div>
                     </div>
-                </div>
-        @error('images')
-        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-        @enderror
-            <a id="single_image" data-fancybox="gallery" class="images-preview-div grid grid-cols-3gap-3 mt-3 object-cover" style="margin-top: 2rem; margin-bottom: 2rem; width: 2rem"> </a>
-        
-    
-     
-</div>
-<div class="text-right mt-5">
-    <a href="">
-        <button type="button" class="btn btn-outline-secondary w-24 mr-1">Cancel</button>
-    </a>    
-    <button type="submit" class="btn btn-primary w-24">Save</button>
-</div>
-</form>
-</div>
+                </div> --}}
+                {{-- @error('images')
+                <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                @enderror
+                <a id="single_image" data-fancybox="gallery"
+                    class="images-preview-div grid grid-cols-3gap-3 mt-3 object-cover"
+                    style="margin-top: 2rem; margin-bottom: 2rem; width: 2rem"></a> --}}
+        </div>
+        <div class="text-right mt-5">
+            <a href="">
+                <button type="button" class="btn btn-outline-secondary w-24 mr-1">Cancel</button>
+            </a>
+            <button type="submit" class="btn btn-primary w-24">Save</button>
+        </div>
+        </form>
+    </div>
 </div>
 </div>
 
 @push('js')
-
-
-
-
-
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
-
-<script >
-$(function() {
+<script>
+    $(function() {
 // Multiple images preview with JavaScript
-var previewImages = function(input, imgPreviewPlaceholder) {
-if (input.files) {
-var filesAmount = input.files.length;
-for (i = 0; i < filesAmount; i++) {
-var reader = new FileReader();
-reader.onload = function(event) {
-$($.parseHTML('<img>')).attr('src', event.target.result).appendTo(imgPreviewPlaceholder);
-}
-reader.readAsDataURL(input.files[i]);
-}
-}
-};
-$('#images').on('change', function() {
-previewImages(this, 'a.images-preview-div');
-});
+    var previewImages = function(input, imgPreviewPlaceholder) {
+        if (input.files) {
+            var filesAmount = input.files.length;
+            for (i = 0; i < filesAmount; i++) {
+                var reader = new FileReader();
+                reader.onload = function(event) {
+                $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(imgPreviewPlaceholder);
+                }
+                reader.readAsDataURL(input.files[i]);
+            }
+        }
+    };
+    $('#images').on('change', function() {
+        previewImages(this, 'a.images-preview-div');
+    });
 });
 </script>
 <script>
@@ -192,8 +186,7 @@ previewImages(this, 'a.images-preview-div');
             });
         }
     });
-
-</>
+</script>
 @if (!isset($data))
 <script>
     $('.check-name-increment').on('change', function () {

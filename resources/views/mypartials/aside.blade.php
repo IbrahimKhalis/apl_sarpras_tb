@@ -142,6 +142,14 @@
       </a>
     </li>
     @endcan
+    
+    @can('view_peminjaman')
+    <li>
+      <a href="{{ route('peminjamans.index') }}" class="side-menu {{ Request::is('peminjamans*') ? 'active' : '' }}">
+        <div class="side-menu__icon"><i data-lucide="home"></i></div>
+        <div class="side-menu__title">Peminjaman</div>
+      </a>
+    </li>
+    @endcan
   </ul>
 </nav>
-<!-- END: Side Menu -->

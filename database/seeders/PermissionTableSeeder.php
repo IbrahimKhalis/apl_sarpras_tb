@@ -61,6 +61,11 @@ class PermissionTableSeeder extends Seeder
             'add_ruang',
             'edit_ruang',
             'delete_ruang',
+
+            'view_peminjaman',
+            'add_peminjaman',
+            'edit_peminjaman',
+            'delete_peminjaman',
         ];
 
         foreach ($permissions as $permission) {

@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-    <h2 class="text-lg font-Medium mr-auto">
+    <h2 class="text-lg font-semibold mr-auto">
         Data Kategori
     </h2>
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
@@ -32,9 +32,16 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $data->nama }}</td>
                     <td>{{ $data->jenis}}</td>
-                    <td> @foreach ($data->subcategory as $sub)
-                        {{ $sub->nama }},
-                        @endforeach</td>
+                    <td>
+                        <table class="border-black table-auto">
+                            @foreach ($data->subcategory as $sub)
+                            <tr>
+                                <td>{{ $sub->nama }}</td>
+                                <td>{{ $sub->kode }}</td>
+                            </tr>
+                            @endforeach
+                        </table>
+                    </td>
                     <td class="table-report__action w-56">
                         <div class="flex">
                             <a class="flex items-center mr-3" href="{{ route('kategori.edit', $data->id) }}"> <i

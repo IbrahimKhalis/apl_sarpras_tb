@@ -40,7 +40,7 @@
                 @foreach ($datas as $data)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $data->name}}</td>
+                        <td><a href="{{ url('/data-inventaris/ruang', $data->id) }}">{{ $data->name}}</a></td>
                         <td>{{ $data->kategori ? $data->kategori->nama : '' }}</td>
                         <td>{{ $data->bisa_dipinjam}}</td>
                         <td class="table-report__action w-56">
@@ -50,7 +50,7 @@
                                         @if (auth()->user()->can('delete_ruang'))
                                         <button type="submit" class="btn btn-danger btn-sm rounded"
                                             onclick="deleteData('{{ route('ruang.destroy', [$data->id]) }}')"
-                                           >Hapus</button>
+                                        >Hapus</button>
                                     </td>
                                     @endif
                             </div>

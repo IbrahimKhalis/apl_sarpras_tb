@@ -298,13 +298,13 @@
                         </div>
                         <div class="col-md-12">
                             <label for="subkategori" class="form-label">Sub Kategori</label>
-                            <select name="subkategori_id" class="tom-select w-full" id="subkategori">
+                            <select name="subkategori_id" class="w-full" id="subkategori">
                                 <option value="">Pilih Sub Kategori</option>
                             </select>
                         </div>
                         <div class="col-md-12">
                             <label for="produk" class="form-label">Produk</label>
-                            <select name="produk_id[]" id="produk" class="tom-select w-full" multiple>
+                            <select name="produk_id[]" id="produk" class="w-full" multiple>
                                 <option value="">Pilih Produk</option>
                             </select>
                         </div>
@@ -321,7 +321,7 @@
 
 @push('js')
 <script>
-    let id = ''
+let id = ''
 const url_update = '{{ route("ruang.update", ":id") }}'
 const url_sub = '{{ route("get.sub", ":id") }}'
 const url_produk = '{{ route("produk.get", ":id") }}'
@@ -445,7 +445,6 @@ $('#modalAddProduk form').on('submit', function(e){
             }
         },
         success: function (response) {
-            
             console.log(response)
         },
         error: function (response) {

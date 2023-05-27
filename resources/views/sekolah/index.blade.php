@@ -105,6 +105,11 @@
                         <td>
                             <a href="{{ route('sekolah.show', $sekolah->id) }}"
                                 class="btn btn-primary btn-sm rounded">Detail</a>
+                            @if (auth()->user()->can('edit_sekolah'))
+                            <a class="btn btn-warning btn-sm rounded"
+                                href="{{ route('sekolah.edit', [$sekolah->id]) }}"
+                               >Edit</a>
+                            @endif
                             @if (auth()->user()->can('delete_sekolah'))
                             <button type="submit" class="btn btn-danger btn-sm rounded"
                                 onclick="deleteData('{{ route('sekolah.destroy', [$sekolah->id]) }}')"

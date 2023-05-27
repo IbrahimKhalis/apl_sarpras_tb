@@ -20,7 +20,6 @@
             <thead>
                 <tr>
                     <th class="whitespace-nowrap">No.</th>
-                    <th class="whitespace-nowrap">Sekolah</th>
                     <th class="whitespace-nowrap">Kelas</th>
                     <th class="whitespace-nowrap">Action</th>
                 </tr>
@@ -29,7 +28,6 @@
                 @foreach ($datas as $data)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $data->sekolah->nama}}</td>
                         <td>{{ $data->nama}}</td>
                         <td class="table-report__action w-56">
                             <div class="flex">
