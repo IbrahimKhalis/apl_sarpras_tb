@@ -13,11 +13,11 @@ html body{
 .containers {
     background-color: #1C438C;
     width: 100%;
-    min-height: 900px;
+    min-height: 750px;
     justify-content: center;
     padding: 300px 10px 0px 10px;
     display: flex;
-    gap: 40px;
+    gap: 100px;
     flex-wrap: wrap;
     z-index: 2;
     
@@ -36,7 +36,7 @@ html body{
 
 .text-header h1 {
     color: var(--white);
-    font-size: 55px;
+    font-size: 3.1rem;
     font-weight: 700;
     margin-bottom: 20px;
 }
@@ -224,9 +224,9 @@ html body{
 
 .content-1,.content-2,.content-3,.content-4 {
     display: flex;
-    padding: 0px 200px;
+    padding: 0px 100px;
     align-items: center;
-    gap: 200px;
+    gap: 160px;
     margin-bottom: 200px;
 }
 
