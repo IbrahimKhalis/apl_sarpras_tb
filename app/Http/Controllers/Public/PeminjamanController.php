@@ -7,14 +7,17 @@ use Illuminate\Http\Request;
 use DB;
 use App\Models\Sekolah;
 use App\Models\Subcategory;
+use App\Models\Produk;
 use App\Models\Peminjaman;
 use App\Http\Requests\PeminjamanPublicStore;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\PeminjamanMail;
+use Illuminate\Database\Eloquent\Builder;
 
 class PeminjamanController extends Controller
 {
     public function create(){
+        $page = 'public';
         $tahun_ajaran = getTahunAjaran();
 
         if (!$tahun_ajaran) {
@@ -22,7 +25,7 @@ class PeminjamanController extends Controller
         }
 
         $sekolahs = DB::table('sekolahs')->select('id', 'nama')->get();
-        return view('peminjaman_public.create', compact('sekolahs'));
+        return view('peminjaman_public.create', compact('sekolahs', 'page'));
     }
 
     public function cek_kode(Request $request){
@@ -94,20 +97,32 @@ class PeminjamanController extends Controller
         ], 200);
     }
 
-    public function cek_produk(Request $request){
+    public function get_produk(Request $request){
         $request->validate([
-            'id' => 'required'
+            'id' => 'required',
+            'page' => 'required'
         ]);
 
-        $count = Subcategory::select('produks.id')
-                            ->join('produks', 'subcategories.id', 'produks.sub_kategori_id')
+        $datas = Produk::select('produks.id', 'produks.nama')
                             ->join('ruangs', 'ruangs.id', 'produks.ruang_id')
-                            ->where('subcategories.id', $request->id)
+                            ->where('produks.sub_kategori_id', $request->id)
                             ->where('ruangs.produk_dipinjam', 1)
-                            ->count();
-                            
+                            ->when(!$request->peminjaman_id, function($q) use($request){
+                                $q->where('produks.dipinjam', 0);
+                            });
+
+        if ($request->page == 'public') {
+            $datas = $datas->count();
+        }else{
+            $datas = $datas->when($request->peminjaman_id, function($q) use($request){
+                $q->whereHas('peminjaman', function(Builder $query) use($request){
+                    $query->where('peminjaman_produk.peminjaman_id', $request->peminjaman_id);
+                })->orWhere('produks.dipinjam', 0);
+            })->get();
+        }
+
         return response()->json([
-            'count' => $count
+            'datas' => $datas
         ], 200);
     }
 

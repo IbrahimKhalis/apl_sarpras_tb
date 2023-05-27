@@ -52,7 +52,7 @@ class Controller extends BaseController
         return $return;
     }
 
-    private function uploadCam($img, $name_folder){
+    public function uploadImage($img, $name_folder){
         $folderPath = $name_folder . "/";
         $image_parts = explode(";base64,", $img);
         foreach ($image_parts as $key => $image){
@@ -64,7 +64,7 @@ class Controller extends BaseController
         return $fileName;
     }
 
-    private function uploadTtd(){
+    public function uploadTtd(){
         $folderPath = "ttd/";
         $img_parts =  explode(";base64,", $signed);
         $img_type_aux = explode("image/", $img_parts[0]);

@@ -1,7 +1,8 @@
 <script>
-    let count_produk = null;
-function cek (){sub();compare()}
-function syncJenis(kategori_id = null){
+let count_produk = null;
+let data_produk = {{ isset($produks) ? json_encode($produks) : json_encode([]) }};
+function cek (){syncProduk();compare()}
+function syncKategori(kategori_id = null){
     $('.div-jml-peminjaman, .div-subkategori, .div-ruang').remove();
 
     if ($('#jenis').val() == 'sarana') {
@@ -42,10 +43,10 @@ function syncJenis(kategori_id = null){
         });
 }
 
-function syncKategori(sub_kategori_id = null, ruang_id = null){
+function syncSub(sub_kategori_id = null, ruang_id = null){
     let jenis = $('#jenis').val()
     if ($('#kategori').val()) {
-        $.ajax({
+        return $.ajax({
                 type: "POST",
                 url: "{{ route('peminjaman.get.subcategori') }}",
                 data: {
@@ -72,7 +73,10 @@ function syncKategori(sub_kategori_id = null, ruang_id = null){
                             $('.form-peminjaman #subkategori').attr('disabled', 'disabled')
                         }
                     }else{
-                        $('.form-peminjaman #ruang').removeAttr('disabled');
+                        $('.form-peminjaman #ruang').val(ruang_id)
+                        if (!ruang_id) {
+                            $('.form-peminjaman #ruang').removeAttr('disabled');
+                        }
                     }
                 },
                 error: function (errors) {
@@ -82,13 +86,15 @@ function syncKategori(sub_kategori_id = null, ruang_id = null){
     }
 }
 
-function sub(){
+function syncProduk(value = null){
     if ($('#subkategori').val()) {
-        $.ajax({
+        return $.ajax({
                 type: "POST",
-                url: "{{ route('peminjaman.cek_produk') }}",
+                url: "{{ route('peminjaman.get.produk') }}",
                 data: {
                     id: $('#subkategori').val(),
+                    page: '{{ isset($page) ? $page : "public" }}',
+                    peminjaman_id: '{{ isset($data) ? $data["id"] : "" }}'
                 },
                 dataType: "json",
                 beforeSend: function (e) {
@@ -97,15 +103,24 @@ function sub(){
                     }
                 },
                 success: function (response) {
+                    @if ($page == 'public')
                     $('.div-subkategori .jml-produk') ? $('.div-subkategori .jml-produk').remove() : ''
-                    $('.div-subkategori').append(`<span class="jml-produk ${response.count < 1 ? 'text-red-500' : ''}">Jumlah Produk pada kategori: ${response.count}</span>`)
-                    if (response.count > 0) {
+                    $('.div-subkategori').append(`<span class="jml-produk ${response.datas < 1 ? 'text-red-500' : ''}">Jumlah Produk pada kategori: ${response.datas}</span>`)
+                    if (response.datas > 0) {
                         $('.form-peminjaman .submit-btn').removeAttr('disabled')
                     }else{
                         $('.form-peminjaman .submit-btn').attr('disabled', 'disabled')
                     }
-                    count_produk = response.count;
+                    count_produk = response.datas;
                     compare();
+                    @else
+                    $('#produk').empty();
+                    $('#produk').append(`<option value="">Pilih Produk</option>`)
+                    $.each(response.datas, function(i,e){
+                        $('#produk').append(`<option value="${e.id}">${e.nama}</option>`)
+                    })
+                    $('#produk').val(data_produk)
+                    @endif
                 },
                 error: function (errors) {
                     console.log(errors)
@@ -132,14 +147,24 @@ function compare(){
         $('.form-peminjaman .submit-btn').attr('disabled', 'disabled')
     }
 }
+
+function syncRuang(){
+    if ($('.form-peminjaman #ruang').val()) {
+        $('.form-peminjaman .submit-btn').removeAttr('disabled')
+    }else{
+        $('.form-peminjaman .submit-btn').attr('disabled', 'disabled')
+    }
+}
 </script>
 @if (isset($data))
 <script>
-    syncJenis({{ $data['kategori_id'] }}).then(() => {
+    syncKategori({{ $data['kategori_id'] }}).then(() => {
         @if ($data['jenis'] == 'sarana')
-        syncKategori({{ $data['sub_kategori_id'] }})
+        syncSub({{ $data['sub_kategori_id'] }}).then(() => {
+            syncProduk()
+        })
         @else    
-        syncKategori()
+        syncSub(null, {{ $data['ruang_id'] }})
         @endif
     })
 </script>

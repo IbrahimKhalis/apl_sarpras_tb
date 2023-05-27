@@ -44,8 +44,8 @@ Route::prefix('peminjaman')->name('peminjaman.')->group(function () {
     Route::prefix('get')->name('get.')->group(function () {
         Route::post('/kategori', [PeminjamanPublic::class, 'get_kategori'])->name('kategori');
         Route::post('/sub-categori', [PeminjamanPublic::class, 'get_subcategori'])->name('subcategori');
+        Route::post('/produk', [PeminjamanPublic::class, 'get_produk'])->name('produk');
     });
-    Route::post('/cek-produk', [PeminjamanPublic::class, 'cek_produk'])->name('cek_produk');
     Route::post('/store', [PeminjamanPublic::class, 'store'])->name('store');
 });
 
@@ -106,6 +106,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('getsub/{kategori_id?}', [KategoriController::class, 'getSub'])->name('get.sub');
     Route::get('produk/{sub_id}', [ProdukController::class, 'get'])->name('produk.get');
 
+    Route::post('peminjamans/penagihan', [PeminjamanController::class, 'penagihan'])->name('peminjaman.penagihan');
     Route::resource('peminjamans', PeminjamanController::class)->except('create', 'store');
     Route::get('ruang/updateLokasiBarang/{id}', [RuangController::class, 'transfer_produk']);
     Route::patch('ruang/updateLokasiBarang/{id}', [RuangController::class, 'updateLokasiBarang'])->name('ruang.updateLokasiBarang');

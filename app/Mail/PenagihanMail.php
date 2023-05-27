@@ -9,23 +9,18 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class PeminjamanMail extends Mailable
+class PenagihanMail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $kode;
-    public $status;
-    public $ket;
-
+    public $pesan;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($kode, $status = 'pengajuan', $ket = '')
+    public function __construct($pesan = '')
     {
-        $this->kode = $kode;
-        $this->status = $status;
-        $this->ket = $ket;
+        $this->pesan = $pesan;
     }
 
     /**
@@ -36,7 +31,7 @@ class PeminjamanMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Peminjaman',
+            subject: 'Penagihan',
         );
     }
 
@@ -48,11 +43,9 @@ class PeminjamanMail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'peminjaman_public.mail',
+            view: 'peminjaman.penagihan',
             with: [
-                'kode' => $this->kode,
-                'status' => $this->status,
-                'ket' => $this->ket,
+                'pesan' => $this->pesan,
             ],
         );
     }

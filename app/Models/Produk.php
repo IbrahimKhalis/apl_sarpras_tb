@@ -33,8 +33,8 @@ class Produk extends Model
     public function ruang(){
         return $this->belongsTo(Ruang::class);
     }
-    // public function jurusan()
-    // {
-    //     return $this->belongsTo(Jurusan::class);
-    // }
+
+    public function peminjaman(){
+        return $this->belongsToMany(Peminjaman::class, 'peminjaman_produk', 'produk_id', 'peminjaman_id');
+    }
 }

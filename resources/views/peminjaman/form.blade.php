@@ -33,14 +33,20 @@
         @if (isset($data))
         @method('patch')
         @endif
-        <x-FormPeminjaman page="admin" :update="$data" :kelas="$kelas"></x-FormPeminjaman>
-        <div class="mt-3">
-            <div class="col-md-12">
-                <label for="status" class="form-label">Status</label>
-                <select name="status" class="w-full" id="status">
-                    <option value="pengajuan">Pengajuan</option>
-                    <option value="Diterima">Pilih Kategori</option>
-                </select>
+        <x-FormPeminjaman :page="$page" :update="$data" :kelas="$kelas"></x-FormPeminjaman>
+        <div class="div-other">
+            <div class="mt-3">
+                <div class="col-md-12">
+                    <label for="status" class="form-label">Status</label>
+                    <select name="status" class="w-full" id="status" onchange="syncStatus()">
+                        <option value="pengajuan" {{ isset($data) ? ($data['status']=='pengajuan' ? 'selected' : '' )
+                            : '' }}>Pengajuan</option>
+                        <option value="diterima" {{ isset($data) ? ($data['status']=='diterima' ? 'selected' : '' ) : ''
+                            }}>Diterima</option>
+                        <option value="ditolak" {{ isset($data) ? ($data['status']=='ditolak' ? 'selected' : '' ) : ''
+                            }}>Ditolak</option>
+                    </select>
+                </div>
             </div>
         </div>
         <button type="submit">Kirim</button>
@@ -76,6 +82,10 @@
                     <div class="col-md-6">
                         <div id="result-peminjaman">Your captured image will appear here...</div>
                     </div>
+                    @if (isset($data) && $data['foto_peminjaman'])
+                    <strong>Foto Peminjaman disimpan</strong>
+                    <img src="{{ asset('foto_peminjaman/' . $data['foto_peminjaman']) }}" alt="">
+                    @endif
                 </div>
                 @error('image')
                 <div class="invalid-feedback d-block">
@@ -98,6 +108,10 @@
                     <div class="col-md-6">
                         <div id="result-pengembalian">Your captured image will appear here...</div>
                     </div>
+                    @if (isset($data) && $data['foto_pengembalian'])
+                    <strong>Foto Pengembalian disimpan</strong>
+                    <img src="{{ asset('foto_pengembalian/' . $data['foto_pengembalian']) }}" alt="">
+                    @endif
                 </div>
                 @error('image')
                 <div class="invalid-feedback d-block">
@@ -114,11 +128,54 @@
                 <br />
                 <button id="clear" class="btn btn-danger">Hapus Tanda Tangan</button>
                 <textarea id="signature64" name="ttd" style="display: none"></textarea>
+                @if (isset($data) && $data['ttd'])
+                <strong>Tanda Tangan disimpan</strong>
+                <img src="{{ asset('ttd/' . $data['ttd']) }}" alt="">
+                @endif
                 @error('ttd')
                 <div class="invalid-feedback d-block">
                     {{ $message }}
                 </div>
                 @enderror
+            </div>
+        </div>
+        <script>
+            Webcam.set({
+                    width: 280,
+                    height: 200,
+                    image_format: 'jpeg',
+                    jpeg_quality: 90
+                });
+                
+                Webcam.attach('#camera_peminjaman');
+                Webcam.attach('#camera_pengembalian');
+        
+                function take_snapshot(result, preview) {
+                    Webcam.snap(function(data_uri) {
+                        $(result).val(data_uri);
+                        document.getElementById(preview).innerHTML = '<img src="' + data_uri + '"/>';
+                    });
+                }
+                var canvas = document.getElementById('signature-pad');
+                var sig = $('#sig').signature({
+                    syncField: '#signature64',
+                    syncFormat: 'PNG'
+                });
+        
+                $('#clear').click(function(e) {
+                    e.preventDefault();
+                    sig.signature('clear');
+                    $("#signature64").val('');
+                });
+        </script>
+    </div>
+</template>
+<template id="ditolak">
+    <div class="div-ditolak">
+        <div class="mt-3">
+            <div class="col-md-12">
+                <label for="ket" class="form-label">Keteragan</label>
+                <textarea name="ket" id="ket" cols="30" rows="10">{{ isset($data) ? $data['ket'] : '' }}</textarea>
             </div>
         </div>
     </div>
@@ -131,33 +188,23 @@
 <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/jquery.signature.js') }}"></script>
 <script>
-    Webcam.set({
-            width: 280,
-            height: 200,
-            image_format: 'jpeg',
-            jpeg_quality: 90
-        });
-
-        Webcam.attach('#camera_peminjaman');
-        Webcam.attach('#camera_pengembalian');
-
-        function take_snapshot(result, preview) {
-            Webcam.snap(function(data_uri) {
-                $(result).val(data_uri);
-                document.getElementById(preview).innerHTML = '<img src="' + data_uri + '"/>';
-            });
+    function syncStatus(value = null){
+        let status = value ?? $('.div-other #status').val();
+        if (status == 'diterima') {
+            $('.div-other').append($('#diterima').html())
+            $('.div-other .div-ditolak').remove()
+        }else if(status == 'ditolak'){
+            $('.div-other').append($('#ditolak').html())
+            $('.div-other .div-diterima').remove()
+        }else{
+            $('.div-other .div-ditolak').remove()
+            $('.div-other .div-diterima').remove()
         }
-
-        var canvas = document.getElementById('signature-pad');
-        var sig = $('#sig').signature({
-            syncField: '#signature64',
-            syncFormat: 'PNG'
-        });
-
-        $('#clear').click(function(e) {
-            e.preventDefault();
-            sig.signature('clear');
-            $("#signature64").val('');
-        });
+    }
 </script>
+@if (isset($data))
+<script>
+    syncStatus("{{ $data['status'] }}")
+</script>
+@endif
 @endpush

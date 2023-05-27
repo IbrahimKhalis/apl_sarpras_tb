@@ -32,7 +32,7 @@
     <div class="mt-3">
         <div class="col-md-12">
             <label for="jenis" class="form-label">Kategori Peminjaman</label>
-            <select name="jenis" class="w-full" id="jenis" onchange="syncJenis()">
+            <select name="jenis" class="w-full" id="jenis" onchange="syncKategori()">
                 <option value="">Pilih Kategori</option>
                 <option value="sarana" {{ (count($update)> 0) ? ($update['jenis'] == 'sarana' ? 'selected' : '') : ''
                     }}>Sarana</option>
@@ -44,7 +44,7 @@
     <div class="mt-3">
         <div class="col-md-12">
             <label for="kategori" class="form-label">Kategori</label>
-            <select name="kategori_id" class="w-full" id="kategori" onchange="syncKategori()">
+            <select name="kategori_id" class="w-full" id="kategori" onchange="syncSub()">
                 <option value="">Pilih Kategori</option>
             </select>
         </div>
@@ -61,19 +61,29 @@
     <div class="mt-3 div-subkategori">
         <div class="col-md-12">
             <label for="subkategori" class="form-label">Sub Kategori</label>
-            <select name="sub_kategori_id" class="w-full" id="subkategori" onchange="sub()" {{ count($update) < 1
+            <select name="sub_kategori_id" class="w-full" id="subkategori" onchange="syncProduk()" {{ count($update) < 1
                 ? 'disabled' : '' }}>
                 <option value="">Pilih Sub Kategori</option>
             </select>
         </div>
     </div>
+    @if ($page == 'admin')
+    <div class="mt-3 div-produk">
+        <div class="col-md-12">
+            <label for="produk" class="form-label">Produk</label>
+            <select name="produk_id[]" class="w-full" id="produk" multiple>
+                <option value="">Pilih Produk</option>
+            </select>
+        </div>
+    </div>
+    @endif
 </template>
 
 <template id="template-ruang">
     <div class="mt-3 div-ruang">
         <div class="col-md-12">
             <label for="ruang" class="form-label">Ruang</label>
-            <select name="ruang_id" class="w-full" id="ruang" disabled>
+            <select name="ruang_id" class="w-full" id="ruang" disabled onchange="syncRuang()">
                 <option value="">Pilih Ruang</option>
             </select>
         </div>

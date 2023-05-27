@@ -15,4 +15,8 @@ class Peminjaman extends Model
     public function kelas(){
         return $this->belongsTo(Kelas::class);
     }
+
+    public function produks(){
+        return $this->belongsToMany(Produk::class, 'peminjaman_produk', 'peminjaman_id', 'produk_id');
+    }
 }

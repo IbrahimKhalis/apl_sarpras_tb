@@ -25,8 +25,8 @@ return new class extends Migration
             $table->string('nama');
             $table->string('jenis');
             $table->string('email');
-            $table->date('tgl_peminjaman')->nullable();
-            $table->date('tgl_pengembalian')->nullable();
+            $table->timestamp('tgl_peminjaman')->nullable();
+            $table->timestamp('tgl_pengembalian')->nullable();
             $table->boolean('email_penagihan')->nullable();
             $table->string('ttd')->nullable();
             $table->string('jml_peminjaman')->nullable();
@@ -41,7 +41,7 @@ return new class extends Migration
         Schema::create('peminjaman_produk', function (Blueprint $table) {
             $table->id();
             $table->foreignId('peminjaman_id')->constrained('peminjamans');
-            $table->foreignId('kelas_id')->constrained('kelas');
+            $table->foreignId('produk_id')->constrained('produks');
             $table->timestamps();
         });
     }

@@ -223,7 +223,7 @@
     </section>
     <section id="step-2" class="form-step d-none place-items-center form-stepper-active">
         <form action="{{ route('peminjaman.store') }}" class="form-peminjaman" method="POST">
-            <x-FormPeminjaman/>
+            <x-FormPeminjaman />
             <div class="mt-5 flex gap-3">
                 <button class="button submit-btn" type="submit" disabled>Kirim</button>
             </div>
@@ -331,7 +331,7 @@
 </script>
 @include('peminjaman.js')
 <script>
-$('.form-peminjaman').on('submit', function(e){
+    $('.form-peminjaman').on('submit', function(e){
     e.preventDefault()
     start_loading()
     let form = new FormData($(this)[0])
@@ -349,14 +349,34 @@ $('.form-peminjaman').on('submit', function(e){
                 }
             },
             success: function (response) {
-                console.log(response)
                 count_produk = null;
                 stop_loading()
+                Swal.fire({
+                    title: 'Berhasil dikirim',
+                    text: "Silahkan cek email anda untuk data pengajuan anda",
+                    icon: 'success',
+                    showCancelButton: false,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Kembali'
+                    }).then((result) => {
+                        window.location.href = '{{ route('index') }}'
+                })
             },
             error: function (errors) {
                 count_produk = null;
-                console.log(errors)
-                stop_loading()
+                stop_loading();
+                Swal.fire({
+                    title: 'Failed',
+                    text: "Mohon maaf telah terjadi kesalahan, segera hubungi petugas sarpras",
+                    icon: 'error',
+                    showCancelButton: false,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Kembali'
+                    }).then((result) => {
+                        window.location.href = '{{ route('index') }}'
+                })
             },
         });
 })
