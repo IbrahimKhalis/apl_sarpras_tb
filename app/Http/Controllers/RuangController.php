@@ -57,6 +57,8 @@ class RuangController extends Controller
     {
         $data = Ruang::create([
             'name' => $request->name,
+            'luas' => $request->luas,
+            'no_reg' => $request->no_reg,
             'kategori_id' => $request->kategori_id,
             'ruang_dipinjam' => $request->ruang_dipinjam ? true : false,
             'produk_dipinjam' => $request->produk_dipinjam ? true : false,
@@ -76,7 +78,7 @@ class RuangController extends Controller
      */
     public function show($id)
     {
-        $ruang = Ruang::find($id);
+        $ruang = Ruang::findOrFail($id);
 
         $produks_dalam_ruang = $ruang->produk;
 
@@ -93,7 +95,7 @@ class RuangController extends Controller
      */
     public function edit($id)
     {
-        $data = Ruang::find($id);
+        $data = Ruang::findOrFail($id);
         if ($data->sekolah_id != Auth::user()->sekolah_id) {
             abort(403);
         }
@@ -132,23 +134,20 @@ class RuangController extends Controller
      */
     public function destroy($id)
     {
-        $find = Ruang::find($id);
+        $data = Ruang::findOrFail($id);
 
-        if(!$find){
-            return response()->json([
-                'massages' => "Updated data not found"
-            ], 404);
+        if ($data->peminjaman()->count() > 0) {
+            return redirect()->back()->with('msg_error', 'Telah terjadi peminjaman pada ruang ini tidak bisa dihapus');
         }
 
-        $destroy = $find->delete();
-
-        if(!$destroy){
-            return response()->json([
-                'massages' => "data failed to delete"
-            ], 400);
+        foreach ($data->produk as $key => $produk) {
+            $produk->update([
+                'ruang_id' => null
+            ]);
         }
 
-        return redirect('/'); //change this!
+        $data->delete();
+        return redirect()->back()->with('msg_success', 'Berhasil dihapus');
     }
 
     public function tambah_produk(Request $request){

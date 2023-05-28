@@ -32,10 +32,9 @@ class ProdukController extends Controller
      */
     public function index()
     {
-        $produks = DB::table('produks')->select('produks.*')
-                                        ->join('kategoris', 'kategoris.id', 'produks.kategori_id')
-                                        ->where('kategoris.sekolah_id', Auth::user()->sekolah_id)
-                                        ->paginate(10);
+        $produks = Produk::select('produks.*')
+                                ->where('produks.sekolah_id', Auth::user()->sekolah_id)
+                                ->paginate(10);
         return view('produk.index', compact('produks'));
     }
 
@@ -166,7 +165,6 @@ class ProdukController extends Controller
     {
         DB::beginTransaction();
         try {
-            // $tahun_ajaran = getTahunAjaran();
             validateSekolah($produk->sekolah_id);
             $update = [
                 'kategori_id' => $request->kategori_id,
@@ -177,6 +175,7 @@ class ProdukController extends Controller
                 'kondisi' => $request->kondisi,
                 'ket_produk' => $request->ket_produk,
                 'ket_kondisi' => $request->ket_kondisi,
+                'sekali_pakai' => ($request->sekali_pakai ? true : false)   
             ];
 
             if ($request->kategori_id != $produk->kategori_id) {
@@ -190,31 +189,18 @@ class ProdukController extends Controller
                 
                 $update['kode'] = $this->generate_kode(($last_kategori ? (int)explode($kategori->kode, $last_kategori->kode)[1] + 1 : 1),$kategori, 1);
             }
-
-            if(isset($request->fotos)){
-                foreach ($request->fotos as $key => $foto) {
-                    $path = Storage::disk('public')->putFile('produk', $foto);
-                    $data = Foto::where('produk_id',$produk->id)->first();
-                    if (Storage::disk('public')->exists("$data->file")) {
-                        Storage::disk('public')->delete("$data->file");
-                    }
-
-                    $data->update([
-                        'file' => $path
-                    ]);
-
-                }
-            }
-
+            
             $produk->update($update);
 
-            foreach ($request->fotos as $key => $foto) {
-                $randName = Str::random(24);
-                $path = Storage::disk('public')->putFileAs('produk', $foto, $randName.'_'.$produk->id.'.'.$foto->getClientOriginalExtension());
-                Foto::create([
-                    'produk_id' => $produk->id,
-                    'file' => $path
-                ]);
+            if ($request->produks) {                
+                foreach ($request->fotos as $key => $foto) {
+                    $randName = Str::random(24);
+                    $path = Storage::disk('public')->putFileAs('produk', $foto, $randName.'_'.$produk->id.'.'.$foto->getClientOriginalExtension());
+                    Foto::create([
+                        'produk_id' => $produk->id,
+                        'file' => $path
+                    ]);
+                }
             }
 
             insertLog(Auth::user()->name . " Berhasil mengubah produk " . $request->nama);
@@ -232,18 +218,22 @@ class ProdukController extends Controller
      * @param  \App\Models\Produk  $produk
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Produk $produk)
+    public function destroy($id)
     {
-        validateSekolah($produk->sekolah_id);
-        if (!$produk) {
-            return response()->json([
-                'message' => 'The data wanna be delete Not Found!'
-            ], 400);
+        $data = Produk::findOrFail($id);
+        validateSekolah($data->sekolah_id);
+        
+        if ($data->peminjaman()->count() > 0) {
+            return redirect()->back()->with('msg_error', 'Telah terjadi peminjaman pada produk ini tidak bisa dihapus');
+        }
+        
+        if ($data->ruang_id) {
+            return redirect()->back()->with('msg_error', 'Produk ini telah diset diruang tidak bisa dihapus');
         }
 
-        $produk->delete();
+        $data->delete();
 
-        insertLog(Auth::user()->name . ' Berhasil menghapus produk ' . $produk->nama);
+        insertLog(Auth::user()->name . ' Berhasil menghapus produk ' . $data->nama);
 
         return redirect()->route('produk.index')->with('msg_success', 'Berhasil menghapus produk');
     }

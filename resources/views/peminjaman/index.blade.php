@@ -5,6 +5,7 @@
     <h2 class="text-lg font-Medium mr-auto">
         Peminjaman
     </h2>
+    <a href="{{ route('peminjamans.create') }}">Tambah Peminjaman</a>
 </div>
 
 <div class="intro-y box p-5 mt-5">
@@ -37,6 +38,10 @@
                         @if ($data->status == 'diterima' && now() > $data->tgl_pengembalian)
                         <a href="javascript:;" data-tw-toggle="modal" data-tw-target="#modalPenagihan"
                             class="btn btn-primary" onclick="set({{ $data->id }})">Kirim Penagihan</a>
+                        @endif
+                        @if (auth()->user()->can('delete_peminjaman'))
+                        <button type="submit" class="btn btn-sm btn-danger rounded" style="width: 4rem;"
+                            onclick="deleteData('{{ route('peminjamans.destroy', $data->id) }}')">Hapus</button>
                         @endif
                     </td>
                 </tr>

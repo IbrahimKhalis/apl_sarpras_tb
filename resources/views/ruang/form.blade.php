@@ -244,6 +244,16 @@
                             @endforeach
                         </select>
                     </div>
+                    <div>
+                        <label for="crud-form-1" class="form-label">Luas</label>
+                        <input id="crud-form-1" type="number" class="form-control w-full" name="luas"
+                            value="{{ isset($data) ? $data->luas : old('luas') }}" placeholder="Luas Tahan">
+                    </div>
+                    <div>
+                        <label for="crud-form-1" class="form-label">No Registrasi</label>
+                        <input id="crud-form-1" type="string" class="form-control w-full" name="no_reg"
+                            value="{{ isset($data) ? $data->no_reg : old('no_reg') }}" placeholder="Nomor Registrasi">
+                    </div>
                     <div class="mt-3">
                         <label for="crud-form-2" class="form-label">Ruang Bisa Dipinjam</label>
                         <input type="checkbox" name="ruang_dipinjam" class="form-check-input" {{ isset($data) ?
@@ -321,7 +331,7 @@
 
 @push('js')
 <script>
-let id = ''
+    let id = ''
 const url_update = '{{ route("ruang.update", ":id") }}'
 const url_sub = '{{ route("get.sub", ":id") }}'
 const url_produk = '{{ route("produk.get", ":id") }}'
@@ -445,7 +455,10 @@ $('#modalAddProduk form').on('submit', function(e){
             }
         },
         success: function (response) {
-            console.log(response)
+            $('#kategori').val('');
+            $('#subkategori').empty().append('<option value="">Pilih Sub Kategori</option>')
+            $('#produk').empty().append('<option value="">Pilih Produk</option>')
+            $('#modalAddProduk').hide();
         },
         error: function (response) {
             console.log(response)

@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('ruangs', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('luas');
+            $table->string('no_reg');
             $table->foreignId('kategori_id');
             $table->foreignId('sekolah_id')->constrained();
             $table->boolean('dipinjam')->default(0);

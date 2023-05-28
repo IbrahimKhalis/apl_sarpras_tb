@@ -23,7 +23,7 @@ class Produk extends Model
 
     public function subcategorie()
     {
-        return $this->belongsTo(Subcategory::class);
+        return $this->belongsTo(Subcategory::class, 'sub_kategori_id');
     }
 
     public function fotos(){

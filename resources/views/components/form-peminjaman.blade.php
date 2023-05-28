@@ -1,6 +1,5 @@
 {{-- @dd($update) --}}
 <div class="container-parent">
-    @if ($page == 'public' || (count($update) > 0))
     <div class="mt-3">
         <div class="col-md-12">
             <label for="nama" class="form-label">Nama</label>
@@ -14,7 +13,6 @@
                 value="{{ (count($update) > 0) ? $update['email'] : old('email') }}">
         </div>
     </div>
-    @endif
     <div class="mt-3">
         <div class="col-md-12">
             <label for="kelas" class="form-label">Kelas</label>

@@ -21,4 +21,8 @@ class Ruang extends Model
     {
         return $this->hasMany(Produk::class);
     }
+
+    public function peminjaman(){
+        return $this->hasMany(Peminjaman::class);
+    }
 }

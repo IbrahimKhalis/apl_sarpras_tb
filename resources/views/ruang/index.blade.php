@@ -15,14 +15,9 @@
 </div>
 <div class="search hidden sm:block">
     <form action="{{ route('ruang.index') }}" method="GET">
-        <input type="search" class="search__input form-control border-transparent" id="myInput" name="search"title="Cari Ruangan" placeholder="Search..">
+        <input type="search" class="search__input form-control border-transparent" id="myInput" name="search"
+            title="Cari Ruangan" placeholder="Search..">
     </form>
-   
-    
-</div>
-<div class="mt-3">
-   
-    
 </div>
 <div class="intro-y box p-5 mt-5">
     <div class="overflow-x-auto">
@@ -38,31 +33,28 @@
             </thead>
             <tbody>
                 @foreach ($datas as $data)
-                    <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td><a href="{{ url('/data-inventaris/ruang', $data->id) }}">{{ $data->name}}</a></td>
-                        <td>{{ $data->kategori ? $data->kategori->nama : '' }}</td>
-                        <td>{{ $data->bisa_dipinjam}}</td>
-                        <td class="table-report__action w-56">
-                            <div class="flex">
-                                <a class="flex items-center mr-3" href="{{ route('ruang.edit', $data->id) }}"> <i
-                                        data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                        @if (auth()->user()->can('delete_ruang'))
-                                        <button type="submit" class="btn btn-danger btn-sm rounded"
-                                            onclick="deleteData('{{ route('ruang.destroy', [$data->id]) }}')"
-                                        >Hapus</button>
-                                    </td>
-                                    @endif
-                            </div>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td><a href="{{ url('/data-inventaris/ruang', $data->id) }}">{{ $data->name}}</a></td>
+                    <td>{{ $data->kategori ? $data->kategori->nama : '' }}</td>
+                    <td>{{ $data->bisa_dipinjam}}</td>
+                    <td class="table-report__action w-56">
+                        <div class="flex">
+                            <a class="flex items-center mr-3" href="{{ route('ruang.edit', $data->id) }}"> <i
+                                    data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
+                            @if (auth()->user()->can('delete_ruang'))
+                            <button type="submit" class="btn btn-danger btn-sm rounded"
+                                onclick="deleteData('{{ route('ruang.destroy', [$data->id]) }}')">Hapus</button>
+                    </td>
+                    @endif
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
+</div>
 
-    <div class="mt-5">
-        {{ $datas->links() }}
-    </div>
+<div class="mt-5">
+    {{ $datas->links() }}
+</div>
 @endsection

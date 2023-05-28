@@ -107,23 +107,18 @@ class KategoriController extends Controller
 
     public function destroy($id)
     {
-        $kategori = Kategori::find($id);
+        $kategori = Kategori::findOrFail($id);
 
-        if (!$kategori) {
-            return response()->json([
-                'massages' => "The data that wanna be deleted Not Found!"
-            ], 404);
+        if ($kategori->subcategory()->count() > 0) {
+            return redirect()->back()->with('msg_error', 'Kategori ini sudah digunakan pada sub kategori tidak dapat dihapus');
+        }
+
+        if ($kategori->ruang()->count() > 0) {
+            return redirect()->back()->with('msg_error', 'Kategori ini sudah digunakan pada ruang tidak bisa dihapus');
         }
 
         $delete = $kategori->delete();
-
-        if (!$delete) {
-            return response()->json([
-                'massages' => "Failed to Delete!"
-            ], 400);
-        }
-
-        return redirect('/');
+        return redirect()->back()->with('msg_success', 'Berhasil dihapus');
     }
 
     public function updateSub(UpdateSubcategoriRequest $request, $id)

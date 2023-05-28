@@ -33,7 +33,7 @@
         @if (isset($data))
         @method('patch')
         @endif
-        <x-FormPeminjaman :page="$page" :update="$data" :kelas="$kelas"></x-FormPeminjaman>
+        <x-FormPeminjaman :page="$page" :update="isset($data) ? $data : []" :kelas="$kelas"></x-FormPeminjaman>
         <div class="div-other">
             <div class="mt-3">
                 <div class="col-md-12">

@@ -28,7 +28,8 @@
         <div class="intro-y box p-5 mt-5">
             <div class="row container-filter">
                 <div class="col-md-6 mb-3 mt-3">
-                    <input type="text" class="form-control" placeholder="Search..." name="search" onkeyup="filter_user()">
+                    <input type="text" class="form-control" placeholder="Search..." name="search"
+                        onkeyup="filter_user()">
                 </div>
             </div>
             <div class="table table-responsive table-hover text-center">
@@ -55,13 +56,15 @@
                                     <form action="{{ route('users.shows', ['role' => $role, 'id' => $user->id]) }}"
                                         method="get">
                                         @include('mypartials.tahunajaran')
-                                        <button class="btn btn-sm btn-primary rounded" style="width: 4rem;">Detail</button>
+                                        <button class="btn btn-sm btn-primary rounded"
+                                            style="width: 4rem;">Detail</button>
                                     </form>
                                     @if (auth()->user()->can('edit_users'))
                                     <form action="{{ route('users.edit', ['role' => $role, 'id' => $user->id]) }}"
                                         method="get">
                                         @include('mypartials.tahunajaran')
-                                        <button class="btn btn-sm btn-warning rounded mt-2 mb-2" style="width: 4rem;">Edit</button>
+                                        <button class="btn btn-sm btn-warning rounded mt-2 mb-2"
+                                            style="width: 4rem;">Edit</button>
                                     </form>
                                     @endif
                                     @if (auth()->user()->can('delete_users'))

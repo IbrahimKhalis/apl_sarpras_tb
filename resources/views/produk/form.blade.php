@@ -1,7 +1,6 @@
 @extends('mylayouts.main')
 
 @push('css')
-{{-- <link rel="stylesheet" href="/fancybox/jquery.fancybox-1.3.4.css" type="text/css" media="screen" /> --}}
 <style>
     .title {
         font-weight: 500;
@@ -102,7 +101,7 @@
                 </div>
                 <div class="mt-3">
                     <label for="crud-form-1" class="form-label">Sekali Pakai</label>
-                    <input type="checkbox" class="form-control" name="sekali_pakai">
+                    <input type="checkbox" class="form-control" name="sekali_pakai" {{ isset($data) ? ($data->sekali_pakai ? 'checked' : '') : '' }}>
                 </div>
                 <div class="mt-3">
                     <label for="crud-form-1" class="form-label">Foto</label>

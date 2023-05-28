@@ -107,7 +107,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('produk/{sub_id}', [ProdukController::class, 'get'])->name('produk.get');
 
     Route::post('peminjamans/penagihan', [PeminjamanController::class, 'penagihan'])->name('peminjaman.penagihan');
-    Route::resource('peminjamans', PeminjamanController::class)->except('create', 'store');
+    Route::resource('peminjamans', PeminjamanController::class);
     Route::get('ruang/updateLokasiBarang/{id}', [RuangController::class, 'transfer_produk']);
     Route::patch('ruang/updateLokasiBarang/{id}', [RuangController::class, 'updateLokasiBarang'])->name('ruang.updateLokasiBarang');
 });
