@@ -75,8 +75,13 @@ class PeminjamanController extends Controller
                 'ket' => $request->ket,
                 'sekolah_id' => Auth::user()->sekolah_id,
                 'tahun_ajaran_id' => $tahun_ajaran->id,
-                'kode' => $this->genereate_kode(Auth::user()->sekolah_id)
+                'kode' => $this->genereate_kode(Auth::user()->sekolah_id),
+                'status_pengembalian' => $request->status_pengembalian ? true : false
             ];
+
+            if (!$request->produk_id) {
+                return redirect()->back()->with('tidak ada produk dipilih');
+            }
 
             if ($request->status == 'diterima') {
                 $request->validate([
@@ -108,7 +113,7 @@ class PeminjamanController extends Controller
                 if ($request->status == 'diterima') {
                     if (count($request->produk_id) > 0) {
                         $produk = DB::table('produks')->where('id', $request->produk_id[0])->first();
-                        if (!$produk->sekali_pakai) {
+                        if ($produk->sekali_pakai) {
                             $data['status_pengembalian'] = true;
                         }
                     }
@@ -200,8 +205,13 @@ class PeminjamanController extends Controller
                 'kelas_id' => $request->kelas,
                 'kategori_id' => $request->kategori_id,
                 'status' => $request->status,
-                'ket' => $request->ket
+                'ket' => $request->ket,
+                'status_pengembalian' => $request->status_pengembalian ? true : false
             ];
+
+            if (!$request->produk_id) {
+                return redirect()->back()->with('tidak ada produk dipilih');
+            }
 
             if ($request->status == 'diterima') {
                 $request->validate([
@@ -252,7 +262,7 @@ class PeminjamanController extends Controller
                 if ($request->status == 'diterima') {
                     if (count($request->produk_id) > 0) {
                         $produk = DB::table('produks')->where('id', $request->produk_id[0])->first();
-                        if (!$produk->sekali_pakai) {
+                        if ($produk->sekali_pakai) {
                             $data['status_pengembalian'] = true;
                         }
                     }
