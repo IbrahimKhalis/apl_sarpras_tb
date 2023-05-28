@@ -30,8 +30,11 @@ class Produk extends Model
         return $this->hasMany(Foto::class);
     }
 
-    // public function jurusan()
-    // {
-    //     return $this->belongsTo(Jurusan::class);
-    // }
+    public function ruang(){
+        return $this->belongsTo(Ruang::class);
+    }
+
+    public function peminjaman(){
+        return $this->belongsToMany(Peminjaman::class, 'peminjaman_produk', 'produk_id', 'peminjaman_id');
+    }
 }

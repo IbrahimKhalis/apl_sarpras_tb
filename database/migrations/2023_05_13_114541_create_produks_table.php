@@ -21,12 +21,13 @@ return new class extends Migration
             $table->foreignId('ruang_id')->nullable()->constrained('ruangs');
             $table->foreignId('tahun_ajaran_id')->constrained('tahun_ajarans');
             $table->string('nama');
-            $table->string('kode');
+            $table->string('kode')->unique();
             $table->string('merek');
             $table->enum('kondisi', ['B', 'KB', "RB"]);
             $table->text('ket_produk');
             $table->text('ket_kondisi');
-            $table->boolean('dipinjam');
+            $table->boolean('dipinjam')->default(0);
+            $table->boolean('sekali_pakai')->default(0);
             $table->timestamps();
         });
     }

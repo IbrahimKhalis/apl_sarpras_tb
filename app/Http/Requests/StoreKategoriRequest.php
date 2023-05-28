@@ -25,8 +25,16 @@ class StoreKategoriRequest extends FormRequest
     {
         return [
             'nama' => 'required', 
-            'jenis' => 'required', 
-            'kode' => 'nullable|unique:kategoris,kode'
+            'jenis' => 'required|min:2', 
+            'sub.*' => 'required',
+            'kode.*' => 'unique:subcategories,kode' 
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'jenis' => 'Choose a type',
         ];
     }
 }

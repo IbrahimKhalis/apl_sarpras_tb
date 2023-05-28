@@ -14,4 +14,8 @@ class Sekolah extends Model
     public function user(){
         return $this->hasMany(User::class);
     }
+
+    public function kategori(){
+        return $this->hasMany(Kategori::class);
+    }
 }
