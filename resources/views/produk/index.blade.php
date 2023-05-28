@@ -5,6 +5,7 @@
     <h2 class="text-lg font-Medium mr-auto">
         Data Produk
     </h2>
+    @can('add_produk')
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
         <button class="btn btn-primary shadow-md mr-2">
             <a href="{{ route('produk.create') }}">
@@ -12,6 +13,7 @@
             </a>
         </button>
     </div>
+    @endcan
 </div>
 <div class="mt-3">
     <div class="search hidden sm:block">
@@ -27,7 +29,9 @@
                     <th class="whitespace-nowrap">Sub Kategori</th>
                     <th class="whitespace-nowrap">Merek</th>
                     <th class="whitespace-nowrap">Kondisi</th>
+                    @can('edit_produk', 'delete_produk')
                     <th class="whitespace-nowrap">Action</th>
+                    @endcan
                 </tr>
             </thead>
             <tbody>
@@ -39,13 +43,16 @@
                     </td>
                     <td>{{ $data->merek }}</td>
                     <td>{{ $data->kondisi }}</td>
-                    {{-- <td>{{ $data->jumlah }}</td> --}}
                     <td class="table-report__action w-56">
                         <div class="flex">
+                            @can('edit_produk')
                             <a class="flex items-center mr-3" href="{{ route('produk.edit', $data->id) }}"> <i
                                     data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
+                            @endcan
+                            @can('delete_produk')
                             <button type="submit" class="btn btn-danger btn-sm rounded"
                                 onclick="deleteData('{{ route('produk.destroy', [$data->id]) }}')">Hapus</button>
+                            @endcan
                         </div>
                     </td>
                 </tr>
