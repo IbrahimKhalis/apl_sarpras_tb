@@ -151,7 +151,7 @@
         </div>
         @if (isset($data) && $data['status'] == 'diterima')
         <div class="mt-3">
-            <label for="crud-form-1" class="form-label">Penagjuan selesai</label>
+            <label for="crud-form-1" class="form-label">Pengajuan selesai</label>
             <input type="checkbox" class="form-control" name="status_pengembalian" {{ isset($data) ? ($data['status_pengembalian'] ?
             'checked' : '') : '' }}>
         </div>
