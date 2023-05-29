@@ -67,7 +67,7 @@
         @if (isset($data))
         @foreach ($data->subcategory as $sub)
         <div class="sub-{{ $sub->id }} mt-5">
-            <div class="flex gap-3 justify-center items-start">
+            <div class="flex gap-3 items-start">
                 <div class="div-sub">
                     <input id="crud-form-1" type="text" class="form-control w-full" placeholder="Sub" required
                         value="{{ $sub->nama }}">

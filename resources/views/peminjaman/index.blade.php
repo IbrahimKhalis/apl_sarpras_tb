@@ -5,7 +5,13 @@
     <h2 class="text-lg font-Medium mr-auto">
         Peminjaman
     </h2>
-    <a href="{{ route('peminjamans.create') }}">Tambah Peminjaman</a>
+    <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
+        <button class="btn btn-primary shadow-md mr-2">
+            <a href="{{ route('peminjamans.create') }}">
+                Tambah Peminjaman
+            </a>
+        </button>
+    </div>
 </div>
 
 <div class="intro-y box p-5 mt-5">
