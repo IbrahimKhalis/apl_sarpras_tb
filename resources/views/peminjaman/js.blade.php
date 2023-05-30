@@ -6,10 +6,12 @@ function syncKategori(kategori_id = null){
     $('.div-jml-peminjaman, .div-subkategori, .div-ruang').remove();
 
     if ($('#jenis').val() == 'sarana') {
-        $('.form-peminjaman .container-parent').append($('#template-sub').html())
-    }else{
-        $('.form-peminjaman .container-parent').append($('#template-ruang').html())
-    }
+    $('.form-peminjaman .container-parent').append($('#template-sub').html());
+    $('#template-ruang').hide();
+} else {
+    $('.form-peminjaman .container-parent').append($('#template-ruang').html());
+    $('#template-sub').remove();
+}
 
     return $.ajax({
             type: "POST",

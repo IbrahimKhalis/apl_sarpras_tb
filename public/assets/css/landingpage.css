@@ -12,13 +12,12 @@ html body{
 }
 .containers {
     background-color: #1C438C;
-    width: 100%;
+    width: 100vw;
     min-height: 750px;
     justify-content: center;
-    padding: 300px 10px 0px 10px;
+    padding: 300px 100px 0px 100px;
     display: flex;
-    gap: 100px;
-    flex-wrap: wrap;
+    gap: 5%;
     z-index: 2;
     
 }
@@ -56,15 +55,20 @@ html body{
 }
 
 .image-bian img {
-    max-width: 630px;
+    width: 100vw;
     height: auto;
     margin-top: -70px;
 }
 
 @media (max-width:1260px) {
+   .containers{
+    padding: 150px 100px 0px 100px;
+    flex-wrap: wrap;
+   }
     .image-bian img {
-        margin-top: 0px;
-        width: 350px;
+        margin-top: 50px;
+        margin-bottom: 50px;
+        width: 650px;
     }
 }
 
@@ -396,7 +400,7 @@ html body{
   }
   
   @media only screen and (max-width: 600px) {
-    .container {
+    .faq {
       padding: 80px;
     }
   }
