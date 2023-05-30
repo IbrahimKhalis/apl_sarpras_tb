@@ -258,7 +258,7 @@
     <div class="content-landing">
         <div class="content-1">
             <div class="img-content">
-                <img src="{{ asset('assets/img/content-1.jpg') }}" alt="">
+                <img src="{{ asset('assets/img/content-1.jpg') }}" alt="" style="width: 30vw; object-fit: cover">
             </div>
             <div class="text-content">
                 <ul>
