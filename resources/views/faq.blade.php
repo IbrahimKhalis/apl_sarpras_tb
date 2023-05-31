@@ -6,7 +6,7 @@
 
 @section('content')
 <main>
-    <div class="container">
+    <div class="containers">
         <div class="text-header">
             <h2>FAQ</h2>
             <h1>Frequently Ask Question</h1>
@@ -22,7 +22,7 @@
             <img src="{{ asset('assets/img/tigan welcome.png') }}" alt="">
         </div>
     </div>
-    <svg width="100%" height="100%" id="svg" viewBox="0 0 1440 390" xmlns="http://www.w3.org/2000/svg"
+    <svg class="wave" width="100%" height="100%" id="svg" viewBox="0 0 1440 390" xmlns="http://www.w3.org/2000/svg"
         class="transition duration-300 ease-in-out delay-150">
         <style>
             .path-0 {

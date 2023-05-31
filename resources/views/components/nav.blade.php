@@ -1,7 +1,7 @@
 <header>
     <div class="nav">
         <div class="title">
-            <a href="#" class="logo">Sarpras</a>
+            <a href="{{ route('index') }}" class="logo">Sarpras</a>
         </div>
         <ul class="navbar">
             <li><a href="{{ route('index') }}">Home</a></li>
