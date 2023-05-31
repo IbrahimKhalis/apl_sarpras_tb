@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RuangRequest;
 use App\Models\Jurusan;
 use App\Models\Kategori;
+use App\Models\Produk;
 use App\Models\Ruang;
 use Illuminate\Http\Request;
 use Auth, DB;
@@ -23,9 +24,15 @@ class RuangController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $datas = Ruang::paginate(10);
+        $search = $request->query('search');
+        if(!empty($search)){
+            $datas = Ruang::where('name', 'LIKE', '%' .$request->search.'%')->paginate(10);
+        }else{
+            $datas = Ruang::paginate(10);
+        }
+        
         return view('ruang.index', compact('datas'));
     }
 
@@ -50,6 +57,8 @@ class RuangController extends Controller
     {
         $data = Ruang::create([
             'name' => $request->name,
+            'luas' => $request->luas,
+            'no_reg' => $request->no_reg,
             'kategori_id' => $request->kategori_id,
             'ruang_dipinjam' => $request->ruang_dipinjam ? true : false,
             'produk_dipinjam' => $request->produk_dipinjam ? true : false,
@@ -69,8 +78,13 @@ class RuangController extends Controller
      */
     public function show($id)
     {
-        $ruang = Ruang::find($id);
-        return $ruang;
+        $ruang = Ruang::findOrFail($id);
+
+        $produks_dalam_ruang = $ruang->produk;
+
+        $kategori = $ruang->kategori;
+
+        return view('ruang.show', compact('ruang', 'produks_dalam_ruang', 'kategori'));
     }
 
     /**
@@ -81,7 +95,7 @@ class RuangController extends Controller
      */
     public function edit($id)
     {
-        $data = Ruang::find($id);
+        $data = Ruang::findOrFail($id);
         if ($data->sekolah_id != Auth::user()->sekolah_id) {
             abort(403);
         }
@@ -120,23 +134,20 @@ class RuangController extends Controller
      */
     public function destroy($id)
     {
-        $find = Ruang::find($id);
+        $data = Ruang::findOrFail($id);
 
-        if(!$find){
-            return response()->json([
-                'massages' => "Updated data not found"
-            ], 404);
+        if ($data->peminjaman()->count() > 0) {
+            return redirect()->back()->with('msg_error', 'Telah terjadi peminjaman pada ruang ini tidak bisa dihapus');
         }
 
-        $destroy = $find->delete();
-
-        if(!$destroy){
-            return response()->json([
-                'massages' => "data failed to delete"
-            ], 400);
+        foreach ($data->produk as $key => $produk) {
+            $produk->update([
+                'ruang_id' => null
+            ]);
         }
 
-        return redirect('/'); //change this!
+        $data->delete();
+        return redirect()->back()->with('msg_success', 'Berhasil dihapus');
     }
 
     public function tambah_produk(Request $request){
@@ -149,5 +160,38 @@ class RuangController extends Controller
         return response()->json([
             'message' => 'Berhasil ditambahkan'
         ], 200);
+    }
+
+    public function transfer_produk($idBarang){
+        $barang = Produk::find($idBarang);
+
+        $ruang = $barang->ruang;
+
+        $ruangs = Ruang::all();
+
+        return view('ruang.produk.transfer', compact('barang', 'ruang', 'ruangs'));
+    }
+
+    public function updateLokasiBarang(Request $request, $id){
+
+        $find = Produk::find($id);
+
+        if(!$find){
+            return response()->json([
+                'massages' => "Updated data not found"
+            ], 404);
+        } 
+
+        $update = $find->update([
+            'ruang_id' => $request->ruang_baru
+        ]);
+
+        if(!$update){
+            return response()->json([
+                'massages' => "Update ERROR"
+            ], 400);
+        }
+
+        return redirect('/'); //change this!!
     }
 }

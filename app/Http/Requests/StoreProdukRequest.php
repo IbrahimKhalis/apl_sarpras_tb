@@ -34,6 +34,7 @@ class StoreProdukRequest extends FormRequest
             'ket_produk' => ['string'],
             'ket_kondisi' => ['string'],
             'jumlah' => ['string'],
+            'fotos.*' => 'file|max:5025|image'
         ];
     }
 }

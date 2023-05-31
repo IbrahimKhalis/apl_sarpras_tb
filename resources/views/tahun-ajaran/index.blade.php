@@ -80,4 +80,7 @@
         </table>
     </div>
 </div>
+<div class="mt-5">
+    {{ $tahun_ajarans->links() }}
+</div>
 @endsection

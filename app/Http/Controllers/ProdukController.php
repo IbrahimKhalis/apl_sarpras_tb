@@ -13,7 +13,7 @@ use App\Http\Requests\UpdateProdukRequest;
 use App\Models\Kategori;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-
+use Illuminate\Http\Request;
 
 class ProdukController extends Controller
 {
@@ -32,10 +32,9 @@ class ProdukController extends Controller
      */
     public function index()
     {
-        $produks = DB::table('produks')->select('produks.*')
-                                        ->join('kategoris', 'kategoris.id', 'produks.kategori_id')
-                                        ->where('kategoris.sekolah_id', Auth::user()->sekolah_id)
-                                        ->paginate(10);
+        $produks = Produk::select('produks.*')
+                                ->where('produks.sekolah_id', Auth::user()->sekolah_id)
+                                ->paginate(10);
         return view('produk.index', compact('produks'));
     }
 
@@ -46,6 +45,12 @@ class ProdukController extends Controller
      */
     public function create()
     {
+        $tahun_ajaran = getTahunAjaran();
+
+        if (!$tahun_ajaran) {
+            return redirect()->route('produk.index')->with('msg_error', 'Tidak ada tahun ajaran ditemukan');
+        }
+
         $kategoris = DB::table('kategoris')
                         ->where('sekolah_id', Auth::user()->sekolah_id)
                         ->where('jenis', 'sarana')
@@ -53,26 +58,29 @@ class ProdukController extends Controller
         return view('produk.form', compact('kategoris'));
     }
 
-    private function generate_kode($kode, $kategori, $ke){                            
-        $kode_kategori = sprintf('%0'. 5 .'d', $kode);
-        $result = $kategori->kode . $kode_kategori;
+    private function generate_kode($request, $kode){   
+        $last_produk = DB::table('produks')
+                            ->where('sub_kategori_id', $request->sub_kategori_id)
+                            ->orderByDesc('id')
+                            ->first();
+        $kode_kategori = sprintf('%0'. 5 .'d', ($last_produk ? (int)explode($kode, $last_produk->kode)[1] + 1 : 1));
+        $result = $kode . $kode_kategori;
         return $result;
     }
 
     public function store(StoreProdukRequest $request)
     {
-        DB::beginTransaction();
-        try {
-            $kategori = DB::table('kategoris')
-                                ->where('id', $request->kategori_id)
-                                ->first();
-            $last_kategori = DB::table('produks')
-                                ->where('kategori_id', $request->kategori_id)
-                                ->orderByDesc('id')
-                                ->first();
+        $tahun_ajaran = getTahunAjaran();
+        if (!$tahun_ajaran) {
+            return redirect()->route('produk.index')->with('msg_error', 'Tidak ada tahun ajaran ditemukan');
+        }
 
-            $tahun_ajaran = getTahunAjararan();
-                                
+        DB::beginTransaction();
+        try {                    
+            $sub_kategori = DB::table('subcategories')
+                            ->where('id', $request->sub_kategori_id)
+                            ->first();
+
             for ($i = 0; $i < $request->jumlah; $i++) {
                 $produk = Produk::create([
                     'sekolah_id' => Auth::user()->sekolah_id,
@@ -80,20 +88,23 @@ class ProdukController extends Controller
                     'tahun_ajaran_id' => $tahun_ajaran->id,
                     'sub_kategori_id' => $request->sub_kategori_id,
                     'nama' => ($request->name_increment ? ($request->start_increment ? ($request->nama . ' ' . $request->start_increment + $i) : ($request->nama . ' ' . $i)) : $request->nama),
-                    'kode' => $this->generate_kode(($last_kategori ? (int)explode($kategori->kode, $last_kategori->kode)[1] + ($i + 1) : 1),$kategori, $i + 1),
+                    'kode' => $this->generate_kode($request, $sub_kategori->kode),
                     'merek' => $request->merek,
                     'kondisi' => $request->kondisi,
                     'ket_produk' => $request->ket_produk,
                     'ket_kondisi' => $request->ket_kondisi,
+                    'sekali_pakai' => ($request->sekali_pakai ? true : false)
                 ]);
-                
-                foreach ($request->fotos as $key => $foto) {
-                    $randName = Str::random(24);
-                    $path = Storage::disk('public')->putFileAs('produk', $foto, $randName.'_'.$i.'.'.$foto->getClientOriginalExtension());
-                    Foto::create([
-                        'produk_id' => $produk->id,
-                        'file' => $path
-                    ]);
+            
+                if ($request->fotos) {
+                    foreach ($request->fotos as $key => $foto) {
+                        $randName = Str::random(24);
+                        $path = Storage::disk('public')->putFileAs('produk', $foto, $randName.'_'.$i.'.'.$foto->getClientOriginalExtension());
+                        Foto::create([
+                            'produk_id' => $produk->id,
+                            'file' => $path
+                        ]);
+                    }
                 }
 
                 insertLog(Auth::user()->name . " Berhasil menambahkan produk " . $produk['nama']);
@@ -101,7 +112,7 @@ class ProdukController extends Controller
             DB::commit();
             return redirect()->route('produk.index')->with('msg_success', 'Berhasil menambahkan produk');
         } catch (\Throwable $th) {
-                DB::rollback();
+            DB::rollback();
             return redirect()->route('produk.index')->with('msg_error', 'Gagal Ditambahkan');
         }
     }
@@ -114,7 +125,7 @@ class ProdukController extends Controller
      */
     public function show(Produk $produk)
     {
-        $tahun_ajaran = getTahunAjararan();
+        $tahun_ajaran = getTahunAjaran();
         validateSekolah($produk->sekolah_id);
         return isset($tahun_ajaran) ? $produk : abort(403);
 
@@ -152,8 +163,8 @@ class ProdukController extends Controller
      */
     public function update(UpdateProdukRequest $request, Produk $produk)
     {
+        DB::beginTransaction();
         try {
-            // $tahun_ajaran = getTahunAjararan();
             validateSekolah($produk->sekolah_id);
             $update = [
                 'kategori_id' => $request->kategori_id,
@@ -164,6 +175,7 @@ class ProdukController extends Controller
                 'kondisi' => $request->kondisi,
                 'ket_produk' => $request->ket_produk,
                 'ket_kondisi' => $request->ket_kondisi,
+                'sekali_pakai' => ($request->sekali_pakai ? true : false)   
             ];
 
             if ($request->kategori_id != $produk->kategori_id) {
@@ -177,27 +189,25 @@ class ProdukController extends Controller
                 
                 $update['kode'] = $this->generate_kode(($last_kategori ? (int)explode($kategori->kode, $last_kategori->kode)[1] + 1 : 1),$kategori, 1);
             }
+            
+            $produk->update($update);
 
-            if(isset($request->fotos)){
+            if ($request->produks) {                
                 foreach ($request->fotos as $key => $foto) {
-                    $path = Storage::disk('public')->putFile('produk', $foto);
-                    $data = Foto::where('produk_id',$produk->id)->first();
-                    if (Storage::disk('public')->exists("$data->file")) {
-                        Storage::disk('public')->delete("$data->file");
-                    }
-
-                    $data->update([
+                    $randName = Str::random(24);
+                    $path = Storage::disk('public')->putFileAs('produk', $foto, $randName.'_'.$produk->id.'.'.$foto->getClientOriginalExtension());
+                    Foto::create([
+                        'produk_id' => $produk->id,
                         'file' => $path
                     ]);
-
                 }
             }
 
-            $produk->update($update);
-
             insertLog(Auth::user()->name . " Berhasil mengubah produk " . $request->nama);
+            DB::commit();
             return redirect()->route('produk.index')->with('msg_success', 'Berhasil mengubah produk');
         } catch (\Throwable $th) {
+                DB::rollback();
             return redirect()->route('produk.index')->with('msg_error', 'Gagal Diubah');
         }
     }
@@ -208,18 +218,22 @@ class ProdukController extends Controller
      * @param  \App\Models\Produk  $produk
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Produk $produk)
+    public function destroy($id)
     {
-        validateSekolah($produk->sekolah_id);
-        if (!$produk) {
-            return response()->json([
-                'message' => 'The data wanna be delete Not Found!'
-            ], 400);
+        $data = Produk::findOrFail($id);
+        validateSekolah($data->sekolah_id);
+        
+        if ($data->peminjaman()->count() > 0) {
+            return redirect()->back()->with('msg_error', 'Telah terjadi peminjaman pada produk ini tidak bisa dihapus');
+        }
+        
+        if ($data->ruang_id) {
+            return redirect()->back()->with('msg_error', 'Produk ini telah diset diruang tidak bisa dihapus');
         }
 
-        $produk->delete();
+        $data->delete();
 
-        insertLog(Auth::user()->name . ' Berhasil menghapus produk ' . $produk->nama);
+        insertLog(Auth::user()->name . ' Berhasil menghapus produk ' . $data->nama);
 
         return redirect()->route('produk.index')->with('msg_success', 'Berhasil menghapus produk');
     }
@@ -228,6 +242,27 @@ class ProdukController extends Controller
         $data = Subcategory::findOrFail($sub);
         return response()->json([
             'datas' => $data->produk()->whereNull('ruang_id')->get()
+        ], 200);
+    }
+
+    public function hapus_foto(Request $request){
+        $request->validate([
+            'produk_id' => 'required',
+            'foto_id' => 'required',
+        ]);
+
+        $foto = Foto::where('produk_id', $request->produk_id)
+                        ->where('id', $request->foto_id)
+                        ->first();
+
+        if (Storage::disk('public')->exists("$foto->file")) {
+            return Storage::disk('public')->delete("$foto->file");
+        }
+
+        $foto->delete();
+
+        return response()->json([
+            'message' => 'Berhasil dihapus'
         ], 200);
     }
 }

@@ -16,4 +16,13 @@ class Ruang extends Model
     public function kategori(){
         return $this->belongsTo(Kategori::class);
     }
+
+    public function produk()
+    {
+        return $this->hasMany(Produk::class);
+    }
+
+    public function peminjaman(){
+        return $this->hasMany(Peminjaman::class);
+    }
 }

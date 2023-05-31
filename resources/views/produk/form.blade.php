@@ -54,19 +54,18 @@
                 </div>
                 <div class="mt-3">
                     <label for="crud-form-2" class="form-label">Sub Kategori</label>
-                    <select name="sub_kategori_id" id="subkategori" class=" w-full ">
+                    <select name="sub_kategori_id" id="subkategori" class=" w-full " class="form-control">
                         <option value="">Pilih Sub Kategori</option>
                         @if (isset($subcategories))
                         @foreach ($subcategories as $subcategorie)
                         <option value="{{ $subcategorie->id }}" {{ isset($data) ? ($data->sub_kategori_id ==
-                            $subcategorie->id ? 'selected' : '') : '' }}>{{ $subcategorie->nama }}</option>
+                            $subcategorie->id ? 'selected' : '') : '' }} clas>{{ $subcategorie->nama }}</option>
                         @endforeach
                         @endif
                     </select>
                 </div>
                 <div class="mt-3">
                     <label for="crud-form-2" class="form-label">Kondisi</label>
-
                     <select data-placeholder="Pilih Kondisi Dari Produkmu" class="tom-select w-full" name="kondisi"
                         id="">
                         <option value="">Pilih kondisi</option>
@@ -101,36 +100,78 @@
                         rows="6">{{ isset($data) ? ($data->ket_kondisi) : old('ket_kondisi') }}</textarea>
                 </div>
                 <div class="mt-3">
+                    <label for="crud-form-1" class="form-label">Sekali Pakai</label>
+                    <input type="checkbox" class="form-control" name="sekali_pakai" {{ isset($data) ? ($data->sekali_pakai ? 'checked' : '') : '' }}>
+                </div>
+                <div class="mt-3">
                     <label for="crud-form-1" class="form-label">Foto</label>
                     <input type="file" class="form-control w-full" name="fotos[]" multiple accept="image/*">
                 </div>
                 @if (isset($data))
                 @foreach ($data->fotos as $foto)
-                    <div class="div-foto-{{ $foto->id }}">
-                        <img src="{{ asset('storage/' . $foto->file) }}" alt="">
-                        <button type="button" onclick="hapusFoto({{ $foto->id }})">Hapus</button>
-                    </div>
+                <div class="div-foto-{{ $foto->id }}">
+                    <img src="{{ asset('storage/' . $foto->file) }}" alt="">
+                    <button type="button" onclick="hapusFoto({{ $foto->id }})">Hapus</button>
+                </div>
                 @endforeach
                 @endif
-                <div class="text-right mt-5">
-                    <a href="">
-                        <button type="button" class="btn btn-outline-secondary w-24 mr-1">Cancel</button>
-                    </a>
-                    <button type="submit" class="btn btn-primary w-24">Save</button>
-                </div>
-            </form>
+                {{-- <div class="mt-3">
+                    <label class="form-label">Upload Image</label>
+                    <div class="border-2 border-dashed dark:border-darkmode-400 rounded-md pt-4">
+                        <div class="px-4 pb-4 flex items-center cursor-pointer relative">
+                            <i data-lucide="image" class="w-4 h-4 mr-2"></i> <span class="text-primary mr-1">Upload a
+                                file</span> or drag and drop
+                            <input type="file" class="w-full h-full top-0 left-0 absolute opacity-0 cursor-pointer"
+                                id="images" name="fotos[]" multiple accept="image/*">
+                        </div>
+                    </div>
+                </div> --}}
+                {{-- @error('images')
+                <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                @enderror
+                <a id="single_image" data-fancybox="gallery"
+                    class="images-preview-div grid grid-cols-3gap-3 mt-3 object-cover"
+                    style="margin-top: 2rem; margin-bottom: 2rem; width: 2rem"></a> --}}
         </div>
+        <div class="text-right mt-5">
+            <a href="">
+                <button type="button" class="btn btn-outline-secondary w-24 mr-1">Cancel</button>
+            </a>
+            <button type="submit" class="btn btn-primary w-24">Save</button>
+        </div>
+        </form>
     </div>
+</div>
 </div>
 
 @push('js')
 <script>
-    $('#kategori').change(function(e) {
+    $(function() {
+// Multiple images preview with JavaScript
+    var previewImages = function(input, imgPreviewPlaceholder) {
+        if (input.files) {
+            var filesAmount = input.files.length;
+            for (i = 0; i < filesAmount; i++) {
+                var reader = new FileReader();
+                reader.onload = function(event) {
+                $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(imgPreviewPlaceholder);
+                }
+                reader.readAsDataURL(input.files[i]);
+            }
+        }
+    };
+    $('#images').on('change', function() {
+        previewImages(this, 'a.images-preview-div');
+    });
+});
+</script>
+<script>
+    $('#kategori').change(function (e) {
         if ($(this).val()) {
             $.ajax({
                 type: "get",
                 url: "{{ route('get.sub') }}" + `/${$(this).val()}`,
-                success: function(response) {
+                success: function (response) {
                     items = response.datas
                     $('#subkategori').empty()
                     if (response.datas) {
@@ -147,24 +188,25 @@
 </script>
 @if (!isset($data))
 <script>
-    $('.check-name-increment').on('change', function(){
+    $('.check-name-increment').on('change', function () {
         if ($(this).is(':checked')) {
             $('.div-name-increment').append('<input type="number" name="start_increment" placeholder="mulai">')
-        }else{
+        } else {
             $('.div-name-increment input[type="number"]').remove()
         }
     })
+
 </script>
 @endif
 @if (isset($data))
 <script>
-    function hapusFoto(id){
+    function hapusFoto(id) {
         $.ajax({
             type: "DELETE",
             url: "{{ route('produk.hapus_foto') }}",
             data: {
-                'produk_id' : '{{ $data->id }}',
-                'foto_id' : id
+                'produk_id': '{{ $data->id }}',
+                'foto_id': id
             },
             dataType: "json",
             beforeSend: function (e) {
@@ -173,7 +215,7 @@
                 }
             },
             success: function (response) {
-                console.log(response)
+                $('.div-foto-' + id).remove();
                 showAlert('Berhasil dihapus', 'success')
             },
             error: function (response) {
@@ -181,6 +223,7 @@
             },
         });
     }
+
 </script>
 @endif
 @endpush

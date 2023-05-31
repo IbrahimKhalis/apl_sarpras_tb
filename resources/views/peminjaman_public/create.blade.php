@@ -203,7 +203,7 @@
                 <span class="form-stepper-circle">
                     <span>1</span>
                 </span>
-                <div class="label">Membuat Ruang</div>
+                <div class="label">Pilih Sekolah</div>
             </a>
         </li>
         <li class="form-stepper-unfinished text-center form-stepper-list" step="2">
@@ -211,59 +211,51 @@
                 <span class="form-stepper-circle text-muted">
                     <span>2</span>
                 </span>
-                <div class="label text-muted">Tambah Produk</div>
+                <div class="label text-muted">Peminjaman</div>
             </a>
         </li>
     </ul>
     <section id="step-1" class="form-step">
-        <form action="{{ isset($data) ? route('ruang.update', [$data->id]) : route('ruang.store') }}" method="POST">
-            @csrf
-            @if (isset($data))
-            @method('patch')
-            @endif
-            <div class="mt-3">
-                <div>
-                    <label for="crud-form-1" class="form-label">Nama Ruang</label>
-                    <input id="crud-form-1" type="text" class="form-control w-full" name="name"
-                        value="{{ isset($data) ? $data->name : old('nama') }}" placeholder="Nama">
-                </div>
-                <div class="mt-3">
-                    <label for="crud-form-2" class="form-label">Kategori</label>
-                    <select name="kategori_id" id="" class="tom-select w-full">
-                        @foreach($kategoris as $kategori)
-                        @if ($kategori->jenis == 'prasarana')
-                        <option {{ isset($data) ? ($kategori->id == $data->kategori_id ? 'selected' : '') :'' }}
-                            value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
-                        @endif
-                        @endforeach
-                    </select>
-                </div>
-                <div class="mt-3">
-                    <label for="crud-form-2" class="form-label">Ruang Bisa Dipinjam</label>
-                    <input type="checkbox" name="ruang_dipinjam" class="form-check-input" {{ isset($data) ?
-                        ($data->ruang_dipinjam == 1 ? 'checked' : '') : '' }}>
-                </div>
-                <div class="mt-3">
-                    <label for="crud-form-2" class="form-label">Produk Bisa Dipinjam</label>
-                    <input type="checkbox" name="produk_dipinjam" class="form-check-input" {{ isset($data) ?
-                        ($data->produk_dipinjam == 1 ? 'checked' : '') : '' }}>
-                </div>
-            </div>
-            <div class="mt-3">
-                <button class="button btn-navigate-form-step" type="button" step_number="2">Next</button>
+        @foreach ($sekolahs as $sekolah)
+        <a href="javascript:;" data-tw-toggle="modal" data-tw-target="#modalSekolah" class="btn btn-primary"
+            onclick="set_identifier({{ $sekolah->id }})">{{ $sekolah->nama }}</a>
+        @endforeach
+    </section>
+    <section id="step-2" class="form-step d-none place-items-center form-stepper-active">
+        <form action="{{ route('peminjaman.store') }}" class="form-peminjaman" method="POST">
+            <x-FormPeminjaman />
+            <div class="mt-5 flex gap-3">
+                <button class="button submit-btn" type="submit" disabled>Kirim</button>
             </div>
         </form>
     </section>
-    <section id="step-2" class="form-step d-none place-items-center">
-        <div class="mt-3" style="margin-left: 40%">
-            <a href="javascript:;" data-tw-toggle="modal" data-tw-target="#modalAddProduk"
-                class="btn btn-outline-primary">Tambah Produk</a>
+</div>
+
+<div class="modalkey modal fade" id="modalSekolah" tabindex="-1" aria-labelledby="role" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{{ route('roles.store') }}" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="role">Kode Sekolah</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @csrf
+                    <input type="hidden" name="sekolah_id">
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="kode" class="form-label">Kode</label>
+                            <input class="form-control" type="text" id="kode" placeholder="Masukan Kode Sekolah"
+                                name="kode" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Kirim</button>
+                </div>
+            </form>
         </div>
-        <div class="mt-5 flex gap-3">
-            <button class="button btn-navigate-form-step">Prev</button>
-            <button class="button submit-btn">Save</button>
-        </div>
-    </section>
+    </div>
 </div>
 @endsection
 
@@ -294,15 +286,20 @@
         }
     }
 };
+</script>
+<script>
+    let identifier;
+    function set_identifier(identifier) {
+        $('input[name="sekolah_id"]').val(identifier)
+    }
 
-document.querySelectorAll(".btn-navigate-form-step").forEach((formNavigationBtn) => {
-    formNavigationBtn.addEventListener("click", () => {
-        const stepNumber = parseInt(formNavigationBtn.getAttribute("step_number"));
-        if (stepNumber == 2) {
-            let form = new FormData($('#step-1 form')[0]);
+    $('#modalSekolah form').on('submit', function(e){
+        e.preventDefault();
+        if (!identifier) {
+            let form = new FormData($(this)[0]);
             $.ajax({
                 type: "POST",
-                url: $('#step-1 form').attr('action'),
+                url: "{{ route('peminjaman.cek_kode') }}",
                 data: form,
                 dataType: "json",
                 processData: false,
@@ -313,20 +310,75 @@ document.querySelectorAll(".btn-navigate-form-step").forEach((formNavigationBtn)
                     }
                 },
                 success: function (response) {
-                    id = response.data.id
-                    $('#step-1 form').attr('action', url_update.replace(':id', id)).append('<input type="hidden" name="_method" value="patch">')
-                    showAlert('Berhasil tersimpan', 'success')
-                    navigateToFormStep(stepNumber);
+                    identifier = response.identifier;
+                    $('#modalSekolah').slideUp(300)
+                    showAlert(response.message, 'success');
+                    $('.form-peminjaman #kelas').empty()
+                    $('.form-peminjaman #kelas').append('<option value="">Pilih Kelas</option>')
+                    $.each(response.kelas, function(i,e){
+                        $('.form-peminjaman #kelas').append(`<option value="${e.id}">${e.nama}</option>`);
+                    })
+                    navigateToFormStep(2)
                 },
-                error: function (response) {
-                    console.log(response)
-                    showAlert('Gagal simpan ruang', 'error')
+                error: function (errors) {
+                    showAlert(errors.responseJSON.message, 'error')
                 },
             });
         }else{
-            navigateToFormStep(stepNumber);
+            showAlert('Anda sudah memilih sekolah', 'error')
         }
-    });
-});
+    })
+</script>
+@include('peminjaman.js')
+<script>
+    $('.form-peminjaman').on('submit', function(e){
+    e.preventDefault()
+    start_loading()
+    let form = new FormData($(this)[0])
+    form.set('identifier', identifier)
+    $.ajax({
+            type: "POST",
+            url: "{{ route('peminjaman.store') }}",
+            data: form,
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            beforeSend: function (e) {
+                if (e && e.overrideMimeType) {
+                    e.overrideMimeType("application/json;charset=UTF-8");
+                }
+            },
+            success: function (response) {
+                count_produk = null;
+                stop_loading()
+                Swal.fire({
+                    title: 'Berhasil dikirim',
+                    text: "Silahkan cek email anda untuk data pengajuan anda",
+                    icon: 'success',
+                    showCancelButton: false,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Kembali'
+                    }).then((result) => {
+                        window.location.href = '{{ route('index') }}'
+                })
+            },
+            error: function (errors) {
+                count_produk = null;
+                stop_loading();
+                Swal.fire({
+                    title: 'Failed',
+                    text: "Mohon maaf telah terjadi kesalahan, segera hubungi petugas sarpras",
+                    icon: 'error',
+                    showCancelButton: false,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Kembali'
+                    }).then((result) => {
+                        window.location.href = '{{ route('index') }}'
+                })
+            },
+        });
+})
 </script>
 @endsection

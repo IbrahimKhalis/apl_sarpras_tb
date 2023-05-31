@@ -55,26 +55,27 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 4%;
+    padding: 15px 4%;
     transition: all .50s ease;
     background-color: var(--white);
+    box-shadow: 5px 5px 5px -6px rgba(0,0,0,0.75);
 
 }
 
 .logo {
     color: var(--blue);
     font-weight: bold;
-    font-size: 30px;
+    font-size: 27px;
 }
 
 .navbar {
     display: flex;
-    gap: 80px;
+    gap: 50px;
 }
 
 .navbar a {
     color: var(--blue);
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: 700;
     padding: 5px 0;
     transition: all .50s ease;
@@ -86,9 +87,9 @@ body {
 }
 
 .main {
-    background-color: #1C438C;
-    border-radius: 20px;
-    padding: 4px 20px;
+    background-color: #00B4EB;
+    border-radius: 40px;
+    padding: 15px 40px;
 }
 
 .main a {

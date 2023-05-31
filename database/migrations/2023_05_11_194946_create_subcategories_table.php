@@ -15,8 +15,10 @@ return new class extends Migration
     {
         Schema::create('subcategories', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('sekolah_id')->constrained();
             $table->foreignId('kategori_id')->constrained();
             $table->string('nama');
+            $table->string('kode')->nullable()->unique();
             $table->timestamps();
         });
     }

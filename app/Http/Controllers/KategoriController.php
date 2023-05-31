@@ -6,6 +6,8 @@ use App\Models\Kategori;
 use App\Models\Sekolah;
 use App\Models\Subcategory;
 use App\Http\Requests\StoreKategoriRequest;
+use App\Http\Requests\UpdateKategoriRequest;
+use App\Http\Requests\UpdateSubcategoriRequest;
 use Illuminate\Http\Request;
 use DB, Auth;
 
@@ -37,16 +39,17 @@ class KategoriController extends Controller
             $kategori = Kategori::create([
                 'nama' => $request->nama,
                 'sekolah_id' => Auth::user()->sekolah_id,
-                'kode' => $request->kode,
                 'jenis' => $request->jenis,
             ]);
 
             insertLog(Auth::user()->name . ' Berhasil menambahkan kategori ' . $request->nama);
             if ($request->sub) {
-                foreach ($request->sub as $sub) {
+                foreach ($request->sub as $i => $sub) {
                     Subcategory::create([
                         'kategori_id' => $kategori->id,
+                        'sekolah_id' => Auth::user()->sekolah_id,
                         'nama' => $sub,
+                        'kode' => $request->kode[$i]
                     ]);
                     insertLog(Auth::user()->name . ' Berhasil menambahkan sub kategori ' . $sub);
                 }
@@ -71,23 +74,24 @@ class KategoriController extends Controller
         return view('kategori.form', compact('data'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateKategoriRequest $request, $id)
     {
         DB::beginTransaction();
         try {
             $kategori = Kategori::find($id);
             $kategori->update([
                 'nama' => $request->nama,
-                'kode' => $request->kode,
             ]);
 
             insertLog(Auth::user()->name . ' Berhasil mengubah kategori ' . $request->nama);
 
             if ($request->sub) {
-                foreach ($request->sub as $sub) {
+                foreach ($request->sub as $i => $sub) {
                     Subcategory::create([
                         'kategori_id' => $kategori->id,
+                        'sekolah_id' => Auth::user()->sekolah_id,
                         'nama' => $sub,
+                        'kode' => $request->kode[$i]
                     ]);
                     insertLog(Auth::user()->name . ' Berhasil menambahkan sub kategori ' . $sub);
                 }
@@ -103,30 +107,26 @@ class KategoriController extends Controller
 
     public function destroy($id)
     {
-        $kategori = Kategori::find($id);
+        $kategori = Kategori::findOrFail($id);
 
-        if (!$kategori) {
-            return response()->json([
-                'massages' => "The data that wanna be deleted Not Found!"
-            ], 404);
+        if ($kategori->subcategory()->count() > 0) {
+            return redirect()->back()->with('msg_error', 'Kategori ini sudah digunakan pada sub kategori tidak dapat dihapus');
+        }
+
+        if ($kategori->ruang()->count() > 0) {
+            return redirect()->back()->with('msg_error', 'Kategori ini sudah digunakan pada ruang tidak bisa dihapus');
         }
 
         $delete = $kategori->delete();
-
-        if (!$delete) {
-            return response()->json([
-                'massages' => "Failed to Delete!"
-            ], 400);
-        }
-
-        return redirect('/');
+        return redirect()->back()->with('msg_success', 'Berhasil dihapus');
     }
 
-    public function updateSub(Request $request, $id)
+    public function updateSub(UpdateSubcategoriRequest $request, $id)
     {
         $data = Subcategory::findOrFail($id);
         $data->update([
-            'nama' => $request->nama
+            'nama' => $request->sub,
+            'kode' => $request->kode,
         ]);
         insertLog(Auth::user()->name . ' Berhasil mengubah sub kategori');
         return response()->json([
