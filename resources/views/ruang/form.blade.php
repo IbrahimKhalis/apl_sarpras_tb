@@ -244,15 +244,21 @@
                             @endforeach
                         </select>
                     </div>
-                    <div>
+                    <div class="mt-3">
                         <label for="crud-form-1" class="form-label">Luas</label>
                         <input id="crud-form-1" type="number" class="form-control w-full" name="luas"
                             value="{{ isset($data) ? $data->luas : old('luas') }}" placeholder="Luas Tahan">
                     </div>
-                    <div>
-                        <label for="crud-form-1" class="form-label">No Registrasi</label>
-                        <input id="crud-form-1" type="string" class="form-control w-full" name="no_reg"
-                            value="{{ isset($data) ? $data->no_reg : old('no_reg') }}" placeholder="Nomor Registrasi">
+                    <div class="mt-3">
+                        <label class="form-label">No Registrasi</label>
+                        <div class="sm:grid grid-cols-3 gap-2">
+                            <div class="input-group">
+                                <div id="input-group-3" class="input-group-text">No</div>
+                                <input type="string" class="form-control"
+                                name="no_reg"
+                                value="{{ isset($data) ? $data->no_reg : old('no_reg') }}" placeholder="Masukkan Nomor Registrasi">
+                            </div>
+                        </div>
                     </div>
                     <div class="mt-3">
                         <label for="crud-form-2" class="form-label">Ruang Bisa Dipinjam</label>
