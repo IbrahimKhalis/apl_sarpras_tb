@@ -22,7 +22,7 @@ class PeminjamanExport implements FromView
 
     public function view(): View
     {
-        $datas = Peminjaman::with(['kelas', 'produk'])->get();
+        $datas = Peminjaman::with(['kelas', 'produks', 'kategori', 'subcategorie', 'sekolah', 'tahunajaran', 'ruang'])->get();
         return view("exports.peminjamanexport", compact('datas'));
     }
 }
