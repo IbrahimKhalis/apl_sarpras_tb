@@ -1,4 +1,14 @@
-.container {
+*{
+    margin: 0;
+    padding: 0;
+}
+html body{
+    padding: 0;
+}
+.wave{
+    margin-top: -1px;
+}
+.containers {
     background-color: #1C438C;
     width: 100%;
     min-height: 500px;
@@ -12,6 +22,9 @@
 
 .text-header {
     max-width: 770px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
 }
 
 .text-header h2 {
@@ -24,14 +37,13 @@
     color: var(--white);
     font-size: 56px;
     font-weight: 700;
-    margin-top: 10px;
-    margin-bottom: 20px;
 }
 
 .text-header p {
     color: #F5F6FA;
     font-size: 20px;
     font-weight: 300;
+    line-height: 25px;
 }
 
 .image-bian img {
@@ -51,7 +63,6 @@
     width: 220px;
     padding: 8px 20px 8px 20px;
     border-radius: 25px;
-    margin-top: 30px;
     font-weight: 400;
     font-size: 18px;
     border: 2px solid #ffffff;
@@ -137,6 +148,7 @@
 
 .card .title-card {
     color: #1C438C;
+    font-size: 24px;
 }
 
 .card .desc-card {
