@@ -16,6 +16,8 @@ use App\Http\Controllers\RuangController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\Public\PeminjamanController as PeminjamanPublic;
 use App\Models\Kategori;
+use App\Exports\PeminjamanExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 /*
 |--------------------------------------------------------------------------
@@ -111,6 +113,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('peminjamans', PeminjamanController::class);
     Route::get('ruang/updateLokasiBarang/{id}', [RuangController::class, 'transfer_produk']);
     Route::patch('ruang/updateLokasiBarang/{id}', [RuangController::class, 'updateLokasiBarang'])->name('ruang.updateLokasiBarang');
+
+    // export peminjanam
+    Route::get('/export', [PeminjamanController::class, 'export'])->name('export'); 
 });
 
 require __DIR__.'/auth.php';
