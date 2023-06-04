@@ -99,7 +99,7 @@ class RuangController extends Controller
         if ($data->sekolah_id != Auth::user()->sekolah_id) {
             abort(403);
         }
-        $kategoris = Kategori::where('jenis', 'prasarana')->get();
+        $kategoris = Kategori::all();
         return view('ruang.form', compact('data', 'kategoris'));
     }
 
