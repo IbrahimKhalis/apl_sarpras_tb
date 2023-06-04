@@ -42,6 +42,8 @@
                     {{-- <td>{{ $data->jumlah }}</td> --}}
                     <td class="table-report__action w-56">
                         <div class="flex">
+                            <a class="flex items-center mr-3" href="{{ route('produk.detail', $data->id) }}"> <i
+                                    data-lucide="folder" class="w-4 h-4 mr-1"></i> detail </a>
                             <a class="flex items-center mr-3" href="{{ route('produk.edit', $data->id) }}"> <i
                                     data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
                             <button type="submit" class="btn btn-danger btn-sm rounded"
