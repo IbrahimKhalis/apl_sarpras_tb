@@ -59,7 +59,6 @@ body {
     transition: all .50s ease;
     background-color: var(--white);
     box-shadow: 5px 5px 5px -6px rgba(0,0,0,0.75);
-
 }
 
 .logo {
@@ -89,7 +88,11 @@ body {
 .main {
     background-color: #00B4EB;
     border-radius: 40px;
-    padding: 15px 40px;
+    padding: 12px 30px;
+    transition: all .3s;
+}
+.main:hover{
+    background-color: #1C438C;
 }
 
 .main a {

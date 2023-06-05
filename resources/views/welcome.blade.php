@@ -171,14 +171,16 @@
 
 @section('content')
 <main>
-    
     <div class="containers">
         <div class="text-header">
-            <h1>Semua Informasi </h1>
-            <h1 class="title-header2"> Tentang Alat/Barang</h1>
-            <h1 class="title-header2"> Dalam Situs </h1>
-            <p >Situs ini membantu anda untuk memudahkan dalam Mengatur/Mengelola Pemasukan dan Pengeluaran Barang yang terjadi di lingkungan sekolah</p>
-
+            <h1>Semua Informasi Tentang Alat/Barang Dalam Situs</h1>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi ut id tempora accusantium quis sed
+                natus saepe maxime libero iste. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Culpa
+                cumque, labore quas provident debitis vitae possimus doloremque tenetur neque odit. Lorem ipsum
+                dolor sit, amet consectetur adipisicing elit. Qui, dolorem? lorem doler adisipet master.</p>
+            <div class="button-faq">
+              <a class="btn" href="#more" onclick="links()">Lihat lebih banyak<div class="bx bx-chevron-down"></div></a>
+            </div>
         </div>
         <div class="image-bian">
             <img src="{{ asset('assets/img/dashboard-sarpras.png') }}" style="border-radius: 20px; border: solid 10px white" alt="">
@@ -255,10 +257,10 @@
                 class="transition-all duration-300 ease-in-out delay-150 path-1"></path>
         </svg>
     </div>
-    <div class="content-landing">
+    <div class="content-landing" id="more">
         <div class="content-1">
             <div class="img-content">
-                <img src="{{ asset('assets/img/content-1.jpg') }}" alt="" style="width: 30vw; object-fit: cover">
+                <img src="{{ asset('assets/img/content-1.jpg') }}" alt="" style="">
             </div>
             <div class="text-content">
                 <ul>
@@ -279,7 +281,7 @@
 
             </div>
         </div>
-        <div class="content-2" style="gap: 500px">
+        <div class="content-2">
             <div class="text-content">
                 <ul>
                     <li>
@@ -297,12 +299,12 @@
                 </ul>
             </div>
             <div class="img-content">
-                <img src="{{ asset('assets/img/sarpras-info.jpg') }}" alt="" style="height: 674px; border-radius: 20px; width: 427px; object-fit: cover">
+                <img src="{{ asset('assets/img/sarpras-info.jpg') }}" alt="">
             </div>
         </div>
         <div class="content-3">
           <div class="img-content">
-            <img src="{{ asset('assets/img/dashboard-sarpras.png') }}" alt="" style="border-radius: 20px; border: solid 10px black; width: 130vw">
+            <img src="{{ asset('assets/img/dashboard-sarpras.png') }}" alt="">
           </div>
           <div class="text-content">
             <ul>
@@ -318,7 +320,7 @@
             </ul>
           </div>
         </div>
-        <div class="content-4" style="gap: 400px">
+        <div class="content-4">
           <div class="text-content">
               <ul>
                   <li>
@@ -333,7 +335,7 @@
               </ul>
           </div>
           <div class="img-content">
-              <img src="{{ asset('assets/img/dashboard-mobile-sarpras.png') }}" alt=""  style="width:493px; height:674px; border-radius: 20px; border: solid 10px black">
+              <img src="{{ asset('assets/img/dashboard-mobile-sarpras.png') }}" alt="">
           </div>
       </div>
     </div>

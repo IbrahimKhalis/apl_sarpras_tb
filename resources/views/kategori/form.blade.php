@@ -83,14 +83,13 @@
         </div>
         @endforeach
         @endif
-
         @if (old('sub'))
         @foreach (old('sub') as $key => $sub)
         <div class="sub-{{ $key }} mt-5">
             <div class="flex gap-3 justify-center items-start">
                 <div>
                     <input id="crud-form-1" type="text"
-                        class="form-control w-full @error('sub.' . $key) border-red-500 @enderror" placeholder="Sub"
+                        class="form-control  @error('sub.' . $key) border-red-500 @enderror" placeholder="Sub"
                         required value="{{ $sub }}" name="{{ 'sub[]' }}">
                     @error('sub.' . $key)
                     <div class="text-red-500">
@@ -100,7 +99,7 @@
                 </div>
                 <div>
                     <input id="crud-form-1" type="text"
-                        class="form-control w-full @error('kode.' . $key) border-red-500 @enderror"
+                        class="form-control  @error('kode.' . $key) border-red-500 @enderror"
                         name="{{ 'kode[]' }}" placeholder="Kode" value="{{ old('kode')[$key] }}" required>
                     @error('kode.' . $key)
                     <div class="text-red-500">

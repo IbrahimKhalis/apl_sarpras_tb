@@ -65,6 +65,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::resource('kategori', KategoriController::class);
         Route::delete('produk/hapus-foto', [ProdukController::class, 'hapus_foto'])->name('produk.hapus_foto');
         Route::resource('produk', ProdukController::class);
+        Route::get('produk/{id}/detail', [ProdukController::class, 'detail'])->name('produk.detail');
         Route::post('ruang/tambah-produk', [RuangController::class, 'tambah_produk'])->name('ruang.tambah_produk');
         Route::resource('ruang', RuangController::class);
     });

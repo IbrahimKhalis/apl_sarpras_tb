@@ -153,6 +153,22 @@ class ProdukController extends Controller
 
         return view('produk.form', compact('data','kategoris', 'subcategories'));
     }
+    public function detail($id)
+    {
+        $data = Produk::findOrFail($id);
+        validateSekolah($data->sekolah_id);
+        $kategoris = DB::table('kategoris')
+                        ->where('sekolah_id', Auth::user()->sekolah_id)
+                        ->where('jenis', 'sarana')
+                        ->get();
+        $subcategories = DB::table('subcategories')->select('subcategories.*')
+                                                    ->join('kategoris', 'kategoris.id', 'subcategories.kategori_id')
+                                                    ->where('kategoris.sekolah_id', Auth::user()->sekolah_id)
+                                                    ->where('subcategories.kategori_id', $data->kategori_id)
+                                                    ->get();
+
+        return view('produk.detail', compact('data','kategoris', 'subcategories'));
+    }
 
     /**
      * Update the specified resource in storage.

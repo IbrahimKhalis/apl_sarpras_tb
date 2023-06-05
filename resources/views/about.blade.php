@@ -6,7 +6,7 @@
 
 @section('content')
 <main>
-    <div class="container">
+    <div class="containers">
         <div class="text-header">
             <h2>About Us</h2>
             <h1>Sarana Prasarana</h1>
