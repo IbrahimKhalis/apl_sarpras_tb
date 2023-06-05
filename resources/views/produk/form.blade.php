@@ -32,7 +32,7 @@
                 @if (!isset($data))
                 <div class="div-name-increment">
                     <label for="">Nama Produk increment?</label>
-                    <input type="checkbox" name="name_increment" class="check-name-increment">
+                    <input type="checkbox" name="name_increment" class="check-name-increment form-check-input">
                 </div>
                 @endif
                 <div class="mt-3">
@@ -54,7 +54,7 @@
                 </div>
                 <div class="mt-3">
                     <label for="crud-form-2" class="form-label">Sub Kategori</label>
-                    <select name="sub_kategori_id" id="subkategori" class=" w-full " class="form-control">
+                    <select name="sub_kategori_id" id="subkategori" class="tom-select w-full " class="form-control">
                         <option value="">Pilih Sub Kategori</option>
                         @if (isset($subcategories))
                         @foreach ($subcategories as $subcategorie)
@@ -101,7 +101,7 @@
                 </div>
                 <div class="mt-3">
                     <label for="crud-form-1" class="form-label">Sekali Pakai</label>
-                    <input type="checkbox" class="form-control" name="sekali_pakai" {{ isset($data) ? ($data->sekali_pakai ? 'checked' : '') : '' }}>
+                    <input type="checkbox" class="form-check-input ml-1" name="sekali_pakai" {{ isset($data) ? ($data->sekali_pakai ? 'checked' : '') : '' }}>
                 </div>
                 <div class="mt-3">
                     <label for="crud-form-1" class="form-label">Foto</label>
@@ -134,7 +134,7 @@
                     style="margin-top: 2rem; margin-bottom: 2rem; width: 2rem"></a> --}}
         </div>
         <div class="text-right mt-5">
-            <a href="">
+            <a href="{{ route('produk.index') }}">
                 <button type="button" class="btn btn-outline-secondary w-24 mr-1">Cancel</button>
             </a>
             <button type="submit" class="btn btn-primary w-24">Save</button>
@@ -190,7 +190,7 @@
 <script>
     $('.check-name-increment').on('change', function () {
         if ($(this).is(':checked')) {
-            $('.div-name-increment').append('<input type="number" name="start_increment" placeholder="mulai">')
+            $('.div-name-increment').append('<input type="number" name="start_increment" placeholder="mulai" class="form-control mt-3">')
         } else {
             $('.div-name-increment input[type="number"]').remove()
         }
