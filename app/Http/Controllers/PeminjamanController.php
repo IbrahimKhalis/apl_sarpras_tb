@@ -13,6 +13,8 @@ use App\Mail\PeminjamanMail;
 use App\Mail\PenagihanMail;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
+use App\Exports\PeminjamanExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PeminjamanController extends Controller
 {
@@ -349,5 +351,10 @@ class PeminjamanController extends Controller
 
         Mail::to($peminjaman->email)->send(new PenagihanMail($request->pesan));
         return redirect()->back()->with('msg_success', 'Berhasil dikirim');
+    }
+
+    public function export()
+    {
+        return Excel::download(new PeminjamanExport, "Data Peminjaman .xlsx");
     }
 }

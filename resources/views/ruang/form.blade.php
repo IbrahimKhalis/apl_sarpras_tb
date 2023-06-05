@@ -277,9 +277,32 @@
             </form>
         </section>
         <section id="step-2" class="form-step d-none place-items-center">
-            <div class="mt-3" style="margin-left: 40%">
-                <a href="javascript:;" data-tw-toggle="modal" data-tw-target="#modalAddProduk"
-                    class="btn btn-outline-primary">Tambah Produk</a>
+         
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <label for="kategori" class="form-label">Kategori</label>
+                    <select name="kategori_id" class="tom-select w-full" id="kategori">
+                        <option value="">Pilih Kategori</option>
+                        @foreach($kategoris as $kategori)
+                        @if ($kategori->jenis == 'sarana')
+                        <option {{ isset($data) ? ($kategori->id == $data->kategori_id ? 'selected' : '') :'' }}
+                            value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
+                        @endif
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mt-5">
+                    <label for="subkategori" class="form-label">Sub Kategori</label>
+                    <select name="subkategori_id" class="form-select w-full" id="subkategori">
+                        <option value="">Pilih Sub Kategori</option>
+                    </select>
+                </div>
+                <div class="mt-5">
+                    <label for="produk" class="form-label">Produk</label>
+                    <select name="produk_id[]" id="produk" class="form-select w-full" multiple>
+                        <option value="">Pilih Produk</option>
+                    </select>
+                </div>
             </div>
             <div class="mt-5 flex gap-3">
                 <button class="button btn-navigate-form-step">Prev</button>
@@ -287,50 +310,6 @@
             </div>
         </section>
 
-    </div>
-</div>
-
-<div class="modalkey modal fade" id="modalAddProduk" tabindex="-1" aria-labelledby="role" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <form>
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="role">Tambah Produk</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row mb-3">
-                        <div class="col-md-12">
-                            <label for="kategori" class="form-label">Kategori</label>
-                            <select name="kategori_id" class="tom-select w-full" id="kategori">
-                                <option value="">Pilih Kategori</option>
-                                @foreach($kategoris as $kategori)
-                                @if ($kategori->jenis == 'sarana')
-                                <option {{ isset($data) ? ($kategori->id == $data->kategori_id ? 'selected' : '') :'' }}
-                                    value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
-                                @endif
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-12">
-                            <label for="subkategori" class="form-label">Sub Kategori</label>
-                            <select name="subkategori_id" class="w-full" id="subkategori">
-                                <option value="">Pilih Sub Kategori</option>
-                            </select>
-                        </div>
-                        <div class="col-md-12">
-                            <label for="produk" class="form-label">Produk</label>
-                            <select name="produk_id[]" id="produk" class="w-full" multiple>
-                                <option value="">Pilih Produk</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Tambah</button>
-                </div>
-            </div>
-        </form>
     </div>
 </div>
 @endsection
