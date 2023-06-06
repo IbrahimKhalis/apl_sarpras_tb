@@ -80,7 +80,7 @@
 <div class="intro-y box mt-5">
     <div class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
         <h2 class="font-medium text-base mr-auto">
-            Informasi Admin Sekolah ({{$sekolah->nama}})
+            Informasi Admin Sekolah ({{ $sekolah->nama }})
         </h2>
     </div>
     <div class="p-5">
@@ -88,11 +88,11 @@
             <div class="col-span-12 xl:col-span-6">
                 <div>
                     <h2 class="font-normal text-xs mr-auto">Nama Admin Sekolah:</h2>
-                    <h2 class="text-lg font-normal mr-auto">Lorem Ipsum nama</h2>
+                    <h2 class="text-lg font-normal mr-auto">{{ $sekolah->user->name }}</h2>
                 </div>
                 <div class="mt-3">
                     <h2 class="font-normal text-xs mr-auto">Email Admin Sekolah:</h2>
-                    <h2 class="text-lg font-normal mr-auto">Lorem Ipsum email</h2>
+                    <h2 class="text-lg font-normal mr-auto">{{ $sekolah->user->email }}</h2>
                 </div>
             </div>
         </div>

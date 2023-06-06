@@ -88,7 +88,6 @@ $('.slider').each(function() {
     advance();
   });
 
-
   // SMOOTHSCROLLING
 // const links = document.querySelectorAll(".button-faq a");
 

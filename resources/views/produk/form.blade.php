@@ -175,10 +175,12 @@
                     items = response.datas
                     $('#subkategori').empty().append(`<option value="">Pilih Sub Kategori</option>`)
                     if (response.datas) {
+                        var i = 1
                         items.forEach(item => {
-                            $('#subkategori').append(`
-                                <option value="${item.id}">${item.nama}</option>
-                            `);
+                            console.log(item)
+                            document.getElementById('subkategori').innerHTML += `<option value="${item.id}">${item.nama}</option>`;                 
+                            document.getElementById('subkategori-ts-dropdown').innerHTML += `<div data-selectable="" data-value="${item.id}" class="option active" role="option" id="subkategori-opt-${i}" aria-selected="false">${item.nama}</div>`;
+                            i++
                         });
                     }
                 }
