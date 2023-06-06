@@ -151,5 +151,6 @@
       </a>
     </li>
     @endcan
+    
   </ul>
 </nav>

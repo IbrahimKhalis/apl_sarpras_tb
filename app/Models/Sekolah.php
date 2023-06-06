@@ -12,7 +12,7 @@ class Sekolah extends Model
     protected $guarded = ['id'];
 
     public function user(){
-        return $this->hasMany(User::class);
+        return $this->hasOne(User::class);
     }
 
     public function kategori(){
