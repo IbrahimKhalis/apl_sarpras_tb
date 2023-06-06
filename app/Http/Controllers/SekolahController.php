@@ -51,7 +51,7 @@ class SekolahController extends Controller
      */
     public function store(StoreSekolahRequest $request)
     {
-        dd($request);
+        // dd($request);
         DB::beginTransaction();
         try {
             $sekolah = Sekolah::create([

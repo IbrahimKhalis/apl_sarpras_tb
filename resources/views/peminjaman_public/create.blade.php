@@ -7,8 +7,9 @@
     }
     .subTitle{
         font-family: 'lato';
-        font-size: 42px;
+        font-size: 48px;
         color: var(--blue);
+        margin-bottom: 40px;
     }
     h2 {
         margin: 0;
@@ -56,9 +57,58 @@
     .form-step {
         border: 1px solid rgba(0, 0, 0, 0.1);
         border-radius: 20px;
-        padding: 3rem;
+        padding: 3rem 2rem;
+        width: 90%;
+        align-items: center;
+        margin: auto
     }
-
+    .form-step2 {
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 20px;
+        padding: 3rem 2rem;
+        width: 80%;
+        align-items: center;
+        margin: auto
+    }
+    .cards{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+        gap: 50px;
+    }
+    .card-schools{
+        width: 250px;
+        background-color: transparent;
+        border: 1px solid #dadada;
+        border-top-left-radius:10px;
+        border-top-right-radius: 10px;
+    }
+    .card-schools .img-school img{
+        width: 70%;
+        margin: auto;
+        transition: 0.4s
+    }
+    .card-schools:hover .img-school img{
+        scale: 110%;
+    }
+    .desc-school{
+        background-color: #1C438C;
+        border-top-left-radius:10px;
+        border-top-right-radius: 10px;
+        padding: 8px 0px;
+    }
+    .desc-school h1{
+        font-size: 20px;
+        font-family: 'lato';
+        color: white;
+        margin-bottom: 4px;
+    }
+    .desc-school p{
+        color: #dadada;
+        text-align: center;
+        font-family: 'lato';
+    }
     .font-normal {
         font-weight: normal;
     }
@@ -201,10 +251,10 @@
 
 @section('content')
 <div id="multi-step-form-container">
-    <h1 class="subTitle pt-24">Peminjaman</h1>
-    <ul class="form-stepper form-stepper-horizontal" style="width: 32rem;margin:0 auto">
+    <h1 class="subTitle pt-16">Peminjaman</h1>
+    <ul class="form-stepper form-stepper-horizontal" style="width: 60%;margin:0 auto">
         <li class="form-stepper-active text-center form-stepper-list" step="1">
-            <a class="mx-2">
+            <a class="">
                 <span class="form-stepper-circle">
                     <span>1</span>
                 </span>
@@ -212,7 +262,7 @@
             </a>
         </li>
         <li class="form-stepper-unfinished text-center form-stepper-list" step="2">
-            <a class="mx-2">
+            <a class="">
                 <span class="form-stepper-circle text-muted">
                     <span>2</span>
                 </span>
@@ -221,12 +271,33 @@
         </li>
     </ul>
     <section id="step-1" class="form-step">
-        @foreach ($sekolahs as $sekolah)
+        <div class="cards">
+            @foreach ($sekolahs as $sekolah)
+            <a href="javascript:;" data-tw-toggle="modal" data-tw-target="#modalSekolah"
+            onclick="set_identifier({{ $sekolah->id }})">
+                <div class="card-schools">
+                    <div class="img-school">
+                        @if ($sekolah->logo != '/img/tutwuri.png')
+                        <img src="{{ asset('storage/' . $sekolah->logo) }}" alt="">
+                        @else
+                        <img src="{{ $sekolah->logo }}" alt="">
+                        @endif
+                    </div>
+                    <div class="desc-school">
+                        <h1>{{ $sekolah->nama }}</h1>
+                        <p>{{ $sekolah->npsn }}</p>
+                    </div>
+                </div>
+            </a>
+            @endforeach
+        </div>
+            
+        {{-- @foreach ($sekolahs as $sekolah)
         <a href="javascript:;" data-tw-toggle="modal" data-tw-target="#modalSekolah" class="btn btn-primary"
             onclick="set_identifier({{ $sekolah->id }})">{{ $sekolah->nama }}</a>
-        @endforeach
+        @endforeach --}}
     </section>
-    <section id="step-2" class="form-step d-none place-items-center form-stepper-active">
+    <section id="step-2" class="form-step2 d-none place-items-center form-stepper-active">
         <form action="{{ route('peminjaman.store') }}" class="form-peminjaman" method="POST">
             <x-FormPeminjaman />
             <div class="mt-5 flex gap-3">

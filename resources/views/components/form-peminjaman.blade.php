@@ -2,12 +2,12 @@
 <div class="container-parent">
     <div class="mt-3">
             <label for="nama" class="form-label">Nama</label>
-            <input type="text" class="form-control ml-4" style="width: 20rem;"  name="nama" id="nama" value="{{ (count($update) > 0) ? $update['nama'] : old('nama') }}">
+            <input type="text" class="form-control" name="nama" id="nama" value="{{ (count($update) > 0) ? $update['nama'] : old('nama') }}">
     </div>
     <div class="mt-3">
         <div>
             <label for="email" class="form-label">Email</label>
-            <input  class="form-control ml-5" style="width: 20rem;" type="email" name="email" id="email"
+            <input  class="form-control" type="email" name="email" id="email"
             value="{{ (count($update) > 0) ? $update['email'] : old('email') }}">
         </div>
     </div>
