@@ -5,7 +5,11 @@
     h1 {
         text-align: center;
     }
-
+    .subTitle{
+        font-family: 'lato';
+        font-size: 42px;
+        color: var(--blue);
+    }
     h2 {
         margin: 0;
     }
@@ -197,7 +201,8 @@
 
 @section('content')
 <div id="multi-step-form-container">
-    <ul class="form-stepper form-stepper-horizontal text-center mx-auto pl-0">
+    <h1 class="subTitle pt-24">Peminjaman</h1>
+    <ul class="form-stepper form-stepper-horizontal" style="width: 32rem;margin:0 auto">
         <li class="form-stepper-active text-center form-stepper-list" step="1">
             <a class="mx-2">
                 <span class="form-stepper-circle">

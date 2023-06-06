@@ -17,6 +17,16 @@
     <link rel="stylesheet" type="text/css" href="http://keith-wood.name/css/jquery.signature.css">
     <script defer src="https://unpkg.com/alpinejs@3.2.3/dist/cdn.min.js"></script>
     <link href="{{ asset('dist/css/app.css') }}" rel="stylesheet">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        html body{
+            margin: 0;
+            padding: 0
+        }
+    </style>
     @yield('css')
 </head>
 
