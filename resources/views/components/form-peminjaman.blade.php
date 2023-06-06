@@ -14,7 +14,7 @@
     <div class="mt-3">
         <div class="col-md-12">
             <label for="kelas" class="form-label">Kelas</label>
-            <select name="kelas" class="tom-select w-full" id="kelas">
+            <select name="kelas" class="form-select w-full" id="kelas">
                 <option value="">Pilih Kelas</option>
                 @if ($page == 'admin')
                 @foreach ($kelas as $row)
@@ -40,7 +40,7 @@
     <div class="mt-3">
         <div class="col-md-12">
             <label for="kategori" class="form-label">Kategori</label>
-            <select name="kategori_id" class="tom-select w-full" id="kategori" onchange="syncSub()">
+            <select name="kategori_id" class="form-select w-full" id="kategori" onchange="syncSub()">
                 <option value="">Pilih Kategori</option>
             </select>
         </div>
