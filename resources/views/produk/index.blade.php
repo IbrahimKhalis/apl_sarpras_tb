@@ -44,10 +44,9 @@
                     <td>{{ $data->merek }}</td>
                     <td>{{ $data->kondisi }}</td>
                     <td class="table-report__action w-56">
-                        <div class="flex">
+                        <div class="flex gap-2">
                             @can('edit_produk')
-                            <a class="flex items-center mr-3" href="{{ route('produk.edit', $data->id) }}"> <i
-                                    data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
+                            <a class="btn btn-warning mr-3" href="{{ route('produk.edit', $data->id) }}">Edit</a>
                             @endcan
                             @can('delete_produk')
                             <button type="submit" class="btn btn-danger btn-sm rounded"

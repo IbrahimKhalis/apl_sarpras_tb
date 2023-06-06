@@ -310,6 +310,7 @@
                     }
                 },
                 success: function (response) {
+                    console.log(response)
                     identifier = response.identifier;
                     $('#modalSekolah').slideUp(300)
                     showAlert(response.message, 'success');

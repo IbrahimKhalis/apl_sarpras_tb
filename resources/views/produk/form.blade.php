@@ -43,7 +43,7 @@
                 </div>
                 <div class="mt-3">
                     <label for="crud-form-2" class="form-label">Kategori</label>
-                    <select data-placeholder="Pilih Kategori Produkmu" class="tom-select w-full" name="kategori_id"
+                    <select data-placeholder="Pilih Kategori Produkmu" class="between-input-item-select" name="kategori_id"
                         id="kategori">
                         <option value="">Pilih Kategori</option>
                         @foreach ($kategoris as $kategori)
@@ -54,7 +54,7 @@
                 </div>
                 <div class="mt-3">
                     <label for="crud-form-2" class="form-label">Sub Kategori</label>
-                    <select name="sub_kategori_id" id="subkategori" class="tom-select w-full " class="form-control">
+                    <select name="sub_kategori_id" id="subkategori" class="between-input-item-select w-full " class="form-control">
                         <option value="">Pilih Sub Kategori</option>
                         @if (isset($subcategories))
                         @foreach ($subcategories as $subcategorie)
@@ -91,12 +91,12 @@
                 @endif
                 <div class="flex flex-col mt-5">
                     <label for="">Keterangan Produk</label>
-                    <textarea class="form-control mt-3" name="ket_produk" id="" cols="10"
+                    <textarea class="form-control mt-3 p-3" name="ket_produk" id="" cols="10"
                         rows="6">{{ isset($data) ? ($data->ket_produk) : old('ket_produk') }}</textarea>
                 </div>
                 <div class="flex flex-col mt-5">
                     <label for="">Keterangan Kondisi Produk</label>
-                    <textarea class="form-control mt-3" name="ket_kondisi" id="" cols="10"
+                    <textarea class="form-control mt-3 p-3" name="ket_kondisi" id="" cols="10"
                         rows="6">{{ isset($data) ? ($data->ket_kondisi) : old('ket_kondisi') }}</textarea>
                 </div>
                 <div class="mt-3">
@@ -173,7 +173,7 @@
                 url: "{{ route('get.sub') }}" + `/${$(this).val()}`,
                 success: function (response) {
                     items = response.datas
-                    $('#subkategori').empty()
+                    $('#subkategori').empty().append(`<option value="">Pilih Sub Kategori</option>`)
                     if (response.datas) {
                         items.forEach(item => {
                             $('#subkategori').append(`
@@ -190,7 +190,7 @@
 <script>
     $('.check-name-increment').on('change', function () {
         if ($(this).is(':checked')) {
-            $('.div-name-increment').append('<input type="number" name="start_increment" placeholder="mulai" class="form-control mt-3">')
+            $('.div-name-increment').append('<input type="number" name="start_increment" placeholder="Mulai" class="form-control mt-3">')
         } else {
             $('.div-name-increment input[type="number"]').remove()
         }

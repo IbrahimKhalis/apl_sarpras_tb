@@ -1,111 +1,6 @@
 @extends('mylayouts.main')
 
 @section('content')
-{{-- <div class="card">
-    <form class="p-0 pt-3 m-0" action="{{ route('sekolah.store') }}" id="regForm" method="post" style=" width: 100%;"
-enctype="multipart/form-data">
-@csrf
-<div class="tab" id="sekolah">
-    <h5 class="text-lg font-normal mr-auto py-3">Data Sekolah:</h5>
-    <div class="mb-3">
-        <label for="nama" class="form-label">Nama Sekolah</label>
-        <input type="text" class="form-control @error('nama_sekolah') is-invalid @enderror  " placeholder="Nama Sekolah"
-            name="nama_sekolah" style="border-radius: 5px; width: 100%" value="{{ old('nama_sekolah') }}" required>
-        @error('nama_sekolah')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
-        @enderror
-    </div>
-    <div class="mb-3">
-        <label for="npsn" class="form-label">NPSN</label>
-        <input type="number" class="form-control @error('npsn') is-invalid @enderror" placeholder="NPSN" name="npsn"
-            style="border-radius: 5px; width: 100%" value="{{ old('npsn') }}" required>
-        @error('npsn')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
-        @enderror
-    </div>
-    <div class="mb-3">
-        <label for="kepala_sekolah" class="form-label">Nama Kepala Sekolah</label>
-        <input type="text" class="form-control @error('kepala_sekolah') is-invalid @enderror"
-            placeholder="Kepala Sekolah" name="kepala_sekolah" style="border-radius: 5px; width: 100%"
-            value="{{ old('kepala_sekolah') }}" required>
-        @error('kepala_sekolah')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
-        @enderror
-    </div>
-    <div class="mb-3">
-        <label for="jenjang" class="form-label">Jenjang</label>
-        <select name="jenjang" id="jenjang" class="text-dark form-control @error('jenjang') is-invalid @enderror"
-            style="border-radius: 5px;" required>
-            <option value="">Pilih Jenjang</option>
-            <option value="sd" {{ old('jenjang')=='sd' ? 'selected' : '' }}>SD</option>
-            <option value="smp" {{ old('jenjang')=='smp' ? 'selected' : '' }}>SMP</option>
-            <option value="sma" {{ old('jenjang')=='sma' ? 'selected' : '' }}>SMA</option>
-            <option value="smk" {{ old('jenjang')=='smk' ? 'selected' : '' }}>SMK</option>
-        </select>
-        @error('jenjang')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
-        @enderror
-    </div>
-    <div class="mb-3">
-        <label for="logo" class="form-label">Logo (opsional)</label>
-        <input class="form-control" type="file" id="formFile" name="logo" style="border-radius: 5px;">
-    </div>
-    <div class="mb-3">
-        <label for="alamat" class="form-label">alamat</label>
-        <input type="text" class="form-control @error('alamat') is-invalid @enderror" placeholder="Masukan alamat"
-            name="alamat" value="{{ isset($data) ? $data->alamat : old('alamat') }}" style=" font-size: 15px;"
-            id="alamat">
-        @error('alamat')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
-        @enderror
-    </div>
-    <h5 class="text-lg font-normal mr-auto py-3">Data user admin sekolah:</h5>
-    <div class="mb-3">
-        <label for="name" class="form-label">Nama admin sekolah</label>
-        <input type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Nama" name="name"
-            style="border-radius: 5px; width: 100%" value="{{ old('name') }}" required>
-        @error('name')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
-        @enderror
-    </div>
-    <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" name="email"
-            style="border-radius: 5px; width: 100%" value="{{ old('email') }}" required>
-        @error('email')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
-        @enderror
-    </div>
-    <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control @error('password') is-invalid @enderror" placeholder="password"
-            name="password" style="border-radius: 5px; width: 100%" required>
-        @error('password')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
-        @enderror
-    </div>
-</div>
-
-<button type="submit" class="btn btn-primary">Tambah</button>
-</form>
-</div> --}}
-
 <div class="card">
     <div class="card-body">
         <div class="grid gap-6">
@@ -132,8 +27,8 @@ enctype="multipart/form-data">
                                     <input type="text"
                                         class="form-control @error('nama_sekolah') is-invalid @enderror  "
                                         placeholder="Nama Sekolah" name="nama_sekolah"
-                                        style="border-radius: 5px; width: 100%" value="{{ isset($sekolah) ? $sekolah->nama_sekolah : old('nama_sekolah') }}"
-                                        required {{ isset($sekolah) ? 'disabled' : '' }}>
+                                        style="border-radius: 5px; width: 100%" value="{{ isset($sekolah) ? $sekolah->nama : old('nama_sekolah') }}"
+                                        required>
                                     @error('nama_sekolah')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -144,7 +39,7 @@ enctype="multipart/form-data">
                                     <h2 class="font-normal text-xs mr-auto mt-3">Kode Sekolah:</h2>
                                     <input type="text" class="form-control @error('kode') is-invalid @enderror  "
                                         placeholder="Kode Sekolah" name="kode" style="border-radius: 5px; width: 100%"
-                                        value="{{ isset($sekolah) ? $sekolah->kode : old('kode') }}" required {{ isset($sekolah) ? 'disabled' : '' }}>
+                                        value="{{ isset($sekolah) ? $sekolah->kode : old('kode') }}" required>
                                     @error('kode')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -155,7 +50,7 @@ enctype="multipart/form-data">
                                     <h2 class="font-normal text-xs mr-auto">NPSN:</h2>
                                     <input type="number" class="form-control @error('npsn') is-invalid @enderror"
                                         placeholder="NPSN" name="npsn" style="border-radius: 5px; width: 100%"
-                                        value="{{ isset($sekolah) ? $sekolah->npsn :old('npsn') }}" required {{ isset($sekolah) ? 'disabled' : '' }}>
+                                        value="{{ isset($sekolah) ? $sekolah->npsn :old('npsn') }}" required>
                                     @error('npsn')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -168,7 +63,7 @@ enctype="multipart/form-data">
                                         class="form-control @error('kepala_sekolah') is-invalid @enderror"
                                         placeholder="Kepala Sekolah" name="kepala_sekolah"
                                         style="border-radius: 5px; width: 100%" value="{{ isset($sekolah) ? $sekolah->kepala_sekolah :old('kepala_sekolah') }}"
-                                        required {{ isset($sekolah) ? 'disabled' : '' }}>
+                                        required>
                                     @error('kepala_sekolah')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -179,7 +74,7 @@ enctype="multipart/form-data">
                                     <h2 class="font-normal text-xs mr-auto">Jenjang:</h2>
                                     <select name="jenjang" id="jenjang"
                                         class="text-dark form-control @error('jenjang') is-invalid @enderror"
-                                        style="border-radius: 5px;" required {{ isset($sekolah) ? 'disabled' : '' }}>
+                                        style="border-radius: 5px;" required>
                                         <option value="">Pilih Jenjang</option>
                                         <option value="sd" {{ isset($sekolah)? ($sekolah->jenjang =='sd' ? 'selected' : '') : '' }}>SD</option>
                                         <option value="smp" {{ isset($sekolah)? ($sekolah->jenjang =='smp' ? 'selected' : '') : '' }}>SMP</option>
@@ -197,7 +92,7 @@ enctype="multipart/form-data">
                                     <input type="text" class="form-control @error('alamat') is-invalid @enderror"
                                         placeholder="Masukan alamat" name="alamat"
                                         value="{{ isset($sekolah) ? $sekolah->alamat : old('alamat') }}"
-                                        style=" font-size: 15px;" id="alamat" {{ isset($sekolah) ? 'disabled' : '' }}>
+                                        style=" font-size: 15px;" id="alamat">
                                     @error('alamat')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -209,7 +104,7 @@ enctype="multipart/form-data">
                                     <input type="time" class="form-control @error('jam_masuk') is-invalid @enderror"
                                         placeholder="Masukan jam_masuk" name="jam_masuk"
                                         value="{{ isset($sekolah) ? $sekolah->jam_masuk : old('jam_masuk') }}"
-                                        style=" font-size: 15px;" id="jam_masuk" {{ isset($sekolah) ? 'disabled' : '' }}>
+                                        style=" font-size: 15px;" id="jam_masuk">
                                     @error('jam_masuk')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -221,7 +116,7 @@ enctype="multipart/form-data">
                                     <input type="time" class="form-control @error('jam_pulang') is-invalid @enderror"
                                         placeholder="Masukan jam_pulang" name="jam_pulang"
                                         value="{{ isset($sekolah) ? $sekolah->jam_pulang : old('jam_pulang') }}"
-                                        style=" font-size: 15px;" id="jam_pulang" {{ isset($sekolah) ? 'disabled' : '' }}>
+                                        style=" font-size: 15px;" id="jam_pulang">
                                     @error('jam_pulang')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -334,7 +229,7 @@ enctype="multipart/form-data">
 
                                                     <!-- scroll area -->
                                                     <section
-                                                        class="h-full overflow-auto p-8 w-full h-full flex flex-col">
+                                                        class="h-full overflow-auto p-8 w-full flex flex-col">
                                                         <header
                                                             class="border-dashed border-2 border-gray-400 py-12 flex flex-col justify-center items-center">
                                                             <p
@@ -356,7 +251,7 @@ enctype="multipart/form-data">
 
                                                         <ul id="gallery" class="flex flex-1 flex-wrap -m-1">
                                                             <li id="empty"
-                                                                class="h-full w-full text-center flex flex-col items-center justify-center items-center">
+                                                                class="h-full w-full text-center flex flex-col justify-center items-center">
                                                                 <img class="mx-auto w-32"
                                                                     src="https://user-images.githubusercontent.com/507615/54591670-ac0a0180-4a65-11e9-846c-e55ffce0fe7b.png"
                                                                     alt="no data" />
@@ -379,7 +274,7 @@ enctype="multipart/form-data">
                                                     </footer>
                                                 </article>
                                             </main>
-                                        </div> --}}
+                                        </div>
 
                                         <!-- using two similar templates for simplicity in js code -->
                                         {{-- <template id="file-template">
@@ -623,7 +518,6 @@ enctype="multipart/form-data">
                         </div>
                     </form>
                 </div>
-                <!-- END: Personal Information -->
             </div>
         </div>
     </div>

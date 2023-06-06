@@ -26,28 +26,25 @@
             </thead>
             <tbody>
                 @foreach ($datas as $data)
-                    <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $data->nama}}</td>
-                        <td class="table-report__action w-56">
-                            <div class="flex">
-                                <a class="flex items-center mr-3" href="{{ route('kelas.edit', $data->id) }}"> <i
-                                        data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                        @if (auth()->user()->can('delete_kelas'))
-                                        <button type="submit" class="btn btn-danger btn-sm rounded"
-                                            onclick="deleteData('{{ route('kelas.destroy', [$data->id]) }}')"
-                                           >Hapus</button>
-                                    </td>
-                                    @endif
-                            </div>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $data->nama}}</td>
+                    <td class="table-report__action w-56">
+                        <div class="flex gap-3">
+                            <a class="btn btn-warning" href="{{ route('kelas.edit', $data->id) }}">Edit</a>
+                            @if (auth()->user()->can('delete_kelas'))
+                            <button type="submit" class="btn btn-danger btn-sm rounded"
+                                onclick="deleteData('{{ route('kelas.destroy', [$data->id]) }}')">Hapus</button>
+                    </td>
+                    @endif
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
-    <div class="mt-5">
-        {{ $datas->links() }}
-    </div>
+</div>
+<div class="mt-5">
+    {{ $datas->links() }}
+</div>
 @endsection

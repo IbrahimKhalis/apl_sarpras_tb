@@ -51,7 +51,6 @@ class SekolahController extends Controller
      */
     public function store(StoreSekolahRequest $request)
     {
-        dd($request);
         DB::beginTransaction();
         try {
             $sekolah = Sekolah::create([
@@ -117,7 +116,7 @@ class SekolahController extends Controller
     {
         $admin = User::where('sekolah_id', $sekolah->id)->first();
         $data = [
-            'nama' => $request->nama,
+            'nama' => $request->nama_sekolah,
             'kode' => $request->kode,
             'npsn' => $request->npsn,
             'kepala_sekolah' => $request->kepala_sekolah,
@@ -151,10 +150,7 @@ class SekolahController extends Controller
             $data += ['logo' => $request->file('logo')->store('logo')];
         }
 
-        // $sekolah->update($data);
-
-        // dd($data);
-
+        $sekolah->update($data);
         return redirect()->route('sekolah.index')->with('msg_success', 'Berhasil di update');
     }
 
