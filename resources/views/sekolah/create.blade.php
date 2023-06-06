@@ -1,9 +1,16 @@
 @extends('mylayouts.main')
-
+    @push('css')
+        <style>
+              .hidden {
+            display: none;
+        }
+        </style>
+    @endpush
 @section('content')
+
 {{-- <div class="card">
     <form class="p-0 pt-3 m-0" action="{{ route('sekolah.store') }}" id="regForm" method="post" style=" width: 100%;"
-enctype="multipart/form-data">
+enctyp  e="multipart/form-data">
 @csrf
 <div class="tab" id="sekolah">
     <h5 class="text-lg font-normal mr-auto py-3">Data Sekolah:</h5>
@@ -178,7 +185,7 @@ enctype="multipart/form-data">
                                 <div class="mt-3">
                                     <h2 class="font-normal text-xs mr-auto">Jenjang:</h2>
                                     <select name="jenjang" id="jenjang"
-                                        class="text-dark form-control @error('jenjang') is-invalid @enderror"
+                                        class="text-dark form-select mt-3 @error('jenjang') is-invalid @enderror"
                                         style="border-radius: 5px;" required {{ isset($sekolah) ? 'disabled' : '' }}>
                                         <option value="">Pilih Jenjang</option>
                                         <option value="sd" {{ isset($sekolah)? ($sekolah->jenjang =='sd' ? 'selected' : '') : '' }}>SD</option>
@@ -266,7 +273,6 @@ enctype="multipart/form-data">
                                 </div>
                                 <div class="mt-3">
                                     <h2 class="font-normal text-xs mr-auto">Logo Sekolah:</h2>
-                                    <div class="">
                                         {{-- <div class="flex flex-col flex-grow mb-3">
                                             <div x-data="{ files: null }" id="FileUpload"
                                                 class="block w-full py-2 px-3 relative bg-white appearance-none border-2 border-gray-300 border-solid rounded-md hover:shadow-outline-gray">
@@ -368,10 +374,10 @@ enctype="multipart/form-data">
 
                                                     <!-- sticky footer -->
                                                     <footer class="flex justify-end px-8 pb-8 pt-4">
-                                                        {{-- <button id="submit"
+                                                        <button id="submit"
                                                             class="rounded-sm px-3 py-1 bg-blue-700 hover:bg-blue-500 text-white focus:shadow-outline focus:outline-none">
                                                             Upload now
-                                                        </button> --}}
+                                                        </button> 
                                                         <button id="cancel"
                                                             class="ml-3 rounded-sm px-3 py-1 hover:bg-gray-300 focus:shadow-outline focus:outline-none">
                                                             Cancel
@@ -379,7 +385,7 @@ enctype="multipart/form-data">
                                                     </footer>
                                                 </article>
                                             </main>
-                                        </div> --}}
+                                        </div> 
 
                                         <!-- using two similar templates for simplicity in js code -->
                                         {{-- <template id="file-template">
@@ -454,134 +460,60 @@ enctype="multipart/form-data">
                                                 </article>
                                             </li>
                                         </template> --}}
-                                    </div>
-
-                                    <script>
-                                        const fileTempl = document.getElementById("file-template"),
-                                            imageTempl = document.getElementById("image-template"),
-                                            empty = document.getElementById("empty");
-
-                                        // use to store pre selected files
-                                        let FILES = {};
-
-                                        // check if file is of type image and prepend the initialied
-                                        // template to the target element
-                                        function addFile(target, file) {
-                                            const isImage = file.type.match("image.*"),
-                                                objectURL = URL.createObjectURL(file);
-
-                                            const clone = isImage ?
-                                                imageTempl.content.cloneNode(true) :
-                                                fileTempl.content.cloneNode(true);
-
-                                            clone.querySelector("h1").textContent = file.name;
-                                            clone.querySelector("li").id = objectURL;
-                                            clone.querySelector(".delete").dataset.target = objectURL;
-                                            clone.querySelector(".size").textContent =
-                                                file.size > 1024 ?
-                                                file.size > 1048576 ?
-                                                Math.round(file.size / 1048576) + "mb" :
-                                                Math.round(file.size / 1024) + "kb" :
-                                                file.size + "b";
-
-                                            isImage &&
-                                                Object.assign(clone.querySelector("img"), {
-                                                    src: objectURL,
-                                                    alt: file.name
-                                                });
-
-                                            empty.classList.add("hidden");
-                                            target.prepend(clone);
-
-                                            FILES[objectURL] = file;
-                                        }
-
-                                        const gallery = document.getElementById("gallery"),
-                                            overlay = document.getElementById("overlay");
-
-                                        // click the hidden input of type file if the visible button is clicked
-                                        // and capture the selected files
-                                        const hidden = document.getElementById("hidden-input");
-                                        document.getElementById("button").onclick = () => hidden.click();
-                                        hidden.onchange = (e) => {
-                                            for (const file of e.target.files) {
-                                                addFile(gallery, file);
-                                            }
-                                        };
-
-                                        // use to check if a file is being dragged
-                                        const hasFiles = ({
-                                                dataTransfer: {
-                                                    types = []
+                                        
+                                        {{-- <form data-single="true" action="/file-upload" class="dropzone">
+                                            <div class="fallback"> <input type="file" /> </div>
+                                            <div class="dz-message" data-dz-message>
+                                                <div class="text-lg font-medium">Drop files here or click to upload.</div>
+                                                <div class="text-slate-500"> This is just a demo dropzone. Selected files are <span class="font-medium">not</span> actually uploaded. </div>
+                                            </div>
+                                        </form> --}}
+                                        <div class="mt-3">
+                                            <label class="form-label">Upload Image</label>
+                                            <div class="border-2 border-dashed dark:border-darkmode-400 rounded-md pt-4">
+                                                <div class="flex flex-wrap px-4">
+                                                    <div class="w-24 h-24 relative image-fit mb-5 mr-5 cursor-pointer zoom-in" id="previewContainer" style="display: none;">
+                                                        <img class="rounded-md" id="preview" src="" style="" data-action="zoom">
+                                                        <div title="Remove this image?" class="tooltip w-5 h-5 flex items-center justify-center absolute rounded-full text-white bg-danger right-0 top-0 -mr-2 -mt-2" onclick="removeImage()"> <i data-lucide="x" class="w-4 h-4"></i> </div>
+                                                    </div>
+                                                </div>
+                                                <div class="px-4 pb-4 flex items-center cursor-pointer relative">
+                                                    <i data-lucide="image" class="w-4 h-4 mr-2"></i> <span class="text-primary mr-1">Upload a file</span> or drag and drop 
+                                                    <input class="w-full h-full top-0 left-0 absolute opacity-0" type="file" name="logo" id="logoInput" onchange="previewImage(event)">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <script>
+                                            function previewImage(event) {
+                                                var input = event.target;
+                                                var reader = new FileReader();
+                                                var previewContainer = document.getElementById("previewContainer");
+                                                
+                                                reader.onload = function(){
+                                                    var img = document.getElementById("preview");
+                                                    img.src = reader.result;
+                                                    previewContainer.style.display = "block";
+                                                };
+                                                
+                                                if (input.files && input.files[0]) {
+                                                    reader.readAsDataURL(input.files[0]);
+                                                } else {
+                                                    var img = document.getElementById("preview");
+                                                    img.src = "";
+                                                    previewContainer.style.display = "none";
                                                 }
-                                            }) =>
-                                            types.indexOf("Files") > -1;
-
-                                        // use to drag dragenter and dragleave events.
-                                        // this is to know if the outermost parent is dragged over
-                                        // without issues due to drag events on its children
-                                        let counter = 0;
-
-                                        // reset counter and append file to gallery when file is dropped
-                                        function dropHandler(ev) {
-                                            ev.preventDefault();
-                                            for (const file of ev.dataTransfer.files) {
-                                                addFile(gallery, file);
-                                                overlay.classList.remove("draggedover");
-                                                counter = 0;
                                             }
-                                        }
-
-                                        // only react to actual files being dragged
-                                        function dragEnterHandler(e) {
-                                            e.preventDefault();
-                                            if (!hasFiles(e)) {
-                                                return;
-                                            }
-                                            ++counter && overlay.classList.add("draggedover");
-                                        }
-
-                                        function dragLeaveHandler(e) {
-                                            1 > --counter && overlay.classList.remove("draggedover");
-                                        }
-
-                                        function dragOverHandler(e) {
-                                            if (hasFiles(e)) {
-                                                e.preventDefault();
-                                            }
-                                        }
-
-                                        // event delegation to caputre delete events
-                                        // fron the waste buckets in the file preview cards
-                                        gallery.onclick = ({
-                                            target
-                                        }) => {
-                                            if (target.classList.contains("delete")) {
-                                                const ou = target.dataset.target;
-                                                document.getElementById(ou).remove(ou);
-                                                gallery.children.length === 1 && empty.classList.remove("hidden");
-                                                delete FILES[ou];
-                                            }
-                                        };
-
-                                        // print all selected files
-                                        document.getElementById("submit").onclick = () => {
-                                            alert(`Submitted Files:\n${JSON.stringify(FILES)}`);
-                                            console.log(FILES);
-                                        };
-
-                                        // clear entire selection
-                                        document.getElementById("cancel").onclick = () => {
-                                            while (gallery.children.length > 0) {
-                                                gallery.lastChild.remove();
-                                            }
-                                            FILES = {};
-                                            empty.classList.remove("hidden");
-                                            gallery.append(empty);
-                                        };
-
-                                    </script>
-
+                                            function removeImage() {
+                                            var img = document.getElementById("preview");
+                                            var previewContainer = document.getElementById("previewContainer");
+                                            var input = document.getElementById("logoInput");
+    
+                                                 img.src = "";
+                                                previewContainer.style.display = "none";
+                                                input.value = "";
+                                             }
+                                        </script>
                                     <style>
                                         .hasImage:hover section {
                                             background-color: rgba(5, 5, 5, 0.4);
