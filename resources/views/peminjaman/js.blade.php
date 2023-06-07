@@ -1,17 +1,16 @@
 <script>
-let count_produk = null;
+    let count_produk = null;
 let data_produk = {{ isset($produks) ? json_encode($produks) : json_encode([]) }};
 function cek (){syncProduk();compare()}
 function syncKategori(kategori_id = null){
     $('.div-jml-peminjaman, .div-subkategori, .div-ruang').remove();
-
     if ($('#jenis').val() == 'sarana') {
-    $('.form-peminjaman .container-parent').append($('#template-sub').html());
-    $('#template-ruang').hide();
-} else {
-    $('.form-peminjaman .container-parent').append($('#template-ruang').html());
-    $('#template-sub').remove();
-}
+        $('.form-peminjaman .container-parent').append($('#template-sub').html());
+        $('#template-ruang').hide();
+    } else {
+        $('.form-peminjaman .container-parent').append($('#template-ruang').html());
+        $('#template-sub').remove();
+    }
 
     return $.ajax({
             type: "POST",
@@ -47,6 +46,7 @@ function syncKategori(kategori_id = null){
 
 function syncSub(sub_kategori_id = null, ruang_id = null){
     let jenis = $('#jenis').val()
+    let get_select = $('.form-peminjaman ' + (jenis == 'sarana' ? '#subkategori' : '#ruang'));
     if ($('#kategori').val()) {
         return $.ajax({
                 type: "POST",
@@ -63,10 +63,11 @@ function syncSub(sub_kategori_id = null, ruang_id = null){
                     }
                 },
                 success: function (response) {
-                    $('.form-peminjaman ' + (jenis == 'sarana' ? '#subkategori' : '#ruang')).empty();
-                    $('.form-peminjaman ' + (jenis == 'sarana' ? '#subkategori' : '#ruang')).append(`<option value="">Pilih ${jenis == 'sarana' ? 'Sub Kategori' : 'Ruang'}</option>`);
+                    console.log(get_select)
+                    get_select.empty();
+                    get_select.append(`<option value="">Pilih ${jenis == 'sarana' ? 'Sub Kategori' : 'Ruang'}</option>`);
                     $.each(response.datas, function(i,e){
-                        $('.form-peminjaman ' + (jenis == 'sarana' ? '#subkategori' : '#ruang')).append(`<option value="${e.id}">${(jenis == 'sarana' ? e.nama : e.name)}</option>`);
+                        get_select.append(`<option value="${e.id}">${(jenis == 'sarana' ? e.nama : e.name)}</option>`);
                     })
 
                     if (jenis == 'sarana') {
@@ -79,6 +80,12 @@ function syncSub(sub_kategori_id = null, ruang_id = null){
                         if (!ruang_id) {
                             $('.form-peminjaman #ruang').removeAttr('disabled');
                         }
+                    }
+
+                    if (get_select.hasClass("select2-hidden-accessible")) {
+                        get_select.select2("destroy").select2();
+                    }else{
+                        get_select.select2();
                     }
                 },
                 error: function (errors) {

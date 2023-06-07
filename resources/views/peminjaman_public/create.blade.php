@@ -270,7 +270,7 @@
             </a>
         </li>
     </ul>
-    <section id="step-1" class="form-step">
+    <section id="step-1" class="form-step" style="margin-top: 1rem;">
         <div class="cards">
             @foreach ($sekolahs as $sekolah)
             <a href="javascript:;" data-tw-toggle="modal" data-tw-target="#modalSekolah"
@@ -297,7 +297,7 @@
             onclick="set_identifier({{ $sekolah->id }})">{{ $sekolah->nama }}</a>
         @endforeach --}}
     </section>
-    <section id="step-2" class="form-step2 d-none place-items-center form-stepper-active">
+    <section id="step-2" class="form-step2 d-none place-items-center form-stepper-active" style="margin-top: 1rem;">
         <form action="{{ route('peminjaman.store') }}" class="form-peminjaman" method="POST">
             <x-FormPeminjaman />
             <div class="mt-5 flex gap-3">
