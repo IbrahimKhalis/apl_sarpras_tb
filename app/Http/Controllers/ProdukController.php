@@ -179,9 +179,9 @@ class ProdukController extends Controller
      */
     public function update(UpdateProdukRequest $request, Produk $produk)
     {
+        validateSekolah($produk->sekolah_id);
         DB::beginTransaction();
         try {
-            validateSekolah($produk->sekolah_id);
             $update = [
                 'kategori_id' => $request->kategori_id,
                 'sub_kategori_id' => $request->sub_kategori_id,

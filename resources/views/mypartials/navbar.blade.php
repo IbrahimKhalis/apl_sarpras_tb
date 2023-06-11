@@ -47,17 +47,19 @@
           <ul class="dropdown-content bg-primary text-white">
               <li class="p-2">
                   <div class="font-medium">{{ Auth::user()->name }}</div>
-                  <div class="text-xs text-white/70 mt-0.5 dark:text-slate-500">Frontend Engineer</div>
+                  <div class="text-xs text-white/70 mt-0.5 dark:text-slate-500">{{ Auth::user()->getRoleNames()[0] }}</div>
               </li>
               <li>
                   <hr class="dropdown-divider border-white/[0.08]">
               </li>
+              @if (Auth::user()->hasRole('super_admin'))
               <li>
                   <a href="{{ route('profil.index') }}" class="dropdown-item hover:bg-white/5"> <i data-lucide="user" class="w-4 h-4 mr-2"></i> Profile </a>
               </li>
               <li>
                   <a href="{{ route('profil.ubah-password') }}" class="dropdown-item hover:bg-white/5"> <i data-lucide="lock" class="w-4 h-4 mr-2"></i> Reset Password </a>
               </li>
+              @endif
               <li>
                   <hr class="dropdown-divider border-white/[0.08]">
               </li>

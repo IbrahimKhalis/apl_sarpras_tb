@@ -56,11 +56,11 @@ class UserSeeder extends Seeder
             'name' => 'Super Admin',
         ])->assignRole('super_admin');
 
-        $super_admin = User::create([
-            'email' => 'adminsmk@gmail.com',
-            'password' => bcrypt('password'),
-            'name' => 'Admin',
-            'sekolah_id' => 1
-        ])->assignRole('admin');
+        // $super_admin = User::create([
+        //     'email' => 'adminsmk@gmail.com',
+        //     'password' => bcrypt('password'),
+        //     'name' => 'Admin',
+        //     'sekolah_id' => 1
+        // ])->assignRole('admin');
     }
 }
