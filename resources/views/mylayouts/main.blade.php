@@ -41,7 +41,6 @@
       @stack('other_delete')
     </form>
     <script src="//unpkg.com/alpinejs" defer></script>
-    {{-- <script src="path/to/vanilla.js"></script> --}}
     <script>
       function goBack() {
           window.history.back();
@@ -49,7 +48,6 @@
     </script>
     <script>
       const sideMenuLinks = document.querySelectorAll('.side-menu');
-
         sideMenuLinks.forEach(link => {
             if (link.href === window.location.href) {
                 link.classList.add('side-menu--active');
