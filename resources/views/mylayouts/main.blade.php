@@ -16,6 +16,11 @@
   <link href="https://cdn.datatables.net/1.11.3/css/common.min.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.7.0.min.js"
     integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+  <style>
+    .swal2-title {
+      line-height: 2rem;
+    }
+  </style>
   @stack('css')
 </head>
 

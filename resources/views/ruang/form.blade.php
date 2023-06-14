@@ -10,10 +10,6 @@
         margin: 0;
     }
 
-    #multi-step-form-container {
-        margin-top: 5rem;
-    }
-
     .text-center {
         text-align: center;
     }
@@ -47,12 +43,6 @@
 
     .d-none {
         display: none;
-    }
-
-    .form-step {
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        border-radius: 20px;
-        padding: 3rem;
     }
 
     .font-normal {
@@ -192,48 +182,48 @@
     .form-stepper a {
         cursor: default;
     }
+
+    .select2-container {
+        z-index: 99999;
+    }
+
+    .dataTables_length select {
+        background-image: none;
+    }
+
+    #table-produk_wrapper {
+        margin-top: 1rem;
+    }
+
+    .table{
+        width: 100% !important;
+    }
 </style>
+<link rel="stylesheet" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
 @endpush
 
 @section('content')
-<div class="intro-y flex items-center mt-8">
-    <h2 class="text-lg font-medium mr-auto">
-        {{ isset($data) ? 'Edit' : 'Tambah' }} Ruang
-    </h2>
-</div>
-<div>
-    <div id="multi-step-form-container">
-        <ul class="form-stepper form-stepper-horizontal text-center mx-auto pl-0">
-            <li class="form-stepper-active text-center form-stepper-list" step="1">
-                <a class="mx-2">
-                    <span class="form-stepper-circle">
-                        <span>1</span>
-                    </span>
-                    <div class="label">Membuat Ruang</div>
-                </a>
-            </li>
-            <li class="form-stepper-unfinished text-center form-stepper-list" step="2">
-                <a class="mx-2">
-                    <span class="form-stepper-circle text-muted">
-                        <span>2</span>
-                    </span>
-                    <div class="label text-muted">Tambah Produk</div>
-                </a>
-            </li>
-        </ul>
-        <section id="step-1" class="form-step">
-            <form action="{{ isset($data) ? route('ruang.update', [$data->id]) : route('ruang.store') }}" method="POST">
-                @csrf
-                @if (isset($data))
-                @method('patch')
-                @endif
-                <div class="mt-3">
-                    <div>
+<div class="intro-y box">
+    <div class="flex flex-col sm:flex-row items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
+        <h2 class="font-medium text-base mr-auto">
+            {{ isset($data) ? 'Edit' : 'Tambah' }} Ruang
+        </h2>
+    </div>
+    <div id="vertical-form" class="p-5">
+        <div class="preview">
+            <section id="step-1" class="form-step">
+                <form action="{{ isset($data) ? route('ruang.update', [$data->id]) : route('ruang.store') }}"
+                    method="POST">
+                    @csrf
+                    @if (isset($data))
+                    @method('patch')
+                    @endif
+                    <div class="mb-3">
                         <label for="crud-form-1" class="form-label">Nama Ruang</label>
                         <input id="crud-form-1" type="text" class="form-control w-full" name="name"
                             value="{{ isset($data) ? $data->name : old('nama') }}" placeholder="Nama">
                     </div>
-                    <div class="mt-3">
+                    <div class="mb-3">
                         <label for="crud-form-2" class="form-label">Kategori</label>
                         <select name="kategori_id" id="" class="tom-select w-full">
                             @foreach($kategoris as $kategori)
@@ -244,19 +234,19 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="mt-3">
+                    <div class="mb-3">
                         <label for="crud-form-1" class="form-label">Luas</label>
                         <input id="crud-form-1" type="number" class="form-control w-full" name="luas"
                             value="{{ isset($data) ? $data->luas : old('luas') }}" placeholder="Luas Tahan">
                     </div>
-                    <div class="mt-3">
+                    <div class="mb-3">
                         <label class="form-label">No Registrasi</label>
                         <div class="sm:grid grid-cols-3 gap-2">
                             <div class="input-group">
                                 <div id="input-group-3" class="input-group-text">No</div>
-                                <input type="string" class="form-control"
-                                name="no_reg"
-                                value="{{ isset($data) ? $data->no_reg : old('no_reg') }}" placeholder="Masukkan Nomor Registrasi">
+                                <input type="string" class="form-control pl-3" name="no_reg"
+                                    value="{{ isset($data) ? $data->no_reg : old('no_reg') }}"
+                                    placeholder="Masukkan Nomor Registrasi">
                             </div>
                         </div>
                     </div>
@@ -270,186 +260,270 @@
                         <input type="checkbox" name="produk_dipinjam" class="form-check-input" {{ isset($data) ?
                             ($data->produk_dipinjam == 1 ? 'checked' : '') : '' }}>
                     </div>
+                    <div class="mt-3">
+                        <button class="button btn-navigate-form-step" type="button" step_number="2">Selanjutnya</button>
+                    </div>
+                </form>
+            </section>
+            <section id="step-2" class="form-step d-none place-items-center">
+                <div class="flex justify-between align-items-center">
+                    <h2 class="font-medium text-base mr-auto">
+                        Produk
+                    </h2>
+                    <a href="javascript:;" data-tw-toggle="modal" data-tw-target="#modalAddProduk"
+                        class="btn btn-outline-primary">Tambah Produk</a>
                 </div>
-                <div class="mt-3">
-                    <button class="button btn-navigate-form-step" type="button" step_number="2">Next</button>
+                <table id="table-produk" class="table">
+                    <thead>
+                        <tr>
+                            <td>No</td>
+                            <td>Kode</td>
+                            <td>Nama</td>
+                            <td>Merek</td>
+                            <td>Kondisi</td>
+                            <td>Aksi</td>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <div class="mt-5 flex gap-3">
+                    <button class="button btn-navigate-form-step" step_number="1">Kembali</button>
+                    <a href="{{ route('ruang.index') }}" class="button submit-btn">Selesai</a>
                 </div>
-            </form>
-        </section>
-        <section id="step-2" class="form-step d-none place-items-center">
-         
-            <div class="row mb-3">
-                <div class="col-md-12">
-                    <label for="kategori" class="form-label">Kategori</label>
-                    <select name="kategori_id" class="tom-select w-full" id="kategori">
-                        <option value="">Pilih Kategori</option>
-                        @foreach($kategoris as $kategori)
-                        @if ($kategori->jenis == 'sarana')
-                        <option {{ isset($data) ? ($kategori->id == $data->kategori_id ? 'selected' : '') :'' }}
-                            value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
-                        @endif
-                        @endforeach
-                    </select>
-                </div>
-                <div class="mt-5">
-                    <label for="subkategori" class="form-label">Sub Kategori</label>
-                    <select name="subkategori_id" class="form-select w-full" id="subkategori">
-                        <option value="">Pilih Sub Kategori</option>
-                    </select>
-                </div>
-                <div class="mt-5">
-                    <label for="produk" class="form-label">Produk</label>
-                    <select name="produk_id[]" id="produk" class="form-select w-full" multiple>
-                        <option value="">Pilih Produk</option>
-                    </select>
-                </div>
-            </div>
-            <div class="mt-5 flex gap-3">
-                <button class="button btn-navigate-form-step">Prev</button>
-                <button class="button submit-btn">Save</button>
-            </div>
-        </section>
+            </section>
+        </div>
+    </div>
+</div>
 
+<div class="modalkey modal fade" id="modalAddProduk" tabindex="-1" aria-labelledby="role" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <form>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="role">Tambah Produk</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-2">
+                        <label for="kategori" class="form-label mt-1">Kategori</label>
+                        <select name="kategori_id" class="between-input-item-select" id="kategori">
+                            <option value="">Pilih Kategori</option>
+                            @foreach($kategoris as $kategori)
+                            @if ($kategori->jenis == 'sarana')
+                            <option {{ isset($data) ? ($kategori->id == $data->kategori_id ? 'selected' : '') :'' }}
+                                value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
+                            @endif
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <label for="subkategori" class="form-label mt-1">Sub Kategori</label>
+                        <select name="subkategori_id" class="between-input-item-select" id="subkategori">
+                            <option value="">Pilih Sub Kategori</option>
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <label for="produk" class="form-label mt-1">Produk</label>
+                        <select name="produk_id[]" id="produk" class="between-input-item-select" multiple>
+                            <option value="">Pilih Produk</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Tambah</button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 @endsection
 
 @push('js')
+<script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 <script>
-    let id = ''
-const url_update = '{{ route("ruang.update", ":id") }}'
-const url_sub = '{{ route("get.sub", ":id") }}'
-const url_produk = '{{ route("produk.get", ":id") }}'
-const navigateToFormStep = (stepNumber) => {
-    document.querySelectorAll(".form-step").forEach((formStepElement) => {
-        formStepElement.classList.add("d-none");
+    const url_update = '{{ route("ruang.update", ":id") }}'
+    let id = '';
+    const url_sub = '{{ route("get.sub", ":id") }}';
+    const url_produk = '{{ route("produk.get", ":id") }}';
+    let url_get_ruang_produk = '{{ isset($data) ? route("ruang.produk", $data->id) : route("ruang.produk", ":id") }}';
+    const navigateToFormStep = (stepNumber) => {
+        document.querySelectorAll(".form-step").forEach((formStepElement) => {
+            formStepElement.classList.add("d-none");
+        });
+
+        document.querySelector("#step-" + stepNumber).classList.remove("d-none");
+    };
+
+    document.querySelectorAll(".btn-navigate-form-step").forEach((formNavigationBtn) => {
+        formNavigationBtn.addEventListener("click", () => {
+            const stepNumber = parseInt(formNavigationBtn.getAttribute("step_number"));
+            if (stepNumber == 2) {
+                let form = new FormData($('#step-1 form')[0]);
+                $.ajax({
+                    type: "POST",
+                    url: $('#step-1 form').attr('action'),
+                    data: form,
+                    dataType: "json",
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function (e) {
+                        if (e && e.overrideMimeType) {
+                            e.overrideMimeType("application/json;charset=UTF-8");
+                        }
+                    },
+                    success: function (response) {
+                        id = response.data.id
+                        url_get_ruang_produk = url_get_ruang_produk.replace(':id', id);
+                        table_produk.ajax.url(url_get_ruang_produk);
+                        $('#step-1 form').attr('action', url_update.replace(':id', id)).append('<input type="hidden" name="_method" value="patch">')
+                        showAlert('Berhasil tersimpan', 'success')
+                        navigateToFormStep(stepNumber);
+                    },
+                    error: function (response) {
+                        console.log(response)
+                        showAlert('Gagal simpan ruang', 'error')
+                    },
+                });
+            }else{
+                navigateToFormStep(stepNumber);
+            }
+        });
     });
 
-    document.querySelectorAll(".form-stepper-list").forEach((formStepHeader) => {
-        formStepHeader.classList.add("form-stepper-unfinished");
-        formStepHeader.classList.remove("form-stepper-active", "form-stepper-completed");
-    });
+    $('#kategori').on('change', function(){
+        $.ajax({
+            type: "GET",
+            url: url_sub.replace(':id', $(this).val()),
+            beforeSend: function (e) {
+                if (e && e.overrideMimeType) {
+                    e.overrideMimeType("application/json;charset=UTF-8");
+                }
+            },
+            success: function (response) {
+                $('#subkategori').empty().append('<option value="">Pilih Sub Kategori</option>')
+                $('#produk').empty().append('<option value="">Pilih Produk</option>').select2()
+                $.each(response.datas, function (key, value) {
+                    $('#subkategori').append(`<option value="${value.id}">${value.nama}</option>`)
+                })
+                $('#subkategori').select2()
+            },
+            error: function (response) {
+                showAlert('Gagal get subcategory', 'error')
+            },
+        });
+    })
 
-    document.querySelector("#step-" + stepNumber).classList.remove("d-none");
+    $('#subkategori').on('change', function(){
+        $.ajax({
+            type: "GET",
+            url: url_produk.replace(':id', $(this).val()),
+            beforeSend: function (e) {
+                if (e && e.overrideMimeType) {
+                    e.overrideMimeType("application/json;charset=UTF-8");
+                }
+            },
+            success: function (response) {
+                $('#produk').empty().append('<option value="">Pilih Produk</option>')
+                $.each(response.datas, function (key, value) {
+                    $('#produk').append(`<option value="${value.id}">${value.nama}</option>`)
+                })
+                $('#produk').select2();
+            },
+            error: function (response) {
+                showAlert('Gagal get produk', 'error')
+            },
+        });
+    })
 
-    const formStepCircle = document.querySelector('li[step="' + stepNumber + '"]');
+    $('#modalAddProduk form').on('submit', function(e){
+        e.preventDefault();
+        let form = new FormData($(this)[0]);
+        form.set('ruang_id', id)
+        $.ajax({
+            type: "POST",
+            url: '{{ route("ruang.tambah_produk") }}',
+            data: form,
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            beforeSend: function (e) {
+                if (e && e.overrideMimeType) {
+                    e.overrideMimeType("application/json;charset=UTF-8");
+                }
+            },
+            success: function (response) {
+                showAlert('Berhasil ditambahkan', 'success')
+                $('#kategori').val('');
+                $('#subkategori').empty().append('<option value="">Pilih Sub Kategori</option>').select2();
+                $('#produk').empty().append('<option value="">Pilih Produk</option>').select2();
+                $('.modalkey.show').trigger('click');
+                table_produk.ajax.reload();
+            },
+            error: function (response) {
+                showAlert('Gagal ditambahkan', 'error')
+            },
+        })
+    })
 
-    formStepCircle.classList.remove("form-stepper-unfinished", "form-stepper-completed");
-    formStepCircle.classList.add("form-stepper-active");
+    let table_produk = $('#table-produk').DataTable({
+            processing: true,
+            ordering: false,
+            info: false,
+            ajax: {
+                url: url_get_ruang_produk,
+            },
+            columns: [{
+                    data: 'DT_RowIndex',
+                    searchable: false,
+                    sortable: false
+                },
+                {
+                    data: 'kode'
+                },
+                {
+                    data: 'nama'
+                },
+                {
+                    data: 'merek'
+                },
+                {
+                    data: 'kondisi'
+                },
+                {
+                    data: 'action',
+                    searchable: false,
+                    sortable: false
+                },
+            ]
+        });
 
-    for (let index = 0; index < stepNumber; index++) {
-        const formStepCircle = document.querySelector('li[step="' + index + '"]');
-        if (formStepCircle) {
-            formStepCircle.classList.remove("form-stepper-unfinished", "form-stepper-active");
-            formStepCircle.classList.add("form-stepper-completed");
-        }
-    }
-};
-
-document.querySelectorAll(".btn-navigate-form-step").forEach((formNavigationBtn) => {
-    formNavigationBtn.addEventListener("click", () => {
-        const stepNumber = parseInt(formNavigationBtn.getAttribute("step_number"));
-        if (stepNumber == 2) {
-            let form = new FormData($('#step-1 form')[0]);
+    function hapus_produk(id){
+        if (confirm('Apakah anda yakin?')) {
             $.ajax({
                 type: "POST",
-                url: $('#step-1 form').attr('action'),
-                data: form,
+                url: '{{ route("ruang.hapus_produk") }}',
+                data: {
+                    'produk_id': id
+                },
                 dataType: "json",
-                processData: false,
-                contentType: false,
                 beforeSend: function (e) {
                     if (e && e.overrideMimeType) {
                         e.overrideMimeType("application/json;charset=UTF-8");
                     }
                 },
                 success: function (response) {
-                    id = response.data.id
-                    $('#step-1 form').attr('action', url_update.replace(':id', id)).append('<input type="hidden" name="_method" value="patch">')
-                    showAlert('Berhasil tersimpan', 'success')
-                    navigateToFormStep(stepNumber);
+                    showAlert(response.message, 'success')
+                    table_produk.ajax.reload();
                 },
                 error: function (response) {
-                    console.log(response)
-                    showAlert('Gagal simpan ruang', 'error')
+                    showAlert('Gagal hapus produk', 'error')
                 },
-            });
-        }else{
-            navigateToFormStep(stepNumber);
+            })
         }
-    });
-});
-
-$('#kategori').on('change', function(){
-    $.ajax({
-        type: "GET",
-        url: url_sub.replace(':id', $(this).val()),
-        beforeSend: function (e) {
-            if (e && e.overrideMimeType) {
-                e.overrideMimeType("application/json;charset=UTF-8");
-            }
-        },
-        success: function (response) {
-            $('#subkategori').empty().append('<option value="">Pilih Sub Kategori</option>')
-            $('#produk').empty().append('<option value="">Pilih Produk</option>')
-            $.each(response.datas, function (key, value) {
-                $('#subkategori').append(`<option value="${value.id}">${value.nama}</option>`)
-            })
-        },
-        error: function (response) {
-            showAlert('Gagal get subcategory', 'error')
-        },
-    });
-})
-
-$('#subkategori').on('change', function(){
-    $.ajax({
-        type: "GET",
-        url: url_produk.replace(':id', $(this).val()),
-        beforeSend: function (e) {
-            if (e && e.overrideMimeType) {
-                e.overrideMimeType("application/json;charset=UTF-8");
-            }
-        },
-        success: function (response) {
-            $('#produk').empty().append('<option value="">Pilih Produk</option>')
-            $.each(response.datas, function (key, value) {
-                $('#produk').append(`<option value="${value.id}">${value.nama}</option>`)
-            })
-        },
-        error: function (response) {
-            showAlert('Gagal get produk', 'error')
-        },
-    });
-})
-
-$('#modalAddProduk form').on('submit', function(e){
-    e.preventDefault();
-    let form = new FormData($(this)[0]);
-    form.set('ruang_id', id)
-    $.ajax({
-        type: "POST",
-        url: '{{ route("ruang.tambah_produk") }}',
-        data: form,
-        dataType: "json",
-        processData: false,
-        contentType: false,
-        beforeSend: function (e) {
-            if (e && e.overrideMimeType) {
-                e.overrideMimeType("application/json;charset=UTF-8");
-            }
-        },
-        success: function (response) {
-            $('#kategori').val('');
-            $('#subkategori').empty().append('<option value="">Pilih Sub Kategori</option>')
-            $('#produk').empty().append('<option value="">Pilih Produk</option>')
-            $('#modalAddProduk').hide();
-        },
-        error: function (response) {
-            console.log(response)
-            showAlert('Gagal simpan ruang', 'error')
-        },
-    })
-})
+    }
+    @if (isset($data))
+    table_produk.ajax.url(url_get_ruang_produk)
+    table_produk.ajax.reload()
+    @endif
 </script>
 @endpush

@@ -24,37 +24,55 @@ class DashboardController extends Controller
                 'countTahunAjaran' => $countTahunAjaran
             ];
         }else {
-            $produk_terbanyak = DB::table('peminjamans')
-                                        ->select('subcategories.nama', DB::raw('COUNT(peminjamans.id) as total_peminjaman'))
+            $bulan = request('bulan') ?? date('m');
+
+            $sub_terbanyak = DB::table('peminjamans')
+                                        ->select('subcategories.nama as key', DB::raw('COUNT(peminjamans.id) as jml'))
                                         ->join('subcategories', 'subcategories.id', 'peminjamans.sub_kategori_id')
                                         ->where('peminjamans.sekolah_id', Auth::user()->sekolah_id)
-                                        ->orderBy('total_peminjaman', 'desc')
+                                        // ->where('peminjamans.status', 'diterima')
+                                        ->when($bulan != 'all', function ($q) use ($bulan){
+                                            $q->whereMonth('peminjamans.created_at', $bulan);
+                                        })
+                                        ->orderBy('jml', 'desc')
                                         ->groupBy('subcategories.nama')
                                         ->limit(5)
                                         ->get();
 
             $ruang_terbanyak = DB::table('peminjamans')
-                                        ->select('ruangs.name', DB::raw('COUNT(peminjamans.id) as total_peminjaman'))
+                                        ->select('ruangs.name as key', DB::raw('COUNT(peminjamans.id) as jml'))
                                         ->join('ruangs', 'ruangs.id', 'peminjamans.ruang_id')
                                         ->where('peminjamans.sekolah_id', Auth::user()->sekolah_id)
-                                        ->orderBy('total_peminjaman', 'desc')
+                                        // ->where('peminjamans.status', 'diterima')
+                                        ->when($bulan != 'all', function ($q) use ($bulan){
+                                            $q->whereMonth('peminjamans.created_at', $bulan);
+                                        })
+                                        ->orderBy('jml', 'desc')
                                         ->groupBy('ruangs.name')
                                         ->limit(5)
                                         ->get();
             
             $kelas_terbanyak = DB::table('peminjamans')
-                                        ->select('kelas.nama', DB::raw('COUNT(peminjamans.id) as total_peminjaman'))
+                                        ->select('kelas.nama as key', DB::raw('COUNT(peminjamans.id) as jml'))
                                         ->join('kelas', 'kelas.id', 'peminjamans.kelas_id')
                                         ->where('peminjamans.sekolah_id', Auth::user()->sekolah_id)
-                                        ->orderBy('total_peminjaman', 'desc')
+                                        // ->where('peminjamans.status', 'diterima')
+                                        ->when($bulan != 'all', function ($q) use ($bulan){
+                                            $q->whereMonth('peminjamans.created_at', $bulan);
+                                        })
+                                        ->orderBy('jml', 'desc')
                                         ->groupBy('kelas.nama')
                                         ->limit(5)
                                         ->get();
             
             $email_terbanyak = DB::table('peminjamans')
-                                        ->select('peminjamans.email', DB::raw('COUNT(peminjamans.id) as total_peminjaman'))
+                                        ->select('peminjamans.email as key', DB::raw('COUNT(peminjamans.id) as jml'))
                                         ->where('peminjamans.sekolah_id', Auth::user()->sekolah_id)
-                                        ->orderBy('total_peminjaman', 'desc')
+                                        // ->where('peminjamans.status', 'diterima')
+                                        ->when($bulan != 'all', function ($q) use ($bulan){
+                                            $q->whereMonth('peminjamans.created_at', $bulan);
+                                        })
+                                        ->orderBy('jml', 'desc')
                                         ->groupBy('peminjamans.email')
                                         ->limit(5)
                                         ->get();
@@ -62,14 +80,25 @@ class DashboardController extends Controller
                 'total_kategori' => DB::table('kategoris')->count(),
                 'total_produk' => DB::table('produks')->count(),
                 'total_ruang' => DB::table('ruangs')->count(),
-                'produk_terbanyak' => $produk_terbanyak,
-                'ruang_terbanyak' => $ruang_terbanyak,
-                'kelas_terbanyak' => $kelas_terbanyak,
-                'email_terbanyak' => $email_terbanyak,
+                'sub_terbanyak' => $this->parseData($sub_terbanyak),
+                'ruang_terbanyak' => $this->parseData($ruang_terbanyak),
+                'kelas_terbanyak' => $this->parseData($kelas_terbanyak),
+                'email_terbanyak' => $this->parseData($email_terbanyak),
             ]; 
         }
 
         return view('dashboard', $return);
+    }
+
+    private function parseDataPie($datas) {
+        $result = [];
+        foreach ($datas as $key => $data) {
+            $result[] = [
+                'name' => $data->key,
+                'y' => $data->jml
+            ];
+        }
+        return $result;
     }
 
     private function parseData($datas){
