@@ -144,6 +144,7 @@
 @endsection
 
 @push('js')
+@if (Auth::user()->hasRole('admin'))
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
@@ -320,27 +321,11 @@
   }]
 });
 </script>
-{{-- <script>
-  Highcharts.chart('container-kelas', {
-  chart: {
-    type: 'pie'
-  },
-  title: {
-    text: 'Kelas sering minjem'
-  },
-  tooltip: {
-      valueSuffix: ' Peminjaman'
-    },
-  series: [{
-    name: 'Jumlah',
-    data:{!! json_encode($kelas_terbanyak) !!}
-  }]
-});
-</script> --}}
 <script>
   $('select#bulan').on('change', function(){
   $('.form-filter input').val($(this).val())
   $('.form-filter').submit();
 })
 </script>
+@endif
 @endpush
