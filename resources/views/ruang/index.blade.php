@@ -41,10 +41,10 @@
                     <td>{{ $data->kategori ? $data->kategori->nama : '' }}</td>
                     <td>{{ $data->bisa_dipinjam}}</td>
                     <td class="table-report__action w-56">
-                        <div class="flex">
+                        <div class="flex gap-3">
+                            <a class="btn border-t-cyan-400 btn-sm" href="{{ route('ruang.show', $data->id) }}">Detail</a>
                             @can('edit_ruang')
-                            <a class="flex items-center mr-3" href="{{ route('ruang.edit', $data->id) }}"> <i
-                                    data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
+                            <a class="btn btn-warning btn-sm" href="{{ route('ruang.edit', $data->id) }}">Edit</a>
                             @endcan
                             @can('delete_ruang')
                             <button type="submit" class="btn btn-danger btn-sm rounded"

@@ -79,12 +79,7 @@ class RuangController extends Controller
     public function show($id)
     {
         $ruang = Ruang::findOrFail($id);
-
-        $produks_dalam_ruang = $ruang->produk;
-
-        $kategori = $ruang->kategori;
-
-        return view('ruang.show', compact('ruang', 'produks_dalam_ruang', 'kategori'));
+        return view('ruang.show', compact('ruang'));
     }
 
     /**
@@ -162,36 +157,68 @@ class RuangController extends Controller
         ], 200);
     }
 
-    public function transfer_produk($idBarang){
-        $barang = Produk::find($idBarang);
-
-        $ruang = $barang->ruang;
-
-        $ruangs = Ruang::all();
-
-        return view('ruang.produk.transfer', compact('barang', 'ruang', 'ruangs'));
-    }
-
-    public function updateLokasiBarang(Request $request, $id){
-
-        $find = Produk::find($id);
-
-        if(!$find){
-            return response()->json([
-                'massages' => "Updated data not found"
-            ], 404);
-        } 
-
-        $update = $find->update([
-            'ruang_id' => $request->ruang_baru
-        ]);
-
-        if(!$update){
-            return response()->json([
-                'massages' => "Update ERROR"
-            ], 400);
+    public function get_produk($ruang_id){
+        if ($ruang_id != ':id') {
+            $data = DB::table('produks')->select('id', 'nama', 'kode', 'merek', 'kondisi')->where('ruang_id', $ruang_id)->get();
+        }else{
+            $data = [];
         }
 
-        return redirect('/'); //change this!!
+        return datatables($data)
+            ->addIndexColumn()
+            ->addColumn('action', function ($data) {
+                return
+                    "
+                    <button class='btn btn-danger' onclick='hapus_produk(". $data->id .")'>Hapus</button>            
+                ";
+            })
+            ->escapeColumns([])
+            ->make(true);
     }
+    
+    public function hapus_produk(Request $request){
+        $request->validate([
+            'produk_id' => 'required'
+        ]);
+
+        Produk::findOrFail($request->produk_id)->update([
+            'ruang_id' => null
+        ]);
+
+        return response()->json([
+            'message' => 'Berhasil dihapus'
+        ], 200);
+    }
+    // public function transfer_produk($idBarang){
+    //     $barang = Produk::find($idBarang);
+
+    //     $ruang = $barang->ruang;
+
+    //     $ruangs = Ruang::all();
+
+    //     return view('ruang.produk.transfer', compact('barang', 'ruang', 'ruangs'));
+    // }
+
+    // public function updateLokasiBarang(Request $request, $id){
+
+    //     $find = Produk::find($id);
+
+    //     if(!$find){
+    //         return response()->json([
+    //             'massages' => "Updated data not found"
+    //         ], 404);
+    //     } 
+
+    //     $update = $find->update([
+    //         'ruang_id' => $request->ruang_baru
+    //     ]);
+
+    //     if(!$update){
+    //         return response()->json([
+    //             'massages' => "Update ERROR"
+    //         ], 400);
+    //     }
+
+    //     return redirect('/'); //change this!!
+    // }
 }

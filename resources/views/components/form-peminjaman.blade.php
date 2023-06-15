@@ -1,14 +1,15 @@
 {{-- @dd($update) --}}
 <div class="container-parent">
     <div class="mt-3">
-            <label for="nama" class="form-label">Nama</label>
-            <input type="text" class="form-control" name="nama" id="nama" value="{{ (count($update) > 0) ? $update['nama'] : old('nama') }}">
+        <label for="nama" class="form-label">Nama</label>
+        <input type="text" class="form-control" name="nama" id="nama"
+            value="{{ (count($update) > 0) ? $update['nama'] : old('nama') }}">
     </div>
     <div class="mt-3">
         <div>
             <label for="email" class="form-label">Email</label>
-            <input  class="form-control" type="email" name="email" id="email"
-            value="{{ (count($update) > 0) ? $update['email'] : old('email') }}">
+            <input class="form-control" type="email" name="email" id="email"
+                value="{{ (count($update) > 0) ? $update['email'] : old('email') }}">
         </div>
     </div>
     <div class="mt-3">
@@ -47,33 +48,35 @@
     </div>
 </div>
 <template id="template-sub">
-    <div class="mt-3">
-        <label class="form-label">Jumlah Peminjaman</label>
-        <div class="sm:grid grid-cols-3 gap-2">
-            <div class="input-group">
-                <div id="input-group-3" class="input-group-text">Unit</div>
-                <input type="number" name="jml_peminjaman" id="jml_peminjaman" class="form-control form-control-rounded" min="1" onkeyup="cek()"
-                value="{{ count($update) > 0 ? $update['jml_peminjaman'] : '' }}">
+    <div class="container-sub-render">
+        <div class="mt-3">
+            <label class="form-label">Jumlah Peminjaman</label>
+            <div class="sm:grid grid-cols-3 gap-2">
+                <div class="input-group">
+                    <div id="input-group-3" class="input-group-text">Unit</div>
+                    <input type="number" name="jml_peminjaman" id="jml_peminjaman" class="form-control form-control-rounded"
+                        min="1" onkeyup="cek()" value="{{ count($update) > 0 ? $update['jml_peminjaman'] : '' }}">
+                </div>
             </div>
         </div>
-    </div>
-   
-    <div class="mt-3 div-subkategori">
+        <div class="mt-3 div-subkategori">
             <label for="subkategori" class="form-label">Sub Kategori</label>
-            <select name="sub_kategori_id" class="between-input-item-select w-full" id="subkategori" onchange="syncProduk()" >
+            <select name="sub_kategori_id" class="between-input-item-select w-full" id="subkategori"
+                onchange="syncProduk()">
                 <option value="">Pilih Sub Kategori</option>
             </select>
-    </div>
-    @if ($page == 'admin')
-    <div class="mt-3 div-produk">
-        <div class="col-md-12">
-            <label for="produk" class="form-label">Produk</label>
-            <select name="produk_id[]" class="between-input-item-select w-full" id="produk" multiple>
-                <option value="">Pilih Produk</option>
-            </select>
         </div>
+        @if ($page == 'admin')
+        <div class="mt-3 div-produk">
+            <div class="col-md-12">
+                <label for="produk" class="form-label">Produk</label>
+                <select name="produk_id[]" class="between-input-item-select w-full" id="produk" multiple>
+                    <option value="">Pilih Produk</option>
+                </select>
+            </div>
+        </div>
+        @endif
     </div>
-    @endif
 </template>
 
 <template id="template-ruang">

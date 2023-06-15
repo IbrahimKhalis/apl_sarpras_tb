@@ -291,11 +291,6 @@
             </a>
             @endforeach
         </div>
-            
-        {{-- @foreach ($sekolahs as $sekolah)
-        <a href="javascript:;" data-tw-toggle="modal" data-tw-target="#modalSekolah" class="btn btn-primary"
-            onclick="set_identifier({{ $sekolah->id }})">{{ $sekolah->nama }}</a>
-        @endforeach --}}
     </section>
     <section id="step-2" class="form-step2 d-none place-items-center form-stepper-active" style="margin-top: 1rem;">
         <form action="{{ route('peminjaman.store') }}" class="form-peminjaman" method="POST">

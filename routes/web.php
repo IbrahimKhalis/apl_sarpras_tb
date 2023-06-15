@@ -13,6 +13,7 @@ use App\Http\Controllers\KelasController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\RuangController;
+use App\Http\Controllers\MFaqController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\Public\PeminjamanController as PeminjamanPublic;
 use App\Models\Kategori;
@@ -61,6 +62,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::resource('tahun-ajaran', TahunAjaranController::class);
         Route::resource('kelas', KelasController::class);
         Route::resource('jurusan', JurusanController::class);
+        Route::resource('faq', MFaqController::class);
     });
 
     Route::prefix('data-inventaris')->group(function () {
@@ -69,6 +71,8 @@ Route::group(['middleware' => ['auth']], function() {
         Route::resource('produk', ProdukController::class);
         Route::get('produk/{id}/detail', [ProdukController::class, 'detail'])->name('produk.detail');
         Route::post('ruang/tambah-produk', [RuangController::class, 'tambah_produk'])->name('ruang.tambah_produk');
+        Route::post('ruang/hapus-produk', [RuangController::class, 'hapus_produk'])->name('ruang.hapus_produk');
+        Route::get('ruang/{id}/produk', [RuangController::class, 'get_produk'])->name('ruang.produk');
         Route::resource('ruang', RuangController::class);
     });
     
@@ -111,8 +115,8 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::post('peminjamans/penagihan', [PeminjamanController::class, 'penagihan'])->name('peminjaman.penagihan');
     Route::resource('peminjamans', PeminjamanController::class);
-    Route::get('ruang/updateLokasiBarang/{id}', [RuangController::class, 'transfer_produk']);
-    Route::patch('ruang/updateLokasiBarang/{id}', [RuangController::class, 'updateLokasiBarang'])->name('ruang.updateLokasiBarang');
+    // Route::get('ruang/updateLokasiBarang/{id}', [RuangController::class, 'transfer_produk']);
+    // Route::patch('ruang/updateLokasiBarang/{id}', [RuangController::class, 'updateLokasiBarang'])->name('ruang.updateLokasiBarang');
 
     // export peminjanam
     Route::get('/export', [PeminjamanController::class, 'export'])->name('export'); 

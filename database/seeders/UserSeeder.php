@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
         $roles = [
             'super_admin' => [
                 'name_long' => 'Super Admin',
-                'permission' => ['7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17']
+                'permission' => ['7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '42', '43', '44', '45']
             ],
             'admin' => [
                 'name_long' => 'Admin',
