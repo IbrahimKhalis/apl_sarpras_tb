@@ -27,8 +27,7 @@ return new class extends Migration
             $table->text('ket_produk');
             $table->text('ket_kondisi');
             $table->boolean('dipinjam')->default(0);
-            $table->boolean('
-            ')->default(0);
+            $table->boolean('sekali_pakai')->default(0);
             $table->timestamps();
         });
     }

@@ -13,6 +13,7 @@ use App\Http\Controllers\KelasController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\RuangController;
+use App\Http\Controllers\MFaqController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\Public\PeminjamanController as PeminjamanPublic;
 use App\Models\Kategori;
@@ -61,6 +62,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::resource('tahun-ajaran', TahunAjaranController::class);
         Route::resource('kelas', KelasController::class);
         Route::resource('jurusan', JurusanController::class);
+        Route::resource('faq', MFaqController::class);
     });
 
     Route::prefix('data-inventaris')->group(function () {
