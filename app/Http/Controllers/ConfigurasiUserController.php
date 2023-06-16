@@ -13,9 +13,16 @@ use Auth;
 class ConfigurasiUserController extends Controller
 {
     public function index(){
+        if (!Auth::user()->hasRole('super_admin')) {
+            abort(403);
+        }
+
         return view('myauth.settings');
     }
     public function edit(){
+        if (!Auth::user()->hasRole('super_admin')) {
+            abort(403);
+        }
         return view('myauth.editprofile');
     }
 
@@ -49,6 +56,9 @@ class ConfigurasiUserController extends Controller
     }
 
     public function ubahPassword(){
+        if (!Auth::user()->hasRole('super_admin')) {
+            abort(403);
+        }
         return view('myauth.ubahpassword');
     }
 

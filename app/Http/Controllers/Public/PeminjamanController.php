@@ -24,7 +24,7 @@ class PeminjamanController extends Controller
             abort(403);
         }
 
-        $sekolahs = DB::table('sekolahs')->select('id', 'nama')->get();
+        $sekolahs = DB::table('sekolahs')->select('id', 'nama','logo','npsn')->get();
         return view('peminjaman_public.create', compact('sekolahs', 'page'));
     }
 

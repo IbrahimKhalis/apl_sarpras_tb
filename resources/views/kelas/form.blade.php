@@ -27,5 +27,4 @@
         </div>
     </form>
 </div>
-<!-- END: Vertical Form -->
 @endsection

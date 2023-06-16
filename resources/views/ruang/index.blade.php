@@ -28,7 +28,9 @@
                     <th class="whitespace-nowrap">Ruang</th>
                     <th class="whitespace-nowrap">Kategori</th>
                     <th class="whitespace-nowrap">Status</th>
+                    @can('edit_ruang', 'delete_ruang')
                     <th class="whitespace-nowrap">Action</th>
+                    @endcan
                 </tr>
             </thead>
             <tbody>
@@ -39,14 +41,16 @@
                     <td>{{ $data->kategori ? $data->kategori->nama : '' }}</td>
                     <td>{{ $data->bisa_dipinjam}}</td>
                     <td class="table-report__action w-56">
-                        <div class="flex">
-                            <a class="flex items-center mr-3" href="{{ route('ruang.edit', $data->id) }}"> <i
-                                    data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                            @if (auth()->user()->can('delete_ruang'))
+                        <div class="flex gap-3">
+                            <a class="btn border-t-cyan-400 btn-sm" href="{{ route('ruang.show', $data->id) }}">Detail</a>
+                            @can('edit_ruang')
+                            <a class="btn btn-warning btn-sm" href="{{ route('ruang.edit', $data->id) }}">Edit</a>
+                            @endcan
+                            @can('delete_ruang')
                             <button type="submit" class="btn btn-danger btn-sm rounded"
                                 onclick="deleteData('{{ route('ruang.destroy', [$data->id]) }}')">Hapus</button>
+                            @endcan
                     </td>
-                    @endif
                 </tr>
                 @endforeach
             </tbody>

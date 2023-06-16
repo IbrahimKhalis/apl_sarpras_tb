@@ -47,28 +47,26 @@ class KelasController extends Controller
 
     public function edit($id)
     {
-        $data = Kelas::find($id);
+        $data = Kelas::findOrFail($id);
+        validateSekolah($data->sekolah_id);
         return view('kelas.form', compact('data'));
     }
 
     public function update(UpdateKelasRequest $request, $id)
     {
-        $kelas = Kelas::find($id);
-        $kelas->update([
-            'nama' => $request->nama,
-        ]);
+        $kelas = Kelas::findOrFail($id);
+        validateSekolah($kelas->sekolah_id);
+        $kelas->update(['nama' => $request->nama]);
         insertLog(Auth::user()->name. " Berhasil mengubah kelas ". $kelas['nama']);
         return redirect()->route('kelas.index')->with('msg_success', 'Berhasil mengubah kelas');
     }
 
     public function destroy($id)
     {
-        $kelas = Kelas::with(['sekolah'])->find($id);
-        if(!$kelas) return abort(403, 'Kelas yang ingin di hapus tidak ditemukan!');
-
+        $kelas = Kelas::findOrFail($id);
+        validateSekolah($kelas->sekolah_id);
         $kelas->delete();
         insertLog(Auth::user()->name ." Berhasil menghapus kelas ". $kelas['nama']);
-        
         return redirect()->route('kelas.index')->with('msg_success', 'Berhasil menghapus kelas');
     }
 }

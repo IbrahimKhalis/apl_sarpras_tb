@@ -23,7 +23,7 @@ class KategoriController extends Controller
 
     public function index()
     {
-        $datas = Kategori::paginate(10);
+        $datas = Kategori::where('sekolah_id', Auth::user()->sekolah_id)->paginate(10);
         return view('kategori.index', compact('datas'));
     }
 
@@ -64,21 +64,23 @@ class KategoriController extends Controller
 
     public function show($id)
     {
-        $kategori = Kategori::find($id);
+        $kategori = Kategori::findOrFail($id);
         return $kategori;
     }
 
     public function edit($id)
     {
-        $data = Kategori::find($id);
+        $data = Kategori::findOrFail($id);
+        validateSekolah($data->sekolah_id);
         return view('kategori.form', compact('data'));
     }
 
     public function update(UpdateKategoriRequest $request, $id)
     {
+        $kategori = Kategori::findOrFail($id);
+        validateSekolah($kategori->sekolah_id);
         DB::beginTransaction();
         try {
-            $kategori = Kategori::find($id);
             $kategori->update([
                 'nama' => $request->nama,
             ]);
@@ -108,6 +110,7 @@ class KategoriController extends Controller
     public function destroy($id)
     {
         $kategori = Kategori::findOrFail($id);
+        validateSekolah($kategori->sekolah_id);
 
         if ($kategori->subcategory()->count() > 0) {
             return redirect()->back()->with('msg_error', 'Kategori ini sudah digunakan pada sub kategori tidak dapat dihapus');

@@ -40,7 +40,7 @@
                     <div class="mt-3">
                         <div class="col-md-12">
                             <label for="status" class="form-label">Status</label>
-                            <select name="status" class="tom-select w-full" id="status" onchange="syncStatus()">
+                            <select name="status" class="between-input-item-select" id="status" onchange="syncStatus()">
                                 <option value="pengajuan" {{ isset($data) ? ($data['status']=='pengajuan' ? 'selected' : '' )
                                     : '' }}>Pengajuan</option>
                                 <option value="diterima" {{ isset($data) ? ($data['status']=='diterima' ? 'selected' : '' ) : ''
