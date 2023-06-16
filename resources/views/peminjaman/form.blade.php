@@ -197,6 +197,8 @@
         </div>
     </div>
 </template>
+
+<h1></h1>
 @endsection
 
 @push('js')
