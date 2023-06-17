@@ -41,7 +41,7 @@
     <div class="mt-3">
         <div class="col-md-12">
             <label for="kategori" class="form-label">Kategori</label>
-            <select name="kategori_id" class="between-input-item-select w-full" id="kategori" onchange="syncSub()">
+            <select name="kategori_id" class="tom-select w-full" id="kategori" onchange="syncSub()">
                 <option value="">Pilih Kategori</option>
             </select>
         </div>
