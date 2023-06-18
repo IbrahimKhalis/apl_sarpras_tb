@@ -97,102 +97,53 @@
         <div class="title">
             <h1>Find your questions</h1>
         </div>
-        <div class="cards">
-            <div class="card">
-                <div class="title-card">
-                    <h2>How do i get verified?</h2>
-                </div>
-                <div class="desc-card">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus dolores voluptatum ducimus
-                    tenetur aliquam enim aut? Nulla beatae amet perspiciatis.
-                </div>
-                <button class="learn-more">
-                    <span class="circle" aria-hidden="true">
-                        <span class="icon arrow"></span>
-                    </span>
-                    <span class="button-text">Pelajari lebih</span>
-                </button>
-                <!-- <div class="more">
-                    <div class="bx bx-right-arrow-circle" id="icon"></div>
-                    <h3>Pelajari Selanjutnya</h3>
-                </div> -->
+        <div class="faq">
+            <div class="faq-title">
+                <h1>FAQ</h1>
             </div>
-            <div class="card">
-                <div class="title-card">
-                    <h2>How do i get verified?</h2>
+            <div class="faq-drawer">
+                <input class="faq-drawer__trigger" id="faq-drawer" type="checkbox" /><label class="faq-drawer__title1" for="faq-drawer"> Apa itu aplikasi sarpras di sekolah?</label>
+                <div class="faq-drawer__content-wrapper">
+                  <div class="faq-drawer__content">
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                    </p>
+                  </div>
                 </div>
-                <div class="desc-card">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus dolores voluptatum ducimus
-                    tenetur aliquam enim aut? Nulla beatae amet perspiciatis.
+              </div>
+              
+              <div class="faq-drawer">
+                <input class="faq-drawer__trigger" id="faq-drawer-2" type="checkbox" /><label class="faq-drawer__title" for="faq-drawer-2">Apa saja fitur yang tersedia dalam aplikasi sarpras di sekolah?</label>
+                <div class="faq-drawer__content-wrapper">
+                  <div class="faq-drawer__content">
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                    </p>
+                  </div>
                 </div>
-                <button class="learn-more">
-                    <span class="circle" aria-hidden="true">
-                        <span class="icon arrow"></span>
-                    </span>
-                    <span class="button-text">Pelajari lebih</span>
-                </button>
-                <!-- <div class="more">
-                    <div class="bx bx-right-arrow-circle" id="icon"></div>
-                    <h3>Pelajari Selanjutnya</h3>
-                </div> -->
-            </div>
-            <div class="card">
-                <div class="title-card">
-                    <h2>How do i get verified?</h2>
+              </div>
+              
+              <div class="faq-drawer">
+                <input class="faq-drawer__trigger" id="faq-drawer-3" type="checkbox" /><label class="faq-drawer__title" for="faq-drawer-3">Apa manfaat menggunakan aplikasi sarpras di sekolah?</label>
+                <div class="faq-drawer__content-wrapper">
+                  <div class="faq-drawer__content">
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.            
+                    </p>
+                  </div>
                 </div>
-                <div class="desc-card">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus dolores voluptatum ducimus
-                    tenetur aliquam enim aut? Nulla beatae amet perspiciatis.
+              </div>
+              <div class="faq-drawer">
+                <input class="faq-drawer__trigger" id="faq-drawer-4" type="checkbox" /><label class="faq-drawer__title" for="faq-drawer-4"> Apa kendala yang dapat dihadapi dalam penggunaan aplikasi sarpras di sekolah?</label>
+                <div class="faq-drawer__content-wrapper">
+                  <div class="faq-drawer__content">
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.            
+                    </p>
+                  </div>
                 </div>
-                <button class="learn-more">
-                    <span class="circle" aria-hidden="true">
-                        <span class="icon arrow"></span>
-                    </span>
-                    <span class="button-text">Pelajari lebih</span>
-                </button>
-                <!-- <div class="more">
-                    <div class="bx bx-right-arrow-circle" id="icon"></div>
-                    <h3>Pelajari Selanjutnya</h3>
-                </div> -->
-            </div>
-            <div class="card">
-                <div class="title-card">
-                    <h2>How do i get verified?</h2>
-                </div>
-                <div class="desc-card">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus dolores voluptatum ducimus
-                    tenetur aliquam enim aut? Nulla beatae amet perspiciatis.
-                </div>
-                <button class="learn-more">
-                    <span class="circle" aria-hidden="true">
-                        <span class="icon arrow"></span>
-                    </span>
-                    <span class="button-text">Pelajari lebih</span>
-                </button>
-                <!-- <div class="more">
-                    <div class="bx bx-right-arrow-circle" id="icon"></div>
-                    <h3>Pelajari Selanjutnya</h3>
-                </div> -->
-            </div>
-            <div class="card">
-                <div class="title-card">
-                    <h2>How do i get verified?</h2>
-                </div>
-                <div class="desc-card">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus dolores voluptatum ducimus
-                    tenetur aliquam enim aut? Nulla beatae amet perspiciatis.
-                </div>
-                <button class="learn-more">
-                    <span class="circle" aria-hidden="true">
-                        <span class="icon arrow"></span>
-                    </span>
-                    <span class="button-text">Pelajari lebih</span>
-                </button>
-                <!-- <div class="more">
-                    <div class="bx bx-right-arrow-circle" id="icon"></div>
-                    <h3>Pelajari Selanjutnya</h3>
-                </div> -->
-            </div>
+              </div>
+              
         </div>
     </div>
 </main>

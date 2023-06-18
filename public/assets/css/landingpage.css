@@ -215,6 +215,13 @@ body {
 }
 
 
+.faq {
+    padding: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .content-2,
 .content-3 {
     display: flex;
@@ -322,13 +329,70 @@ body {
     }
 }
 
-@media (max-width:550px) {
+@media (max-width:450px) {
 
-    .content-1 .img-content img,
-    .content-2 .img-content img,
-    .content-3 .img-content img {
-        width: 55vw;
+    .image-bian{
+        display: none;
     }
+   
+    .containers {
+        padding: 150px 40px 100px 40px;
+        flex-wrap: wrap;
+    }
+    .text-header p{
+        text-align: justify;
+    }
+
+    .content-1 .img-content img {
+        width: 55vw;
+        margin-left: 15%;
+    }
+
+    .content-2 .img-content img {
+        width: 65vw;
+    }
+    .content-3 .img-content img {
+        width: 65vw;
+    }
+
+    .content-2 .text-content h1{
+        text-align: center;
+    }
+    .content-3 .text-content h1{
+        text-align: center;
+    }
+
+    .content-1{
+        padding: 0px 40px;
+    }
+    .content-2{
+        padding: 0px 40px;
+    }
+    .content-3{
+        padding: 0px 40px;
+    }
+    .content-4{
+        padding: 0px 40px;
+    }
+
+    .faq{
+        padding: 20px;
+    }
+}
+
+
+@media (max-width:400px){
+    .containers{
+        padding: 100px;
+    }
+}
+
+@media (max-width:850px){    
+    .content-1 .img-content img {
+        width: 45vw;
+      
+    }
+
 }
 
 .content-2 {
@@ -452,16 +516,11 @@ input[type="checkbox"] {
 
 @media only screen and (max-width: 600px) {
     .faq {
-        padding: 80px;
+        padding: 40px;
     }
 }
 
-.faq {
-    padding: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+
 
 .faq-title h1 {
     text-align: center;
