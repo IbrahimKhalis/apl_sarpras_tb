@@ -363,20 +363,38 @@ body {
     }
 
     .content-1{
-        padding: 0px 40px;
+        padding: 0px 30px;
+        margin-bottom: 100px;
     }
     .content-2{
-        padding: 0px 40px;
+        padding: 0px 30px;
+        margin-bottom: 100px;
     }
     .content-3{
-        padding: 0px 40px;
+        padding: 0px 30px;
+        margin-bottom: 100px;
     }
     .content-4{
-        padding: 0px 40px;
+        padding: 0px 30px;
+        margin-bottom: 100px;
     }
 
     .faq{
         padding: 20px;
+    }
+
+    .content-1 .text-content h1{
+        font-size: 44px;
+    }
+    .content-2 .text-content h1{
+        font-size: 44px;
+       
+    }
+    .content-3 .text-content h1{
+        font-size: 44px;
+    }
+    .content-4 .text-content h1{
+        font-size: 44px;
     }
 }
 
