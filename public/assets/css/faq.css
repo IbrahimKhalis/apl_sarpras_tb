@@ -380,12 +380,11 @@ input[type="checkbox"] {
     .faq {
         padding: 40px;
     }
-}
-@media only screen and (max-width: 850px) {
-    .faq {
-        padding: 40px;
+    .containers{
+        padding: 100px 45px 100px 45px;
     }
 }
+
 
 
 .faq{
