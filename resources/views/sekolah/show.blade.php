@@ -103,7 +103,7 @@
 <div class="content">
     <div class="intro-y flex items-center mt-8">
         <h2 class="text-lg font-medium mr-auto">
-            Profile Layout
+            Data Sekolah
         </h2>
     </div>
     <!-- BEGIN: Profile Info -->
