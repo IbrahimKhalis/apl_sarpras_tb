@@ -158,22 +158,23 @@
                 <a data-toggle="tab" data-target="#product" href="#product" class="tab-link nav-link py-4 flex items-center" data-tw-target="#change-password" aria-selected="false" role="tab" > <i class="w-4 h-4 mr-2" data-lucide="package"></i> Product </a>
             </li>
         </ul>
+        <div class="tab-content mt-5" style="padding-bottom: 2rem; padding-top: 2rem">
+            <div id="profile" class="tab-pane active">
+                <h2 class="font-medium text-lg">Profile</h2>
+                <p>This is the profile tab content.</p>
+            </div>
+            <div id="statistik" class="tab-pane">
+                <h2 class="font-medium text-lg">Statistik</h2>
+                <p>This is the Statistik tab content.</p>
+            </div>
+            <div id="product" class="tab-pane">
+                <h2 class="font-medium text-lg">Product</h2>
+                <p>This is the Product tab content.</p>
+            </div>
+        </div>
     </div>
     <!-- END: Profile Info -->
-    <div class="tab-content mt-5">
-        <div id="profile" class="tab-pane active">
-            <h2 class="font-medium text-lg">Profile</h2>
-            <p>This is the profile tab content.</p>
-        </div>
-        <div id="statistik" class="tab-pane">
-            <h2 class="font-medium text-lg">Statistik</h2>
-            <p>This is the Statistik tab content.</p>
-        </div>
-        <div id="product" class="tab-pane">
-            <h2 class="font-medium text-lg">Product</h2>
-            <p>This is the Product tab content.</p>
-        </div>
-    </div>
+   
 </div>
 
 
