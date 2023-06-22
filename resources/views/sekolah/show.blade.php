@@ -16,7 +16,7 @@
     </div>
 </div> --}}
 
-<div class="intro-y flex items-center mt-8">
+{{-- <div class="intro-y flex items-center mt-8">
     <h2 class="text-lg font-medium mr-auto">
         Detail {{ $sekolah->nama }}
     </h2>
@@ -98,5 +98,104 @@
         </div>
 
     </div>
+</div> --}}
+
+<div class="content">
+    <div class="intro-y flex items-center mt-8">
+        <h2 class="text-lg font-medium mr-auto">
+            Data Sekolah
+        </h2>
+    </div>
+    <!-- BEGIN: Profile Info -->
+    <div class="intro-y box px-5 pt-5 mt-5">
+        <div class="flex flex-col lg:flex-row border-b border-slate-200/60 dark:border-darkmode-400 pb-5 -mx-5">
+            <div class="flex flex-1 px-5 items-center justify-center lg:justify-start">
+                <div class="w-20 h-20 sm:w-24 sm:h-24 flex-none lg:w-32 lg:h-32 image-fit relative  cursor-pointer zoom-in">
+                    @if ($sekolah->logo != '/img/tutwuri.png')
+                    <img src="{{ asset('storage/' . $sekolah->logo) }}" alt=""
+                        style="object-fit: cover" class="rounded-full" data-action="zoom">
+                    @else
+                    <img src="{{ $sekolah->logo }}" alt="" style="object-fit: cover" class="rounded-full" data-action="zoom">
+                    @endif 
+                </div>
+               
+                <div class="ml-5">
+                    <div class="w-24 sm:w-40 truncate sm:whitespace-normal font-medium text-lg">{{ $sekolah->nama }}</div>
+                    <div class="text-slate-500">NPSN : {{ $sekolah->npsn }}</div>
+                </div>
+            </div>
+            <div class="mt-6 lg:mt-0 flex-1 px-5 border-l border-r border-slate-200/60 dark:border-darkmode-400 border-t lg:border-t-0 pt-5 lg:pt-0">
+                <div class="font-medium text-center lg:text-left lg:mt-3">Contact Details</div>
+                <div class="flex flex-col justify-center items-center lg:items-start mt-4">
+                    <div class="truncate sm:whitespace-normal flex items-center"> <i data-lucide="mail" class="w-4 h-4 mr-2"></i> denzelwashington@left4code.com </div>
+                    <div class="truncate sm:whitespace-normal flex items-center mt-3"> <i data-lucide="instagram" class="w-4 h-4 mr-2"></i> Instagram Denzel Washington </div>
+                    <div class="truncate sm:whitespace-normal flex items-center mt-3"> <i data-lucide="twitter" class="w-4 h-4 mr-2"></i> Twitter Denzel Washington </div>
+                </div>
+            </div>
+            <div class="mt-6 lg:mt-0 flex-1 flex items-center justify-center px-5 border-t lg:border-0 border-slate-200/60 dark:border-darkmode-400 pt-5 lg:pt-0">
+                <div class="text-center rounded-md w-20 py-3">
+                    <div class="font-medium text-primary text-xl">201</div>
+                    <div class="text-slate-500">Orders</div>
+                </div>
+                <div class="text-center rounded-md w-20 py-3">
+                    <div class="font-medium text-primary text-xl">1k</div>
+                    <div class="text-slate-500">Purchases</div>
+                </div>
+                <div class="text-center rounded-md w-20 py-3">
+                    <div class="font-medium text-primary text-xl">492</div>
+                    <div class="text-slate-500">Reviews</div>
+                </div>
+            </div>
+        </div>
+        <ul class="nav nav-link-tabs flex-col sm:flex-row justify-center lg:justify-start text-center" role="tablist" >
+            <li id="profile-tab" class="nav-item" role="presentation">
+                <a  data-toggle="tab" data-target="#profile" href="#profile" class="tab-link nav-link py-4 flex items-center active" data-tw-target="#profile" aria-controls="profile" aria-selected="true" role="tab" > <i class="w-4 h-4 mr-2" data-lucide="user"></i> Profile </a>
+            </li>
+            <li id="account-tab" class="nav-item" role="presentation">
+                <a data-toggle="tab" data-target="#statistik" href="#statistik" class="tab-link nav-link py-4 flex items-center" data-tw-target="#account" aria-selected="false" role="tab" > <i class="w-4 h-4 mr-2" data-lucide="bar-chart"></i> Statistic </a>
+            </li>
+            <li id="change-password-tab" class="nav-item" role="presentation">
+                <a data-toggle="tab" data-target="#product" href="#product" class="tab-link nav-link py-4 flex items-center" data-tw-target="#change-password" aria-selected="false" role="tab" > <i class="w-4 h-4 mr-2" data-lucide="package"></i> Product </a>
+            </li>
+        </ul>
+        <div class="tab-content mt-5" style="padding-bottom: 2rem; padding-top: 2rem">
+            <div id="profile" class="tab-pane active">
+                <h2 class="font-medium text-lg">Profile</h2>
+                <p>This is the profile tab content.</p>
+            </div>
+            <div id="statistik" class="tab-pane">
+                <h2 class="font-medium text-lg">Statistik</h2>
+                <p>This is the Statistik tab content.</p>
+            </div>
+            <div id="product" class="tab-pane">
+                <h2 class="font-medium text-lg">Product</h2>
+                <p>This is the Product tab content.</p>
+            </div>
+        </div>
+    </div>
+    <!-- END: Profile Info -->
+   
 </div>
+
+
+<script>
+    $(document).ready(function() {
+        $('.tab-link').on('click', function(e) {
+            e.preventDefault();
+
+            
+            $('.tab-link').removeClass('active');
+
+
+            $(this).addClass('active');
+
+           
+            $('.tab-pane').removeClass('active');
+
+
+            var target = $(this).data('target');
+            $(target).addClass('active');
+        });
+    });
+</script>
 @endsection
