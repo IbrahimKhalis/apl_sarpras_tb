@@ -25,6 +25,7 @@ class RoleController extends Controller
     public function index(Request $request)
     {
         $roles = Role::where('name', '!=', 'super_admin')->get();
+        // $roles = Role::all();
         $rolePermissions = [];
 
         foreach ($roles as $role) {

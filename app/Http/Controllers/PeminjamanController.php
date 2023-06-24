@@ -20,7 +20,7 @@ class PeminjamanController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:view_peminjaman', ['only' => ['index', 'show']]);
+        $this->middleware('permission:view_peminjaman', ['only' => ['index']]);
         $this->middleware('permission:add_peminjaman', ['only' => ['create', 'store']]);
         $this->middleware('permission:edit_peminjaman', ['only' => ['edit', 'update']]);
         $this->middleware('permission:delete_peminjaman', ['only' => ['destroy']]);
@@ -32,8 +32,45 @@ class PeminjamanController extends Controller
      */
     public function index()
     {
-        $datas = Peminjaman::where('sekolah_id', Auth::user()->sekolah_id)->latest()->get();
-        return view('peminjaman.index', compact('datas'));
+        return view('peminjaman.index');
+    }
+
+    public function data($sekolah_id = null){
+        if (!Auth::user()->hasRole('super_admin')) {
+            $sekolah_id = Auth::user()->sekolah_id;
+        }
+
+        if (!$sekolah_id) {
+            abort(403);
+        }
+
+        $data = Peminjaman::where('sekolah_id', $sekolah_id)->get();
+
+        return datatables($data)
+            ->addIndexColumn()
+            ->addColumn('kelas', function ($data) {
+                return $data->kelas->nama;
+            })
+            ->editColumn('status_pengembalian', function ($data) {
+                return $data->status_pengembalian ? 'Sudah' : 'Belum';
+            })
+            ->addColumn('status_telat', function ($data) {
+                return $data->status == 'diterima' ? (now() > $data->tgl_pengembalian ? 'Telat' : '') : '';
+            })
+            ->addColumn('action', function ($data) {
+                $action = '<a href="'. route('peminjamans.show', $data->id) .'" class="btn btn-sm btn-primary mr-2">Lihat</a>';
+                if (auth()->user()->can('edit_peminjaman') && $data->status == 'diterima' && now() > $data->tgl_pengembalian){
+                    $action .= '<a href="javascript:;" data-tw-toggle="modal" data-tw-target="#modalPenagihan"
+                class="btn btn-sm btn-warning mr-2" onclick="set('. $data->id .')">Kirim Penagihan</a>';
+                }
+                if (auth()->user()->can('delete_peminjaman')) {
+                    $action .= '<button type="submit" class="btn btn-sm btn-danger rounded" style="width: 4rem;"
+                    onclick="deleteData("'. route('peminjamans.destroy', $data->id) .'")">Hapus</button>';
+                }
+                return $action;
+            })
+            ->escapeColumns([])
+            ->make(true);
     }
 
     /**

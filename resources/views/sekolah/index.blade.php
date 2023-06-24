@@ -106,7 +106,7 @@
                             <a href="{{ route('sekolah.show', $sekolah->id) }}"
                                 class="btn btn-primary btn-sm rounded">Detail</a>
                             @if (auth()->user()->can('edit_sekolah'))
-                            <a class="btn btn-warning btn-sm rounded"
+                            <a class="btn btn-warning btn-sm rounded rounded"
                                 href="{{ route('sekolah.edit', [$sekolah->id]) }}"
                                >Edit</a>
                             @endif

@@ -192,7 +192,7 @@
         <div class="mt-3">
             <div class="col-md-12">
                 <label for="ket" class="form-label">Keteragan</label>
-                <textarea name="ket" id="ket" cols="30" rows="10">{{ isset($data) ? $data['ket'] : '' }}</textarea>
+                <textarea name="ket" id="ket" cols="30" rows="10" class="form-control">{{ isset($data) ? $data['ket'] : '' }}</textarea>
             </div>
         </div>
     </div>

@@ -75,4 +75,16 @@ class Controller extends BaseController
         file_put_contents($file, $img_base64);
         return $namaTandaTangan;
     }
+
+    public function parseData($datas){
+        $result = [
+            'key' => [],
+            'data' => []
+        ];
+        foreach ($datas as $key => $data) {
+            array_push($result['key'], ucfirst($data->key));
+            array_push($result['data'], $data->jml);
+        }
+        return $result;
+    }
 }

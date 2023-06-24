@@ -32,10 +32,38 @@ class ProdukController extends Controller
      */
     public function index()
     {
-        $produks = Produk::select('produks.*')
-                                ->where('produks.sekolah_id', Auth::user()->sekolah_id)
-                                ->paginate(10);
-        return view('produk.index', compact('produks'));
+        return view('produk.index');
+    }
+
+    public function data($sekolah_id = null){
+        if (!Auth::user()->hasRole('super_admin')) {
+            $sekolah_id = Auth::user()->sekolah_id;
+        }
+
+        if (!$sekolah_id) {
+            abort(403);
+        }
+
+        $data = Produk::where('sekolah_id', $sekolah_id)->get();
+
+        return datatables($data)
+            ->addIndexColumn()
+            ->addColumn('sub', function ($data) {
+                return $data->subcategorie->nama;
+            })
+            ->addColumn('action', function ($data) {
+                $action = '';
+                if (Auth::user()->can('edit_produk')){
+                    $action .= '<a class="btn btn-warning btn-sm rounded" href="'. route('produk.edit', $data->id) .'">Edit</a>';
+                }
+                if (Auth::user()->can('delete_produk')) {
+                    $action .= '<button type="submit" class="btn btn-sm btn-danger rounded ml-2" style="width: 4rem;"
+                    onclick="deleteData("'. route('produk.destroy', $data->id) .'")">Hapus</button>';
+                }
+                return $action;
+            })
+            ->escapeColumns([])
+            ->make(true);
     }
 
     /**

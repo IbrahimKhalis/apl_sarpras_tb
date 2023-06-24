@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-    <h2 class="text-lg font-Medium mr-auto">
+    <h2 class="text-lg font-bold mr-auto">
         Data Produk
     </h2>
     @can('add_produk')
@@ -15,16 +15,12 @@
     </div>
     @endcan
 </div>
-<div class="mt-3">
-    <div class="search hidden sm:block">
-        <input type="text" class="search__input form-control border-transparent" placeholder="Search...">
-    </div>
-</div>
 <div class="intro-y box p-5 mt-5">
     <div class="overflow-x-auto">
-        <table class="table table-striped">
+        <table class="table table-striped" id="tabel_produk">
             <thead>
                 <tr>
+                    <th class="whitespace-nowrap">No</th>
                     <th class="whitespace-nowrap">Nama</th>
                     <th class="whitespace-nowrap">Sub Kategori</th>
                     <th class="whitespace-nowrap">Merek</th>
@@ -35,33 +31,44 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($produks as $data)
-                <tr>
-                    <td>{{ $data->nama }}</td>
-                    <td>
-                        <a href="" class="font-medium whitespace-nowrap">{{ ($data->subcategorie ? $data->subcategorie->nama : '') }}</a>
-                    </td>
-                    <td>{{ $data->merek }}</td>
-                    <td>{{ $data->kondisi }}</td>
-                    <td class="table-report__action w-56">
-                        <div class="flex gap-2">
-                            @can('edit_produk')
-                            <a class="btn btn-warning mr-3" href="{{ route('produk.edit', $data->id) }}">Edit</a>
-                            @endcan
-                            @can('delete_produk')
-                            <button type="submit" class="btn btn-danger btn-sm rounded"
-                                onclick="deleteData('{{ route('produk.destroy', [$data->id]) }}')">Hapus</button>
-                            @endcan
-                        </div>
-                    </td>
-                </tr>
-                @endforeach
             </tbody>
         </table>
     </div>
 </div>
-<div class="mt-5">
-    {{ $produks->links() }}
-</div>
-
 @endsection
+
+@push('js')
+<script>
+    let tabel_produk = $('#tabel_produk').DataTable({
+            processing: true,
+            ordering: false,
+            info: false,
+            ajax: {
+                url: '{{ route('produk.data') }}',
+            },
+            columns: [{
+                    data: 'DT_RowIndex',
+                    searchable: false,
+                    sortable: false
+                },
+                {
+                    data: 'nama'
+                },
+                {
+                    data: 'sub'
+                },
+                {
+                    data: 'merek'
+                },
+                {
+                    data: 'kondisi'
+                },
+                {
+                    data: 'action',
+                    searchable: false,
+                    sortable: false
+                },
+            ]
+        });
+</script>
+@endpush
