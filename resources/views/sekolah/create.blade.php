@@ -79,7 +79,7 @@
                                 <div class="mt-3">
                                     <h2 class="font-normal text-xs mr-auto">Jenjang:</h2>
                                     <select name="jenjang" id="jenjang"
-                                        class="text-dark form-control @error('jenjang') is-invalid @enderror"
+                                        class="form-select text-dark form-control @error('jenjang') is-invalid @enderror"
                                         style="border-radius: 5px;" required>
                                         <option value="">Pilih Jenjang</option>
                                         <option value="sd" {{ isset($sekolah)? ($sekolah->jenjang =='sd' ? 'selected' : '') : '' }}>SD</option>

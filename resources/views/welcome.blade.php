@@ -157,7 +157,7 @@
     <script src="assets/vendor/aos/aos.js"></script>
 
     <!-- Template Main JS File -->
-    <script src="assets/js/main.js"></script>
+    <script src="assets/js /main.js"></script>
 
 </body>
 
@@ -174,10 +174,7 @@
     <div class="containers">
         <div class="text-header">
             <h1>Semua Informasi Tentang Alat/Barang Dalam Situs</h1>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi ut id tempora accusantium quis sed
-                natus saepe maxime libero iste. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Culpa
-                cumque, labore quas provident debitis vitae possimus doloremque tenetur neque odit. Lorem ipsum
-                dolor sit, amet consectetur adipisicing elit. Qui, dolorem? lorem doler adisipet master.</p>
+            <p>Situs ini membantu anda untuk memudahkan dalam Mengatur/Mengelola Pemasukan dan Pengeluaran Barang yang terjadi di lingkungan sekolah</p>
             <div class="button-faq">
               <a class="btn" href="#more" onclick="links()">Lihat lebih banyak<div class="bx bx-chevron-down"></div></a>
             </div>

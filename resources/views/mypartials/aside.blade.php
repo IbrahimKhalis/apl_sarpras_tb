@@ -43,13 +43,13 @@
         @endcan
 
         @can('view_faq')
-        <li>
+        {{-- <li>
           <a href="{{ route('faq.index') }}"
             class="side-menu {{ Request::is('data-master/faq*') ? 'active' : '' }}">
             <div class="side-menu__icon"><i data-lucide="inbox"></i></div>
             <div class="side-menu__title">FAQ</div>
           </a>
-        </li>
+        </li> --}}
         @endcan
 
         @can('view_kelas')

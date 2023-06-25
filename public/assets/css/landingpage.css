@@ -13,13 +13,13 @@ body {
     align-items: center;
     padding: 200px 10px 0px 10px;
     display: flex;
-    gap: 60px;
+    gap: 40px;
     flex-wrap: wrap;
     z-index: 2;
 }
 
 .text-header {
-    max-width: 770px;
+    max-width: 730px;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -103,7 +103,7 @@ body {
     margin-top: -70px;
 }
 
-@media (max-width:1260px) {
+@media (max-width:1289px) {
     .containers {
         padding: 150px 100px 0px 100px;
         flex-wrap: wrap;
@@ -214,15 +214,39 @@ body {
     color: #ffffff;
 }
 
-.content-1,
-.content-2,
-.content-3,
-.content-4 {
+
+.faq {
+    padding: 100px;
     display: flex;
-    padding: 0px 100px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.content-2,
+.content-3 {
+    display: flex;
+    padding: 0px 150px;
     align-items: center;
     justify-content: center;
     gap: 220px;
+    margin-bottom: 200px;
+}
+
+.content-1{
+    display: flex;
+    padding: 0px 150px;
+    align-items: center;
+    justify-content: center;
+    gap: 200px;
+    margin-bottom: 200px;
+}
+
+.content-4 {
+    display: flex;
+    padding: 0px 150px;
+    align-items: center;
+    justify-content: center;
+    gap: 350px;
     margin-bottom: 200px;
 }
 
@@ -231,13 +255,14 @@ body {
     object-fit: cover;
     border-radius: 20px;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.123);
+    margin-right: 80px;
 }
 
 .content-2 .img-content img {
     width: 35vw;
     object-fit: cover;
     border-radius: 20px;
-    border: 10px solid black;
+   
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.123);
 }
 
@@ -245,7 +270,7 @@ body {
     width: 35vw;
     object-fit: cover;
     border-radius: 20px;
-    border: 10px solid black;
+  
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.123);
 }
 
@@ -253,7 +278,6 @@ body {
     width: 30vw;
     object-fit: cover;
     border-radius: 20px;
-    border: 10px solid black;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.123);
 }
 
@@ -279,13 +303,22 @@ body {
     }
 
     .content-1 .img-content img {
-        width: 35vw;
+        width: 90%;
+        margin-left: 7%;
+    }
+    .content-2 .img-content img {
+        width: 50vw;
+        
+    }
+    .content-3 .img-content img {
+        width: 50vw;
+        
     }
 
-    .content-2 .img-content img,
-    .content-3 .img-content img,
+   
+    
     .content-4 .img-content img {
-        width: 35vw;
+        width: 45vw;
     }
 
     .content-1 .text-content h1 {
@@ -296,13 +329,88 @@ body {
     }
 }
 
-@media (max-width:550px) {
+@media (max-width:450px) {
 
-    .content-1 .img-content img,
-    .content-2 .img-content img,
-    .content-3 .img-content img {
-        width: 55vw;
+    .image-bian{
+        display: none;
     }
+   
+    .containers {
+        padding: 150px 40px 100px 40px;
+        flex-wrap: wrap;
+    }
+    .text-header p{
+        text-align: justify;
+    }
+
+    .content-1 .img-content img {
+        width: 55vw;
+        margin-left: 15%;
+    }
+
+    .content-2 .img-content img {
+        width: 65vw;
+    }
+    .content-3 .img-content img {
+        width: 65vw;
+    }
+
+    .content-2 .text-content h1{
+        text-align: center;
+    }
+    .content-3 .text-content h1{
+        text-align: center;
+    }
+
+    .content-1{
+        padding: 0px 30px;
+        margin-bottom: 100px;
+    }
+    .content-2{
+        padding: 0px 30px;
+        margin-bottom: 100px;
+    }
+    .content-3{
+        padding: 0px 30px;
+        margin-bottom: 100px;
+    }
+    .content-4{
+        padding: 0px 30px;
+        margin-bottom: 100px;
+    }
+
+    .faq{
+        padding: 20px;
+    }
+
+    .content-1 .text-content h1{
+        font-size: 44px;
+    }
+    .content-2 .text-content h1{
+        font-size: 44px;
+       
+    }
+    .content-3 .text-content h1{
+        font-size: 44px;
+    }
+    .content-4 .text-content h1{
+        font-size: 44px;
+    }
+}
+
+
+@media (max-width:400px){
+    .containers{
+        padding: 100px;
+    }
+}
+
+@media (max-width:850px){    
+    .content-1 .img-content img {
+        width: 45vw;
+      
+    }
+
 }
 
 .content-2 {
@@ -426,16 +534,11 @@ input[type="checkbox"] {
 
 @media only screen and (max-width: 600px) {
     .faq {
-        padding: 80px;
+        padding: 40px;
     }
 }
 
-.faq {
-    padding: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+
 
 .faq-title h1 {
     text-align: center;
