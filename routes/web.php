@@ -47,6 +47,9 @@ Route::prefix('peminjaman')->name('peminjaman.')->group(function () {
     Route::post('/store', [PeminjamanPublic::class, 'store'])->name('store');
 });
 
+Route::get('produk/detail/{kode}', [PublicController::class, 'produk'])->name('produk.detail.public');
+Route::get('ruang/detail/{kode}', [PublicController::class, 'ruang'])->name('ruang.detail.public');
+
 Route::group(['middleware' => ['auth']], function() {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('roles', RoleController::class);

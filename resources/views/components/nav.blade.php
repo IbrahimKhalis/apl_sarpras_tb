@@ -11,7 +11,7 @@
                 <li><a href="{{ route('peminjaman.create') }}">Peminjaman</a></li>
             </ul>
             <div class="main">
-                <a href="{{ route('login') }}">{{ Auth::user() ? 'Dashboard' : 'Login' }}</a>
+                <a href="{{ route('login') }}">{{ Auth::user() ? 'Dashboard' : 'Sign In' }}</a>
             </div>
         </div>
         <div class="left-nav">

@@ -49,7 +49,7 @@ class RuangController extends Controller
                 return $data->dipinjam ? 'Ya' : 'Tidak';
             })
             ->addColumn('action', function ($data) {
-                $action = '';
+                $action = '<a class="btn btn-primary btn-sm rounded mr-2" href="'. route('ruang.show', $data->id) .'">Detail</a>';
                 if (Auth::user()->can('edit_ruang')){
                     $action .= '<a class="btn btn-warning btn-sm rounded" href="'. route('ruang.edit', $data->id) .'">Edit</a>';
                 }
@@ -105,8 +105,10 @@ class RuangController extends Controller
      */
     public function show($id)
     {
-        $ruang = Ruang::findOrFail($id);
-        return view('ruang.show', compact('ruang'));
+        $data = Ruang::findOrFail($id);
+        validateSekolah($data->sekolah_id);
+        $page = 'admin';
+        return view('ruang.show', compact('data', 'page'));
     }
 
     /**
@@ -118,9 +120,7 @@ class RuangController extends Controller
     public function edit($id)
     {
         $data = Ruang::findOrFail($id);
-        if ($data->sekolah_id != Auth::user()->sekolah_id) {
-            abort(403);
-        }
+        validateSekolah($data->sekolah_id);
         $kategoris = Kategori::all();
         return view('ruang.form', compact('data', 'kategoris'));
     }
@@ -216,36 +216,4 @@ class RuangController extends Controller
             'message' => 'Berhasil dihapus'
         ], 200);
     }
-    // public function transfer_produk($idBarang){
-    //     $barang = Produk::find($idBarang);
-
-    //     $ruang = $barang->ruang;
-
-    //     $ruangs = Ruang::all();
-
-    //     return view('ruang.produk.transfer', compact('barang', 'ruang', 'ruangs'));
-    // }
-
-    // public function updateLokasiBarang(Request $request, $id){
-
-    //     $find = Produk::find($id);
-
-    //     if(!$find){
-    //         return response()->json([
-    //             'massages' => "Updated data not found"
-    //         ], 404);
-    //     } 
-
-    //     $update = $find->update([
-    //         'ruang_id' => $request->ruang_baru
-    //     ]);
-
-    //     if(!$update){
-    //         return response()->json([
-    //             'massages' => "Update ERROR"
-    //         ], 400);
-    //     }
-
-    //     return redirect('/'); //change this!!
-    // }
 }

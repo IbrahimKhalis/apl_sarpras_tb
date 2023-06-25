@@ -67,16 +67,16 @@
                     role="tab"> <i class="w-4 h-4 mr-2" data-lucide="bar-chart"></i> Kategori
                 </a>
             </li>
+            <li id="change-password-tab" class="nav-item" role="presentation">
+                <a data-toggle="tab" data-target="#product" href="#product"
+                    class="tab-link nav-link py-4 flex items-center" data-tw-target="#product" aria-selected="false"
+                    role="tab"> <i class="w-4 h-4 mr-2" data-lucide="package"></i> Product </a>
+            </li>
             <li id="account-tab" class="nav-item" role="presentation">
                 <a data-toggle="tab" data-target="#ruang" href="#ruang" class="tab-link nav-link py-4 flex items-center"
                     data-tw-target="#ruang" aria-selected="false" role="tab"> <i class="w-4 h-4 mr-2"
                         data-lucide="bar-chart"></i> Ruang
                 </a>
-            </li>
-            <li id="change-password-tab" class="nav-item" role="presentation">
-                <a data-toggle="tab" data-target="#product" href="#product"
-                    class="tab-link nav-link py-4 flex items-center" data-tw-target="#product" aria-selected="false"
-                    role="tab"> <i class="w-4 h-4 mr-2" data-lucide="package"></i> Product </a>
             </li>
         </ul>
         <div class="tab-content" style="padding-bottom: 2rem; padding-top: 2rem">

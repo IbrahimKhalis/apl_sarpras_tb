@@ -13,6 +13,7 @@
     <link href="{{ asset('dist/css/app.css') }}" rel="stylesheet">
     <link href="https://unpkg.com/tailwindcss@1.2.0/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.css">
     {{--
     <link href="https://cdn.datatables.net/1.11.3/css/common.min.css" rel="stylesheet"> --}}
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -79,10 +80,8 @@
         })
         </script>
 
-        {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
         <script src="{{ asset('dist/js/app.js') }}"></script>
-        {{-- <script type="text/javascript" src="/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
-        <script type="text/javascript" src="/fancybox/jquery.fancybox-1.3.4.pack.js"></script> --}}
         <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
         <script src="https://unpkg.com/create-file-list"></script>

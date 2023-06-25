@@ -17,7 +17,7 @@
             tahun</option>
         @foreach ($tahuns as $key => $tahun)
         <option value="{{ $key + 1 }}" {{ request('tahun') ? (request('tahun')==$key+1 ? 'selected' : '' ) : '' }}>
-            {{ $tahun }}
+            {{ $tahun->year }}
         </option>
         @endforeach
     </select>

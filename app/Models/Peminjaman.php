@@ -22,7 +22,7 @@ class Peminjaman extends Model
     }
 
     public function subcategorie(){
-        return $this->belongsTo(Subcategory::class);
+        return $this->belongsTo(Subcategory::class, 'sub_kategori_id');
     }
 
     public function sekolah(){
@@ -30,11 +30,11 @@ class Peminjaman extends Model
     }
 
     public function tahunajaran(){
-        return $this->belongsTo(TahunAjaran::class);
+        return $this->belongsTo(TahunAjaran::class, 'tahun_ajaran_id');
     }
 
     public function ruang(){
-        return $this->belongsTo(Ruang::class);
+        return $this->belongsTo(Ruang::class, 'ruang_id');
     }
 
     public function produks(){
@@ -48,10 +48,10 @@ class Peminjaman extends Model
                 ->join('subcategories', 'subcategories.id', 'peminjamans.sub_kategori_id')
                 ->where('peminjamans.sekolah_id', $sekolah_id)
                 // ->where('peminjamans.status', 'diterima')
-                ->when($bulan != 'all' && $bulan != '', function ($q) use ($bulan){
+                ->when($bulan != 'all' && $bulan != 0, function ($q) use ($bulan){
                     $q->whereMonth('peminjamans.created_at', $bulan);
                 })
-                ->when($tahun != 'all' && $tahun != '', function ($q) use ($tahun){
+                ->when($tahun != 'all' && $tahun != 0, function ($q) use ($tahun){
                     $q->whereMonth('peminjamans.created_at', $tahun);
                 })
                 ->orderBy('jml', 'desc')
@@ -66,10 +66,10 @@ class Peminjaman extends Model
                     ->join('ruangs', 'ruangs.id', 'peminjamans.ruang_id')
                     ->where('peminjamans.sekolah_id', $sekolah_id)
                     // ->where('peminjamans.status', 'diterima')
-                    ->when($bulan != 'all' && $bulan != '', function ($q) use ($bulan){
+                    ->when($bulan != 'all' && $bulan != 0, function ($q) use ($bulan){
                         $q->whereMonth('peminjamans.created_at', $bulan);
                     })
-                    ->when($tahun != 'all' && $tahun != '', function ($q) use ($tahun){
+                    ->when($tahun != 'all' && $tahun != 0, function ($q) use ($tahun){
                         $q->whereMonth('peminjamans.created_at', $tahun);
                     })
                     ->orderBy('jml', 'desc')
@@ -84,10 +84,10 @@ class Peminjaman extends Model
                     ->join('kelas', 'kelas.id', 'peminjamans.kelas_id')
                     ->where('peminjamans.sekolah_id', $sekolah_id)
                     // ->where('peminjamans.status', 'diterima')
-                    ->when($bulan != 'all' && $bulan != '', function ($q) use ($bulan){
+                    ->when($bulan != 'all' && $bulan != 0, function ($q) use ($bulan){
                         $q->whereMonth('peminjamans.created_at', $bulan);
                     })
-                    ->when($tahun != 'all' && $tahun != '', function ($q) use ($tahun){
+                    ->when($tahun != 'all' && $tahun != 0, function ($q) use ($tahun){
                         $q->whereMonth('peminjamans.created_at', $tahun);
                     })
                     ->orderBy('jml', 'desc')
@@ -101,10 +101,10 @@ class Peminjaman extends Model
                     ->select('peminjamans.email as key', DB::raw('COUNT(peminjamans.id) as jml'))
                     ->where('peminjamans.sekolah_id', $sekolah_id)
                     // ->where('peminjamans.status', 'diterima')
-                    ->when($bulan != 'all' && $bulan != '', function ($q) use ($bulan){
+                    ->when($bulan != 'all' && $bulan != 0, function ($q) use ($bulan){
                         $q->whereMonth('peminjamans.created_at', $bulan);
                     })
-                    ->when($tahun != 'all' && $tahun != '', function ($q) use ($tahun){
+                    ->when($tahun != 'all' && $tahun != 0, function ($q) use ($tahun){
                         $q->whereMonth('peminjamans.created_at', $tahun);
                     })
                     ->orderBy('jml', 'desc')

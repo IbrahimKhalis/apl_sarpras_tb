@@ -43,8 +43,8 @@
                 </div>
                 <div class="mt-3">
                     <label for="crud-form-2" class="form-label">Kategori</label>
-                    <select data-placeholder="Pilih Kategori Produkmu" class="between-input-item-select" name="kategori_id"
-                        id="kategori">
+                    <select data-placeholder="Pilih Kategori Produkmu" class="between-input-item-select"
+                        name="kategori_id" id="kategori">
                         <option value="">Pilih Kategori</option>
                         @foreach ($kategoris as $kategori)
                         <option value="{{ $kategori->id }}" {{ isset($data) ? ($data->kategori_id == $kategori->id ?
@@ -54,7 +54,8 @@
                 </div>
                 <div class="mt-3">
                     <label for="crud-form-2" class="form-label">Sub Kategori</label>
-                    <select name="sub_kategori_id" id="subkategori" class="between-input-item-select w-full " class="form-control">
+                    <select name="sub_kategori_id" id="subkategori" class="between-input-item-select w-full "
+                        class="form-control">
                         <option value="">Pilih Sub Kategori</option>
                         @if (isset($subcategories))
                         @foreach ($subcategories as $subcategorie)
@@ -101,37 +102,27 @@
                 </div>
                 <div class="mt-3">
                     <label for="crud-form-1" class="form-label">Sekali Pakai</label>
-                    <input type="checkbox" class="form-check-input ml-1" name="sekali_pakai" {{ isset($data) ? ($data->sekali_pakai ? 'checked' : '') : '' }}>
+                    <input type="checkbox" class="form-check-input ml-1" name="sekali_pakai" {{ isset($data) ?
+                        ($data->sekali_pakai ? 'checked' : '') : '' }}>
                 </div>
                 <div class="mt-3">
                     <label for="crud-form-1" class="form-label">Foto</label>
-                    <input type="file" class="form-control w-full" name="fotos[]" multiple accept="image/*">
+                    <input type="file" class="w-full" name="fotos[]" multiple accept="image/*">
                 </div>
                 @if (isset($data))
-                @foreach ($data->fotos as $foto)
-                <div class="div-foto-{{ $foto->id }}">
-                    <img src="{{ asset('storage/' . $foto->file) }}" alt="">
-                    <button type="button" onclick="hapusFoto({{ $foto->id }})">Hapus</button>
-                </div>
-                @endforeach
-                @endif
-                {{-- <div class="mt-3">
-                    <label class="form-label">Upload Image</label>
-                    <div class="border-2 border-dashed dark:border-darkmode-400 rounded-md pt-4">
-                        <div class="px-4 pb-4 flex items-center cursor-pointer relative">
-                            <i data-lucide="image" class="w-4 h-4 mr-2"></i> <span class="text-primary mr-1">Upload a
-                                file</span> or drag and drop
-                            <input type="file" class="w-full h-full top-0 left-0 absolute opacity-0 cursor-pointer"
-                                id="images" name="fotos[]" multiple accept="image/*">
-                        </div>
+                <div class="flex gap-3">
+                    @foreach ($data->fotos as $foto)
+                    <div class="div-foto-{{ $foto->id }}">
+                        <a href="{{ asset('storage/' . $foto->file) }}" data-fancybox="gallery">
+                            <img src="{{ asset('storage/' . $foto->file) }}" alt=""
+                                style="object-fit: cover;aspect-ratio: 1/1;margin: 10px;box-shadow: 0 3px 6px #0000001c;width: 8rem;" />
+                        </a>
+                        <button type="button" onclick="hapusFoto({{ $foto->id }})"
+                            class="btn btn-sm btn-danger rounded w-full">Hapus</button>
                     </div>
-                </div> --}}
-                {{-- @error('images')
-                <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                @enderror
-                <a id="single_image" data-fancybox="gallery"
-                    class="images-preview-div grid grid-cols-3gap-3 mt-3 object-cover"
-                    style="margin-top: 2rem; margin-bottom: 2rem; width: 2rem"></a> --}}
+                    @endforeach
+                </div>
+                @endif
         </div>
         <div class="text-right mt-5">
             <a href="{{ route('produk.index') }}">
@@ -203,7 +194,8 @@
 @if (isset($data))
 <script>
     function hapusFoto(id) {
-        $.ajax({
+        if (confirm('Apakah anda yakin?')) {
+            $.ajax({
             type: "DELETE",
             url: "{{ route('produk.hapus_foto') }}",
             data: {
@@ -224,8 +216,8 @@
                 console.log(response)
             },
         });
+        }
     }
-
 </script>
 @endif
 @endpush

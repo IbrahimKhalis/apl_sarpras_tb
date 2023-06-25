@@ -95,8 +95,8 @@ class SekolahController extends Controller
         }
 
         $sekolah_id = $sekolah->id;
-        $bulan = request('bulan') ?? date('m');
-        $tahun = request('tahun') ?? date('Y');
+        $bulan = (int) request('bulan') ?? date('m');
+        $tahun = (int) request('tahun') ?? date('Y');
         
         $sub_terbanyak = Peminjaman::sub_terbanyak($sekolah_id, $bulan, $tahun);
         $ruang_terbanyak = Peminjaman::ruang_terbanyak($sekolah_id, $bulan, $tahun);

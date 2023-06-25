@@ -32,7 +32,9 @@ class PeminjamanController extends Controller
      */
     public function index()
     {
-        return view('peminjaman.index');
+        $tahun_ajarans = DB::table('tahun_ajarans')->get();
+        $status = DB::table('peminjamans')->select('status')->distinct()->get();
+        return view('peminjaman.index', compact('tahun_ajarans', 'status'));
     }
 
     public function data($sekolah_id = null){
@@ -44,7 +46,13 @@ class PeminjamanController extends Controller
             abort(403);
         }
 
-        $data = Peminjaman::where('sekolah_id', $sekolah_id)->get();
+        $data = Peminjaman::where('sekolah_id', $sekolah_id)
+                ->when(request('tahun_ajaran') && request('tahun_ajaran') != 'all', function($q){
+                    $q->where('tahun_ajaran_id', request('tahun_ajaran'));
+                })
+                ->when(request('status') && request('status') != 'all', function($q){
+                    $q->where('status', request('status'));
+                })->get();
 
         return datatables($data)
             ->addIndexColumn()
@@ -59,13 +67,17 @@ class PeminjamanController extends Controller
             })
             ->addColumn('action', function ($data) {
                 $action = '<a href="'. route('peminjamans.show', $data->id) .'" class="btn btn-sm btn-primary mr-2">Lihat</a>';
+                if (auth()->user()->can('edit_peminjaman')) {
+                    $action .= '<a href="'. route('peminjamans.edit', $data->id) .'" data-tw-toggle="modal" 
+                class="btn btn-sm btn-warning mr-2">Edit</a>';
+                }
+                if (auth()->user()->can('delete_peminjaman')) {
+                    $action .= '<button type="submit" class="btn btn-sm btn-danger rounded mr-2" style="width: 4rem;"
+                    onclick="deleteData("'. route('peminjamans.destroy', $data->id) .'")">Hapus</button>';
+                }
                 if (auth()->user()->can('edit_peminjaman') && $data->status == 'diterima' && now() > $data->tgl_pengembalian){
                     $action .= '<a href="javascript:;" data-tw-toggle="modal" data-tw-target="#modalPenagihan"
                 class="btn btn-sm btn-warning mr-2" onclick="set('. $data->id .')">Kirim Penagihan</a>';
-                }
-                if (auth()->user()->can('delete_peminjaman')) {
-                    $action .= '<button type="submit" class="btn btn-sm btn-danger rounded" style="width: 4rem;"
-                    onclick="deleteData("'. route('peminjamans.destroy', $data->id) .'")">Hapus</button>';
                 }
                 return $action;
             })
@@ -101,14 +113,13 @@ class PeminjamanController extends Controller
      */
     public function store(StorePeminjamanRequest $request)
     {
-        DB::beginTransaction();
-        try {
-            $tahun_ajaran = getTahunAjaran();
-            $data = [
+        $tahun_ajaran = getTahunAjaran();
+        $data = [
                 'nama' => $request->nama,
                 'jenis' => $request->jenis,
                 'email' => $request->email,
                 'kelas_id' => $request->kelas,
+                'ruang_id' => $request->ruang_id,
                 'kategori_id' => $request->kategori_id,
                 'status' => $request->status,
                 'ket' => $request->ket,
@@ -118,8 +129,8 @@ class PeminjamanController extends Controller
                 'status_pengembalian' => $request->status_pengembalian ? true : false
             ];
 
-            if (!$request->produk_id) {
-                return redirect()->back()->with('tidak ada produk dipilih');
+            if ($request->status == 'sarana' && !$request->produk_id) {
+                return redirect()->back()->with('msg_error','tidak ada produk dipilih');
             }
 
             if ($request->status == 'diterima') {
@@ -129,12 +140,14 @@ class PeminjamanController extends Controller
                     'image_peminjaman' => 'required',
                     'ttd' => 'required'
                 ]);
-
+                
                 $data += [
                     'tgl_peminjaman' => $request->tgl_peminjaman,
                     'tgl_pengembalian' => $request->tgl_pengembalian,
                 ];
             }
+            DB::beginTransaction();
+            try {
 
             if ($request->image_peminjaman) {
                 $data['foto_peminjaman'] = $this->uploadImage($request->image_peminjaman, 'foto_peminjaman');
@@ -190,7 +203,7 @@ class PeminjamanController extends Controller
             return redirect()->route('peminjamans.index', $peminjaman->id)->with('msg_success', 'Berhasil disimpan');
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->route('peminjamans.show', $peminjaman->id)->with('msg_error', 'Gagal disimpan');
+            return redirect()->route('peminjamans.create')->with('msg_error', 'Gagal disimpan');
         }
     }
 
@@ -202,8 +215,9 @@ class PeminjamanController extends Controller
      */
     public function show($id)
     {
+        $page = 'admin';
         $data = Peminjaman::findOrFail($id);
-        return view('peminjaman.show', compact('data'));
+        return view('peminjaman.show', compact('data', 'page'));
     }
 
     /**
@@ -234,22 +248,21 @@ class PeminjamanController extends Controller
      */
     public function update(UpdatePeminjamanRequest $request, Peminjaman $peminjaman)
     {
-        DB::beginTransaction();
-        try {
             $old_peminjaman = $peminjaman->status;
             $data = [
                 'nama' => $request->nama,
                 'jenis' => $request->jenis,
                 'email' => $request->email,
                 'kelas_id' => $request->kelas,
+                'ruang_id' => $request->ruang_id,
                 'kategori_id' => $request->kategori_id,
                 'status' => $request->status,
                 'ket' => $request->ket,
                 'status_pengembalian' => $request->status_pengembalian ? true : false
             ];
 
-            if (!$request->produk_id) {
-                return redirect()->back()->with('tidak ada produk dipilih');
+            if ($request->jenis == 'sarana' && !$request->produk_id) {
+                return redirect()->back()->with('msg_error', 'tidak ada produk dipilih');
             }
 
             if ($request->status == 'diterima') {
@@ -275,6 +288,9 @@ class PeminjamanController extends Controller
                     'tgl_pengembalian' => $request->tgl_pengembalian,
                 ];
             }
+
+            DB::beginTransaction();
+            try {
 
             if ($request->image_peminjaman) {
                 if ($peminjaman->foto_peminjaman) {

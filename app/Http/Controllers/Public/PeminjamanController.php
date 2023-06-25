@@ -183,11 +183,8 @@ class PeminjamanController extends Controller
 
     public function show($kode){
         $data = Peminjaman::where('kode', decodeText($kode)['identifier'])->first();
-
-        if (!$data) {
-            return abort(403);
-        }
-
-        dd($data);
+        $page = 'public';
+        if (!$data) {return abort(403);}
+        return view('peminjaman.public', compact('data', 'page'));
     }
 }

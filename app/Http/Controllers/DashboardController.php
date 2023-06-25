@@ -26,8 +26,8 @@ class DashboardController extends Controller
             ];
         }else {
             $sekolah_id = Auth::user()->sekolah_id;
-            $bulan = request('bulan') ?? date('m');
-            $tahun = request('tahun') ?? date('Y');
+            $bulan = (int) request('bulan') ?? date('m');
+            $tahun = (int) request('tahun') ?? date('Y');
             $return += [
                 'tahuns' => DB::table('peminjamans')->selectRaw('distinct(YEAR(created_at)) as year')->get(),
             ]; 
