@@ -94,12 +94,12 @@
         </path>
     </svg>
     <div class="content-card" id="konten">
-        <div class="title">
+        {{-- <div class="title">
             <h1>Find your questions</h1>
-        </div>
+        </div> --}}
         <div class="faq">
             <div class="faq-title">
-                <h1>FAQ</h1>
+                <h1>Frequently Ask Questions</h1>
             </div>
             <div class="faq-drawer">
                 <input class="faq-drawer__trigger" id="faq-drawer" type="checkbox" /><label class="faq-drawer__title1" for="faq-drawer"> Apa itu aplikasi sarpras di sekolah?</label>

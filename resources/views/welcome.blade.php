@@ -336,7 +336,7 @@
           </div>
       </div>
     </div>
-    <div class="faq">
+    {{-- <div class="faq">
         <div class="faq-title">
             <h1>FAQ</h1>
         </div>
@@ -385,7 +385,7 @@
           <li><div class="more-button" style="width: 200px; align-items: center; justify-content: center; margin-top: 50px">
             <a class="btn-more" href="{{ route('faq') }}">Lihat lebih banyak<div class="bx bx-chevron-down"></div></a>
         </div></li>
-    </div>
+    </div> --}}
     
 </main>
 @endsection
