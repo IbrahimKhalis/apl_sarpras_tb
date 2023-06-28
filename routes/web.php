@@ -16,6 +16,7 @@ use App\Http\Controllers\RuangController;
 use App\Http\Controllers\MFaqController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\Public\PeminjamanController as PeminjamanPublic;
+use App\Http\Controllers\Public\PublicController;
 use App\Models\Kategori;
 use App\Exports\PeminjamanExport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -30,15 +31,9 @@ use Maatwebsite\Excel\Facades\Excel;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function(){
-    return view('welcome');
-})->name('index');
-Route::get('/about',function(){
-    return view('about');
-})->name('about');
-Route::get('/faq',function(){
-    return view('faq');
-})->name('faq');
+Route::get('/', [PublicController::class, 'index'])->name('index');
+Route::get('/about', [PublicController::class, 'about'])->name('about');
+Route::get('/faq', [PublicController::class, 'faq'])->name('faq');
 
 Route::prefix('peminjaman')->name('peminjaman.')->group(function () {
     Route::get('/', [PeminjamanPublic::class, 'create'])->name('create');
@@ -52,6 +47,9 @@ Route::prefix('peminjaman')->name('peminjaman.')->group(function () {
     Route::post('/store', [PeminjamanPublic::class, 'store'])->name('store');
 });
 
+Route::get('produk/detail/{kode}', [PublicController::class, 'produk'])->name('produk.detail.public');
+Route::get('ruang/detail/{kode}', [PublicController::class, 'ruang'])->name('ruang.detail.public');
+
 Route::group(['middleware' => ['auth']], function() {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('roles', RoleController::class);
@@ -60,16 +58,20 @@ Route::group(['middleware' => ['auth']], function() {
     Route::patch('update/sekolah', [App\Http\Controllers\User\SekolahController::class, 'update'])->name('sekolah.update.own');
     Route::prefix('data-master')->group(function () {
         Route::resource('tahun-ajaran', TahunAjaranController::class);
+        Route::get('kelas/data', [KelasController::class, 'data'])->name('kelas.data');
         Route::resource('kelas', KelasController::class);
         Route::resource('jurusan', JurusanController::class);
         Route::resource('faq', MFaqController::class);
     });
 
     Route::prefix('data-inventaris')->group(function () {
+        Route::get('kategori/data/{id?}', [KategoriController::class, 'data'])->name('kategori.data');
         Route::resource('kategori', KategoriController::class);
+        Route::get('produk/data/{id?}', [ProdukController::class, 'data'])->name('produk.data');
         Route::delete('produk/hapus-foto', [ProdukController::class, 'hapus_foto'])->name('produk.hapus_foto');
         Route::resource('produk', ProdukController::class);
         Route::get('produk/{id}/detail', [ProdukController::class, 'detail'])->name('produk.detail');
+        Route::get('ruang/data/{id?}', [RuangController::class, 'data'])->name('ruang.data');
         Route::post('ruang/tambah-produk', [RuangController::class, 'tambah_produk'])->name('ruang.tambah_produk');
         Route::post('ruang/hapus-produk', [RuangController::class, 'hapus_produk'])->name('ruang.hapus_produk');
         Route::get('ruang/{id}/produk', [RuangController::class, 'get_produk'])->name('ruang.produk');
@@ -113,10 +115,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('getsub/{kategori_id?}', [KategoriController::class, 'getSub'])->name('get.sub');
     Route::get('produk/{sub_id}', [ProdukController::class, 'get'])->name('produk.get');
 
+    Route::get('peminjamans/data/{id?}', [PeminjamanController::class, 'data'])->name('peminjaman.data');
     Route::post('peminjamans/penagihan', [PeminjamanController::class, 'penagihan'])->name('peminjaman.penagihan');
     Route::resource('peminjamans', PeminjamanController::class);
-    // Route::get('ruang/updateLokasiBarang/{id}', [RuangController::class, 'transfer_produk']);
-    // Route::patch('ruang/updateLokasiBarang/{id}', [RuangController::class, 'updateLokasiBarang'])->name('ruang.updateLokasiBarang');
 
     // export peminjanam
     Route::get('/export', [PeminjamanController::class, 'export'])->name('export'); 

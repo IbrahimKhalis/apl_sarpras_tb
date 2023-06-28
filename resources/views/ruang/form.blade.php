@@ -186,20 +186,7 @@
     .select2-container {
         z-index: 99999;
     }
-
-    .dataTables_length select {
-        background-image: none;
-    }
-
-    #table-produk_wrapper {
-        margin-top: 1rem;
-    }
-
-    .table{
-        width: 100% !important;
-    }
 </style>
-<link rel="stylesheet" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
 @endpush
 
 @section('content')
@@ -339,7 +326,6 @@
 @endsection
 
 @push('js')
-<script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 <script>
     const url_update = '{{ route("ruang.update", ":id") }}'
     let id = '';

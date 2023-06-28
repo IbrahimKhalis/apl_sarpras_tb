@@ -16,6 +16,7 @@
 
     <link rel="stylesheet" type="text/css" href="http://keith-wood.name/css/jquery.signature.css">
     <script defer src="https://unpkg.com/alpinejs@3.2.3/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.css">
     <link href="{{ asset('dist/css/app.css') }}" rel="stylesheet">
     <style>
         *{
@@ -41,6 +42,7 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <script src="{{ asset('assets/js/script.js') }}"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
     @include('mypartials.js')
     @yield('js')
 </body>

@@ -6,7 +6,7 @@ body {
     margin-top: -1px;
 }
 .containers {
-    background-color: #1C438C;
+    background-color: #1c438c;
     width: 100%;
     min-height: 500px;
     justify-content: center;
@@ -33,7 +33,7 @@ body {
 }
 
 .text-header p {
-    color: #F5F6FA;
+    color: #f5f6fa;
     font-size: 20px;
     font-weight: 500;
     line-height: 25px;
@@ -85,7 +85,7 @@ body {
     height: 100%;
     background-color: rgb(255, 255, 255);
     transform: translateX(-100%);
-    transition: all .3s;
+    transition: all 0.3s;
     z-index: -1;
 }
 
@@ -94,7 +94,7 @@ body {
 }
 
 .btn:hover {
-    color: #1C438C;
+    color: #1c438c;
 }
 
 .image-bian img {
@@ -103,7 +103,7 @@ body {
     margin-top: -70px;
 }
 
-@media (max-width:1289px) {
+@media (max-width: 1289px) {
     .containers {
         padding: 150px 100px 0px 100px;
         flex-wrap: wrap;
@@ -122,7 +122,7 @@ body {
 
 .text-content .subjudul {
     font-size: 3.1rem;
-    color: #1C438C;
+    color: #1c438c;
     font-weight: 700;
     line-height: 50px;
 }
@@ -153,13 +153,13 @@ body {
 
 .text-content ul li i {
     font-size: 30px;
-    color: #1C438C;
+    color: #1c438c;
 }
 
 .content-2 .text-content ul li:last-child button,
 .content-3 .text-content ul li:last-child button,
 .content-4 .text-content ul li:last-child button {
-    background-color: #1C438C;
+    background-color: #1c438c;
     color: #ffffff;
     border: none;
     padding: 10px;
@@ -181,8 +181,8 @@ body {
     padding: 0.7rem 1.2rem;
     font-size: 14px;
     font-weight: 700;
-    color: #1C438C;
-    border: 3px solid #1C438C;
+    color: #1c438c;
+    border: 3px solid #1c438c;
     border-radius: 25px;
     cursor: pointer;
     position: relative;
@@ -200,9 +200,9 @@ body {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: #1C438C;
+    background-color: #1c438c;
     transform: translateX(-100%);
-    transition: all .3s;
+    transition: all 0.3s;
     z-index: -1;
 }
 
@@ -213,7 +213,6 @@ body {
 .btn-more:hover {
     color: #ffffff;
 }
-
 
 .faq {
     padding: 100px;
@@ -232,7 +231,7 @@ body {
     margin-bottom: 200px;
 }
 
-.content-1{
+.content-1 {
     display: flex;
     padding: 0px 150px;
     align-items: center;
@@ -252,7 +251,7 @@ body {
 .content-1 .img-content img {
     width: 30vw;
     object-fit: cover;
-    border-radius: 20px;
+    border-radius: 10px;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.123);
     margin-right: 80px;
 }
@@ -260,29 +259,26 @@ body {
 .content-2 .img-content img {
     width: 35vw;
     object-fit: cover;
-    border-radius: 20px;
-   
+    border-radius: 10px;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.123);
 }
 
 .content-3 .img-content img {
     width: 35vw;
     object-fit: cover;
-    border-radius: 20px;
-  
+    border-radius: 10px;
+
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.123);
 }
 
 .content-4 .img-content img {
     width: 30vw;
     object-fit: cover;
-    border-radius: 20px;
+    border-radius: 10px;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.123);
 }
 
-
-
-@media (max-width:1215px) {
+@media (max-width: 1215px) {
     .content-landing {
         padding: 0 10px;
     }
@@ -307,15 +303,11 @@ body {
     }
     .content-2 .img-content img {
         width: 50vw;
-        
     }
     .content-3 .img-content img {
         width: 50vw;
-        
     }
 
-   
-    
     .content-4 .img-content img {
         width: 45vw;
     }
@@ -328,17 +320,16 @@ body {
     }
 }
 
-@media (max-width:450px) {
-
-    .image-bian{
+@media (max-width: 450px) {
+    .image-bian {
         display: none;
     }
-   
+
     .containers {
         padding: 150px 40px 100px 40px;
         flex-wrap: wrap;
     }
-    .text-header p{
+    .text-header p {
         text-align: justify;
     }
 
@@ -348,68 +339,58 @@ body {
     }
 
     .content-2 .img-content img {
-        width: 65vw;
+        width: 100%;
     }
     .content-3 .img-content img {
-        width: 65vw;
+        width: 100%;
     }
 
-    .content-2 .text-content h1{
+    .content-2 .text-content h1 {
         text-align: center;
     }
-    .content-3 .text-content h1{
+    .content-3 .text-content h1 {
         text-align: center;
     }
 
-    .content-1{
-        padding: 0px 30px;
+    .content-1 {
+        padding: 0px 15px;
         margin-bottom: 100px;
     }
-    .content-2{
-        padding: 0px 30px;
+    .content-2 {
+        padding: 0px 15px;
         margin-bottom: 100px;
     }
-    .content-3{
-        padding: 0px 30px;
+    .content-3 {
+        padding: 0px 15px;
         margin-bottom: 100px;
     }
-    .content-4{
-        padding: 0px 30px;
+    .content-4 {
+        padding: 0px 15px;
         margin-bottom: 100px;
     }
 
-    .faq{
+    .faq {
         padding: 20px;
     }
 
-    .content-1 .text-content h1{
-        font-size: 44px;
-    }
-    .content-2 .text-content h1{
-        font-size: 44px;
-       
-    }
-    .content-3 .text-content h1{
-        font-size: 44px;
-    }
-    .content-4 .text-content h1{
-        font-size: 44px;
+    .content-1 .text-content h1,
+    .content-2 .text-content h1,
+    .content-3 .text-content h1,
+    .content-4 .text-content h1 {
+        font-size: 2.4rem;
     }
 }
 
-
-@media (max-width:400px){
-    .containers{
+@media (max-width: 400px) {
+    .containers {
         padding: 100px;
     }
 }
 
-@media (max-width:850px){    
+@media (max-width: 850px) {
     .content-1 .img-content img {
         width: 45vw;
-      
     }
-
 }
 
 .content-2 {
@@ -435,7 +416,7 @@ body {
 }
 
 .faq-drawer__title {
-    border-top: #A1A1A1 1px solid;
+    border-top: #a1a1a1 1px solid;
     cursor: pointer;
     display: block;
     font-size: 1.25em;
@@ -444,11 +425,11 @@ body {
     position: relative;
     margin-bottom: 0;
     transition: all 0.25s ease-out;
-    font-family: 'Lato';
+    font-family: "Lato";
 }
 
 .faq-drawer__title1 {
-    border-top: #A1A1A1 0px solid;
+    border-top: #a1a1a1 0px solid;
     cursor: pointer;
     display: block;
     font-size: 1.25em;
@@ -474,9 +455,8 @@ body {
     transition: 0.35s ease-in-out;
     vertical-align: top;
     width: 15px;
-    border-color: #1C438C;
+    border-color: #1c438c;
 }
-
 
 .faq-drawer__title1::after {
     border-style: solid;
@@ -493,36 +473,39 @@ body {
     transition: 0.35s ease-in-out;
     vertical-align: top;
     width: 15px;
-    border-color: #1C438C;
+    border-color: #1c438c;
 }
-
 
 .faq-drawer__title:hover {
-    color: #4E4B52;
+    color: #4e4b52;
 }
 
-.faq-drawer__trigger:checked+.faq-drawer__title+.faq-drawer__content-wrapper {
+.faq-drawer__trigger:checked
+    + .faq-drawer__title
+    + .faq-drawer__content-wrapper {
     max-height: 350px;
 }
 
-.faq-drawer__trigger:checked+.faq-drawer__title {
-    color: #1C438C;
+.faq-drawer__trigger:checked + .faq-drawer__title {
+    color: #1c438c;
 }
 
-.faq-drawer__trigger:checked+.faq-drawer__title1 {
-    color: #1C438C;
+.faq-drawer__trigger:checked + .faq-drawer__title1 {
+    color: #1c438c;
 }
 
-.faq-drawer__trigger:checked+.faq-drawer__title1+.faq-drawer__content-wrapper {
+.faq-drawer__trigger:checked
+    + .faq-drawer__title1
+    + .faq-drawer__content-wrapper {
     max-height: 350px;
 }
 
-.faq-drawer__trigger:checked+.faq-drawer__title::after {
+.faq-drawer__trigger:checked + .faq-drawer__title::after {
     transform: rotate(-45deg);
     transition: 0.25s ease-in-out;
 }
 
-.faq-drawer__trigger:checked+.faq-drawer__title1::after {
+.faq-drawer__trigger:checked + .faq-drawer__title1::after {
     transform: rotate(-45deg);
     transition: 0.25s ease-in-out;
 }
@@ -537,13 +520,11 @@ input[type="checkbox"] {
     }
 }
 
-
-
 .faq-title h1 {
     text-align: center;
     font-size: 2.8rem;
     font-weight: 700;
-    color: #1C438C;
+    color: #1c438c;
 }
 
 .faq-title {

@@ -41,7 +41,7 @@
     <div class="mt-3">
         <div class="col-md-12">
             <label for="kategori" class="form-label">Kategori</label>
-            <select name="kategori_id" class="tom-select w-full" id="kategori" onchange="syncSub()">
+            <select name="kategori_id" class="between-input-item-select w-full" id="kategori" onchange="syncSub()">
                 <option value="">Pilih Kategori</option>
             </select>
         </div>
@@ -54,8 +54,9 @@
             <div class="sm:grid grid-cols-3 gap-2">
                 <div class="input-group">
                     <div id="input-group-3" class="input-group-text">Unit</div>
-                    <input type="number" name="jml_peminjaman" id="jml_peminjaman" class="form-control form-control-rounded"
-                        min="1" onkeyup="cek()" value="{{ count($update) > 0 ? $update['jml_peminjaman'] : '' }}">
+                    <input type="number" name="jml_peminjaman" id="jml_peminjaman"
+                        class="form-control form-control-rounded" min="1" onkeyup="cek()"
+                        value="{{ count($update) > 0 ? $update['jml_peminjaman'] : '' }}">
                 </div>
             </div>
         </div>
@@ -66,6 +67,7 @@
                 <option value="">Pilih Sub Kategori</option>
             </select>
         </div>
+        <div class="div-jml-peminjaman"></div>
         @if ($page == 'admin')
         <div class="mt-3 div-produk">
             <div class="col-md-12">

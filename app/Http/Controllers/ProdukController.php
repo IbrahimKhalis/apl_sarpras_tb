@@ -32,10 +32,39 @@ class ProdukController extends Controller
      */
     public function index()
     {
-        $produks = Produk::select('produks.*')
-                                ->where('produks.sekolah_id', Auth::user()->sekolah_id)
-                                ->paginate(10);
-        return view('produk.index', compact('produks'));
+        return view('produk.index');
+    }
+
+    public function data($sekolah_id = null){
+        if (!Auth::user()->hasRole('super_admin')) {
+            $sekolah_id = Auth::user()->sekolah_id;
+        }
+
+        if (!$sekolah_id) {
+            abort(403);
+        }
+
+        $data = Produk::where('sekolah_id', $sekolah_id)->get();
+
+        return datatables($data)
+            ->addIndexColumn()
+            ->addColumn('sub', function ($data) {
+                return $data->subcategorie->nama;
+            })
+            ->addColumn('action', function ($data) {
+                $action = '';
+                $action .= '<a class="btn btn-primary btn-sm rounded mr-2" href="'. route('produk.show', $data->id) .'">Detail</a>';
+                if (Auth::user()->can('edit_produk')){
+                    $action .= '<a class="btn btn-warning btn-sm rounded" href="'. route('produk.edit', $data->id) .'">Edit</a>';
+                }
+                if (Auth::user()->can('delete_produk')) {
+                    $action .= '<button type="submit" class="btn btn-sm btn-danger rounded ml-2" style="width: 4rem;"
+                    onclick="deleteData("'. route('produk.destroy', $data->id) .'")">Hapus</button>';
+                }
+                return $action;
+            })
+            ->escapeColumns([])
+            ->make(true);
     }
 
     /**
@@ -123,12 +152,12 @@ class ProdukController extends Controller
      * @param  \App\Models\Produk  $produk
      * @return \Illuminate\Http\Response
      */
-    public function show(Produk $produk)
-    {
-        $tahun_ajaran = getTahunAjaran();
-        validateSekolah($produk->sekolah_id);
-        return isset($tahun_ajaran) ? $produk : abort(403);
-
+    public function show($id)
+    {   
+        $data = Produk::findOrFail($id);
+        validateSekolah($data->sekolah_id);
+        $page = 'admin';
+        return view('produk.show', compact('data', 'page'));
     }
 
     /**
@@ -208,7 +237,7 @@ class ProdukController extends Controller
             
             $produk->update($update);
 
-            if ($request->produks) {                
+            if ($request->fotos) {                
                 foreach ($request->fotos as $key => $foto) {
                     $randName = Str::random(24);
                     $path = Storage::disk('public')->putFileAs('produk', $foto, $randName.'_'.$produk->id.'.'.$foto->getClientOriginalExtension());
@@ -272,7 +301,7 @@ class ProdukController extends Controller
                         ->first();
 
         if (Storage::disk('public')->exists("$foto->file")) {
-            return Storage::disk('public')->delete("$foto->file");
+            Storage::disk('public')->delete("$foto->file");
         }
 
         $foto->delete();

@@ -23,8 +23,43 @@ class KategoriController extends Controller
 
     public function index()
     {
-        $datas = Kategori::where('sekolah_id', Auth::user()->sekolah_id)->paginate(10);
-        return view('kategori.index', compact('datas'));
+        return view('kategori.index');
+    }
+
+    public function data($sekolah_id = null){
+        if (!Auth::user()->hasRole('super_admin')) {
+            $sekolah_id = Auth::user()->sekolah_id;
+        }
+
+        if (!$sekolah_id) {
+            abort(403);
+        }
+
+        $data = Kategori::where('sekolah_id', $sekolah_id)->get();
+
+        return datatables($data)
+            ->addIndexColumn()
+            ->addColumn('sub', function ($data) {
+                $tbl = '<table class="border-black table-auto">';
+                foreach ($data->subcategory as $sub){
+                    $tbl .= ' <tr><td>'. $sub->nama .'</td><td>'. $sub->kode .'</td></tr>';
+                }
+                $tbl .= '</table>';
+                return $tbl;
+            })
+            ->addColumn('action', function ($data) {
+                $action = '';
+                if (Auth::user()->can('edit_kategori')){
+                    $action .= '<a class="btn btn-warning btn-sm rounded" href="'. route('kategori.edit', $data->id) .'">Edit</a>';
+                }
+                if (Auth::user()->can('delete_kategori')) {
+                    $action .= '<button type="submit" class="btn btn-sm btn-danger rounded ml-2" style="width: 4rem;"
+                    onclick="deleteData("'. route('kategori.destroy', $data->id) .'")">Hapus</button>';
+                }
+                return $action;
+            })
+            ->escapeColumns([])
+            ->make(true);
     }
 
     public function create()
