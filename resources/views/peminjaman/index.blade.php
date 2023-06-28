@@ -1,11 +1,33 @@
 @extends('myLayouts.main')
 
+@push('css')
+    <style>
+        .select-filter{
+            min-width: 10rem;
+        }
+    </style>
+@endpush
+
 @section('content')
 <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-    <h2 class="text-lg font-Medium mr-auto">
+    <h2 class="text-lg font-bold mr-auto">
         Peminjaman
     </h2>
-    <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
+    <div class="w-full sm:w-auto flex mt-4 sm:mt-0 gap-3">
+        <form action="" id="form-filter" class="flex gap-3">
+            <select name="tahun_ajaran" id="tahun_ajaran" class="tom-select select-filter">
+                <option value="all">Pilih Tahun Ajaran</option>
+                @foreach ($tahun_ajarans as $tahun_ajaran)
+                <option value="{{ $tahun_ajaran->id }}" {{ request('tahun_ajaran') == $tahun_ajaran->id ? 'selected' : '' }}>{{ $tahun_ajaran->tahun_awal }}/{{ $tahun_ajaran->tahun_akhir }}</option>
+                @endforeach
+            </select>
+            <select name="status" id="status" class="tom-select select-filter">
+                <option value="all">Pilih Status</option>
+                @foreach ($status as $row)
+                <option value="{{ $row->status }}" {{ request('status') == $row->status ? 'selected' : '' }}>{{ $row->status }}</option>
+                @endforeach
+            </select>
+        </form>
         <button class="btn btn-primary shadow-md mr-2">
             <a href="{{ route('peminjamans.create') }}">
                 Tambah Peminjaman
@@ -16,7 +38,7 @@
 
 <div class="intro-y box p-5 mt-5">
     <div class="overflow-x-auto">
-        <table class="table table-striped">
+        <table class="table table-striped" id="table_peminjaman">
             <thead>
                 <tr>
                     <th class="whitespace-nowrap">No</th>
@@ -30,28 +52,6 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($datas as $data)
-                <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $data->kode }}</td>
-                    <td>{{ $data->nama }}</td>
-                    <td>{{ $data->kelas ? $data->kelas->nama : '' }}</td>
-                    <td>{{ $data->status }}</td>
-                    <td>{{ $data->status_pengembalian ? 'Sudah' : 'Belum' }}</td>
-                    <td>{{ $data->status == 'diterima' ? (now() > $data->tgl_pengembalian ? 'Telat' : '') : '' }}</td>
-                    <td>
-                        <a href="{{ route('peminjamans.show', $data->id) }}">Lihat</a>
-                        @if ($data->status == 'diterima' && now() > $data->tgl_pengembalian)
-                        <a href="javascript:;" data-tw-toggle="modal" data-tw-target="#modalPenagihan"
-                            class="btn btn-primary" onclick="set({{ $data->id }})">Kirim Penagihan</a>
-                        @endif
-                        @if (auth()->user()->can('delete_peminjaman'))
-                        <button type="submit" class="btn btn-sm btn-danger rounded" style="width: 4rem;"
-                            onclick="deleteData('{{ route('peminjamans.destroy', $data->id) }}')">Hapus</button>
-                        @endif
-                    </td>
-                </tr>
-                @endforeach
             </tbody>
         </table>
     </div>
@@ -70,7 +70,7 @@
                     <div class="row mb-3">
                         <div class="col-md-12">
                             <label for="pesan" class="form-label">Pesan</label>
-                            <textarea name="pesan" id="pesan" cols="30" rows="10"></textarea>
+                            <textarea name="pesan" id="pesan" cols="30" rows="10" class="form-control"></textarea>
                         </div>
                     </div>
                 </div>
@@ -88,5 +88,51 @@
         function set(peminjaman_id){
             $('input[name="peminjaman_id"]').val(peminjaman_id)
         }
+
+        $('#form-filter select').on('change', function(){
+            table_peminjaman.ajax.reload();
+        })
+        
+        let table_peminjaman = $('#table_peminjaman').DataTable({
+            processing: true,
+            ordering: false,
+            info: false,
+            ajax: {
+                url: '{{ route('peminjaman.data') }}',
+                data: function (p) {
+                        p.tahun_ajaran = $('#form-filter select[name=tahun_ajaran]').val();
+                        p.status = $('#form-filter select[name=status]').val();
+                    }
+            },
+            columns: [{
+                    data: 'DT_RowIndex',
+                    searchable: false,
+                    sortable: false
+                },
+                {
+                    data: 'kode'
+                },
+                {
+                    data: 'nama'
+                },
+                {
+                    data: 'kelas'
+                },
+                {
+                    data: 'status'
+                },
+                {
+                    data: 'status_pengembalian'
+                },
+                {
+                    data: 'status_telat'
+                },
+                {
+                    data: 'action',
+                    searchable: false,
+                    sortable: false
+                },
+            ]
+        });
     </script>
 @endpush

@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-    <h2 class="text-lg font-Medium mr-auto">
+    <h2 class="text-lg font-bold mr-auto">
         Data Kelas
     </h2>
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
@@ -16,7 +16,7 @@
 
 <div class="intro-y box p-5 mt-5">
     <div class="overflow-x-auto">
-        <table class="table table-striped">
+        <table class="table table-striped" id="tabel_kelas">
             <thead>
                 <tr>
                     <th class="whitespace-nowrap">No.</th>
@@ -25,26 +25,35 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($datas as $data)
-                <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $data->nama}}</td>
-                    <td class="table-report__action w-56">
-                        <div class="flex gap-3">
-                            <a class="btn btn-warning" href="{{ route('kelas.edit', $data->id) }}">Edit</a>
-                            @if (auth()->user()->can('delete_kelas'))
-                            <button type="submit" class="btn btn-danger btn-sm rounded"
-                                onclick="deleteData('{{ route('kelas.destroy', [$data->id]) }}')">Hapus</button>
-                    </td>
-                    @endif
-                    </td>
-                </tr>
-                @endforeach
             </tbody>
         </table>
     </div>
 </div>
-<div class="mt-5">
-    {{ $datas->links() }}
-</div>
 @endsection
+
+@push('js')
+<script>
+    let tabel_kelas = $('#tabel_kelas').DataTable({
+            processing: true,
+            ordering: false,
+            info: false,
+            ajax: {
+                url: '{{ route('kelas.data') }}',
+            },
+            columns: [{
+                    data: 'DT_RowIndex',
+                    searchable: false,
+                    sortable: false
+                },
+                {
+                    data: 'nama'
+                },
+                {
+                    data: 'action',
+                    searchable: false,
+                    sortable: false
+                },
+            ]
+        });
+</script>
+@endpush

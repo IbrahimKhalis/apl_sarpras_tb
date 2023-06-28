@@ -18,7 +18,7 @@
 
 <div class="intro-y box p-5 mt-5">
     <div class="overflow-x-auto">
-        <table class="table table-striped">
+        <table class="table table-striped" id="tabel_kategori">
             <thead>
                 <tr>
                     <th class="whitespace-nowrap">No.</th>
@@ -31,39 +31,41 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($datas as $data)
-                <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $data->nama }}</td>
-                    <td>{{ $data->jenis}}</td>
-                    <td>
-                        <table class="border-black table-auto">
-                            @foreach ($data->subcategory as $sub)
-                            <tr>
-                                <td>{{ $sub->nama }}</td>
-                                <td>{{ $sub->kode }}</td>
-                            </tr>
-                            @endforeach
-                        </table>
-                    </td>
-                    <td class="table-report__action w-56">
-                        <div class="flex gap-3">
-                            @can('edit_kategori')
-                            <a class="btn btn-warning" href="{{ route('kategori.edit', $data->id) }}">Edit</a>
-                            @endcan
-                            @can('delete_kategori')
-                            <button type="submit" class="btn btn-danger btn-sm rounded"
-                                onclick="deleteData('{{ route('kategori.destroy', [$data->id]) }}')">Hapus</button>
-                            @endcan
-                        </div>
-                    </td>
-                </tr>
-                @endforeach
             </tbody>
         </table>
     </div>
 </div>
-<div class="mt-5">
-    {{ $datas->links() }}
-</div>
 @endsection
+
+@push('js')
+<script>
+    let tabel_kategori = $('#tabel_kategori').DataTable({
+            processing: true,
+            ordering: false,
+            info: false,
+            ajax: {
+                url: '{{ route('kategori.data') }}',
+            },
+            columns: [{
+                    data: 'DT_RowIndex',
+                    searchable: false,
+                    sortable: false
+                },
+                {
+                    data: 'nama'
+                },
+                {
+                    data: 'jenis'
+                },
+                {
+                    data: 'sub'
+                },
+                {
+                    data: 'action',
+                    searchable: false,
+                    sortable: false
+                },
+            ]
+        });
+</script>
+@endpush

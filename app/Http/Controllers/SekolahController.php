@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Sekolah;
 use App\Models\User;
+use App\Models\Peminjaman;
 use App\Http\Requests\StoreSekolahRequest;
 use App\Http\Requests\UpdateSekolahRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use DB;
+use DB, Auth;
 
 class SekolahController extends Controller
 {
@@ -89,7 +90,33 @@ class SekolahController extends Controller
      */
     public function show(Sekolah $sekolah)
     {
-        return view('sekolah.show', compact('sekolah'));
+        if (!Auth::user()->hasRole('super_admin')) {
+            abort(403);
+        }
+
+        $sekolah_id = $sekolah->id;
+        $bulan = (int) request('bulan') ?? date('m');
+        $tahun = (int) request('tahun') ?? date('Y');
+        
+        $sub_terbanyak = Peminjaman::sub_terbanyak($sekolah_id, $bulan, $tahun);
+        $ruang_terbanyak = Peminjaman::ruang_terbanyak($sekolah_id, $bulan, $tahun);
+        $kelas_terbanyak = Peminjaman::kelas_terbanyak($sekolah_id, $bulan, $tahun);
+        $email_terbanyak = Peminjaman::email_terbanyak($sekolah_id, $bulan, $tahun);
+
+        $return = [
+            'total_kategori' => DB::table('kategoris')->where('sekolah_id', $sekolah_id)->count(),
+            'total_produk' => DB::table('produks')->where('sekolah_id', $sekolah_id)->count(),
+            'total_ruang' => DB::table('ruangs')->where('sekolah_id', $sekolah_id)->count(),
+            'total_peminjaman' => DB::table('peminjamans')->where('peminjamans.sekolah_id', $sekolah_id)->count(),
+            'sub_terbanyak' => $this->parseData($sub_terbanyak),
+            'ruang_terbanyak' => $this->parseData($ruang_terbanyak),
+            'kelas_terbanyak' => $this->parseData($kelas_terbanyak),
+            'email_terbanyak' => $this->parseData($email_terbanyak),
+            'tahuns' => DB::table('peminjamans')->selectRaw('distinct(YEAR(created_at)) as year')->get(),
+            'sekolah' => $sekolah
+        ]; 
+
+        return view('sekolah.show', $return);
     }
 
     /**

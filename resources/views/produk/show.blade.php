@@ -3,9 +3,8 @@
 @section('content')
 <div class="intro-y flex items-center mt-8">
     <h2 class="text-lg font-medium mr-auto">
-        Detail {{ $data->name }}
+        Detail {{ $data->nama }}
     </h2>
 </div>
-
-@include('ruang.detail')
+@include('produk.detail')
 @endsection

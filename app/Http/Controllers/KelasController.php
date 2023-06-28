@@ -25,6 +25,34 @@ class KelasController extends Controller
         return view('kelas.index', compact('datas'));
     }
 
+    public function data($sekolah_id = null){
+        if (!Auth::user()->hasRole('super_admin')) {
+            $sekolah_id = Auth::user()->sekolah_id;
+        }
+
+        if (!$sekolah_id) {
+            abort(403);
+        }
+
+        $data = Kelas::where('sekolah_id', $sekolah_id)->get();
+
+        return datatables($data)
+            ->addIndexColumn()
+            ->addColumn('action', function ($data) {
+                $action = '';
+                if (Auth::user()->can('edit_kelas')){
+                    $action .= '<a class="btn btn-warning btn-sm rounded" href="'. route('kelas.edit', $data->id) .'">Edit</a>';
+                }
+                if (Auth::user()->can('delete_kelas')) {
+                    $action .= '<button type="submit" class="btn btn-sm btn-danger rounded ml-2" style="width: 4rem;"
+                    onclick="deleteData("'. route('kelas.destroy', $data->id) .'")">Hapus</button>';
+                }
+                return $action;
+            })
+            ->escapeColumns([])
+            ->make(true);
+    }
+
     public function create()
     {
         return view('kelas.form');

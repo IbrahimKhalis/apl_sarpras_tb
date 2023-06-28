@@ -64,18 +64,9 @@
           <h2 class="text-lg font-medium truncate mr-5">
             Dashboard
           </h2>
-          <form action="" class="form-filter">
-            <input type="hidden" name="bulan" value="{{ request('bulan') }}">
-          </form>
-          <select id="bulan" class="tom-select">
-            <option value="all" {{ request('bulan') ? (request('bulan')=='all' ? 'selected' : '' ) : 'selected' }}>Semua
-              Bulan</option>
-            @foreach (config('services.bulan') as $key => $bulan)
-            <option value="{{ $key + 1 }}" {{ request('bulan') ? (request('bulan')==$key+1 ? 'selected' : '' ) : '' }}>
-              {{ $bulan }}
-            </option>
-            @endforeach
-          </select>
+          @if ( Auth::user()->hasRole('admin') )
+          @include('grafik.filter')
+          @endif
         </div>
         @if (Auth::user()->hasRole('super_admin'))
         <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
@@ -113,28 +104,42 @@
         @else
         <div class="flex gap-3 my-3">
           <div
-            class="max-w-sm text-center w-1/3 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            class="max-w-sm text-center w-1/4 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $total_peminjaman }}
+            </h5>
+            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Total Peminjaman</p>
+          </div>
+          <div
+            class="max-w-sm text-center w-1/4 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $total_kategori }}</h5>
             <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Total Kategori</p>
           </div>
           <div
-            class="max-w-sm text-center w-1/3 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            class="max-w-sm text-center w-1/4 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $total_produk }}</h5>
             <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Total Produk</p>
           </div>
           <div
-            class="max-w-sm text-center w-1/3 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            class="max-w-sm text-center w-1/4 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $total_ruang }}</h5>
             <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Total Ruang</p>
           </div>
         </div>
         <div class="flex gap-3">
-          <div id="container-produk" class="w-1/2"></div>
-          <div id="container-ruang" class="w-1/2"></div>
+          @can('view_produk')
+          @include('grafik.produk')
+          @endcan
+          @can('view_ruang')
+          @include('grafik.ruang')
+          @endcan
         </div>
         <div class="flex gap-3 mt-3">
-          <div id="container-kelas" class="w-1/2"></div>
-          <div id="container-email" class="w-1/2"></div>
+          @can('view_kelas')
+          @include('grafik.kelas')
+          @endcan
+          @can('view_peminjaman')
+          @include('grafik.email')
+          @endcan
         </div>
         @endif
       </div>
@@ -142,190 +147,3 @@
   </div>
 </div>
 @endsection
-
-@push('js')
-@if (Auth::user()->hasRole('admin'))
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
-<script src="https://code.highcharts.com/modules/accessibility.js"></script>
-<script>
-  Highcharts.chart('container-produk', {
-  chart: {
-    type: 'bar'
-  },
-  title: {
-    text: 'Produk sering dipinjam',
-  },
-  subtitle: {
-    text: '',
-  },
-  xAxis: {
-    categories: {!! json_encode($sub_terbanyak['key']) !!},
-    title: {
-      text: null
-    },
-    gridLineWidth: 1,
-    lineWidth: 0
-  },
-  yAxis: {
-    min: 0,
-    title: {
-      text: 'Total Barang',
-      align: 'high'
-    },
-    labels: {
-      overflow: 'justify'
-    },
-    gridLineWidth: 0
-  },
-  tooltip: {
-    valueSuffix: ' Peminjaman'
-  },
-  plotOptions: {
-    bar: {
-      borderRadius: '5%',
-    }
-  },
-  legend: {
-    enabled: false
-  },
-  credits: {
-    enabled: false
-  },
-  series: [{
-    name: 'Jumlah',
-    data: {!! json_encode($sub_terbanyak['data']) !!}
-  }]
-});
-</script>
-<script>
-  Highcharts.chart('container-ruang', {
-    chart: {
-        type: 'column'
-    },
-    title: {
-        text: 'Ruang Sering dipinjam'
-    },
-    subtitle: {
-        text: ''
-    },
-    xAxis: {
-        categories: {!! json_encode($ruang_terbanyak['key']) !!},
-        crosshair: true
-    },
-    yAxis: {
-        min: 0,
-        title: {
-            text: 'Jumlah'
-        }
-    },
-    plotOptions: {
-        column: {
-            pointPadding: 0.2,
-            borderWidth: 0
-        }
-    },
-    tooltip: {
-      valueSuffix: ' Peminjaman'
-    },
-    series: [{
-        name: 'Jumlah',
-        data: {!! json_encode($ruang_terbanyak['data']) !!}
-    }]
-});
-</script>
-<script>
-  Highcharts.chart('container-kelas', {
-    chart: {
-        type: 'column'
-    },
-    title: {
-        text: 'Kelas Sering minjem'
-    },
-    subtitle: {
-        text: ''
-    },
-    xAxis: {
-        categories: {!! json_encode($kelas_terbanyak['key']) !!},
-        crosshair: true
-    },
-    yAxis: {
-        min: 0,
-        title: {
-            text: 'Jumlah'
-        }
-    },
-    plotOptions: {
-        column: {
-            pointPadding: 0.2,
-            borderWidth: 0
-        }
-    },
-    tooltip: {
-      valueSuffix: ' Peminjaman'
-    },
-    series: [{
-        name: 'Jumlah',
-        data: {!! json_encode($kelas_terbanyak['data']) !!}
-    }]
-});
-</script>
-<script>
-  Highcharts.chart('container-email', {
-  chart: {
-    type: 'bar'
-  },
-  title: {
-    text: 'Email sering minjam',
-  },
-  subtitle: {
-    text: '',
-  },
-  xAxis: {
-    categories: {!! json_encode($email_terbanyak['key']) !!},
-    title: {
-      text: null
-    },
-    gridLineWidth: 1,
-    lineWidth: 0
-  },
-  yAxis: {
-    min: 0,
-    title: {
-      text: 'Total Barang',
-      align: 'high'
-    },
-    labels: {
-      overflow: 'justify'
-    },
-    gridLineWidth: 0
-  },
-  tooltip: {
-    valueSuffix: ' Peminjaman'
-  },
-  plotOptions: {
-    bar: {
-      borderRadius: '5%',
-    }
-  },
-  legend: {
-    enabled: false
-  },
-  credits: {
-    enabled: false
-  },
-  series: [{
-    name: 'Jumlah',
-    data: {!! json_encode($email_terbanyak['data']) !!}
-  }]
-});
-</script>
-<script>
-  $('select#bulan').on('change', function(){
-  $('.form-filter input').val($(this).val())
-  $('.form-filter').submit();
-})
-</script>
-@endif
-@endpush
