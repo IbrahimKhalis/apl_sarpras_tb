@@ -14,7 +14,7 @@
             </div>
             <div class="mb-3">
                 <label for="nama">Nama Sekolah</label>
-                <input class="form-control form-control-sm @error('nama') is-invalid @enderror" type="text"
+                <input class="form-control form-control-sm @error('nama') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror" type="text"
                     placeholder="Masukan Nama Sekolah" value="{{ $data->nama, old('nama') }}" name="nama" id="nama"
                     style=" font-size: 15px;">
                 @error('nama')
@@ -26,7 +26,7 @@
             <div>
                 <h2 class="font-normal text-xs mr-auto mt-3">Kode Sekolah:</h2>
                 <input type="text"
-                    class="form-control @error('kode') is-invalid @enderror  "
+                    class="form-control @error('kode') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror  "
                     placeholder="Kode Sekolah" name="kode"
                     style="border-radius: 5px; width: 100%" value="{{ old('kode') }}"
                     required>
@@ -38,7 +38,7 @@
             </div>
             <div class="mb-3">
                 <label for="npsn">NPSN</label>
-                <input class="form-control form-control-sm @error('npsn') is-invalid @enderror" type="text"
+                <input class="form-control form-control-sm @error('npsn') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror" type="text"
                     placeholder="Masukan NPSN" value="{{ $data->npsn, old('npsn') }}" name="npsn" id="npsn"
                     style=" font-size: 15px;">
                 @error('npsn')
@@ -49,7 +49,7 @@
             </div>
             <div class="mb-3">
                 <label for="kepala_sekolah">Nama Kepala Sekolah</label>
-                <input class="form-control form-control-sm @error('kepala_sekolah') is-invalid @enderror" type="text"
+                <input class="form-control form-control-sm @error('kepala_sekolah') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror" type="text"
                     placeholder="Masukan Nama Kepala Sekolah" value="{{ $data->kepala_sekolah, old('kepala_sekolah') }}"
                     name="kepala_sekolah" id="kepala_sekolah" style=" font-size: 15px;">
                 @error('kepala_sekolah')
@@ -109,7 +109,7 @@
             </div>
             <div class="mb-3">
                 <label for="jalan" class="form-label">Jalan</label>
-                <input type="text" class="form-control @error('jalan') is-invalid @enderror" placeholder="Masukan Jalan"
+                <input type="text" class="form-control @error('jalan') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror" placeholder="Masukan Jalan"
                     name="jalan" value="{{ isset($data) ? $data->jalan : old('jalan') }}" style=" font-size: 15px;"
                     id="jalan">
                 @error('jalan')

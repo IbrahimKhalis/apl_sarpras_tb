@@ -103,27 +103,35 @@
         </div>
         @else
         <div class="flex gap-3 my-3">
+          @can('view_peminjaman')
           <div
             class="max-w-sm text-center w-1/4 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $total_peminjaman }}
             </h5>
             <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Total Peminjaman</p>
           </div>
+          @endcan
+          @can('view_kategori')
           <div
             class="max-w-sm text-center w-1/4 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $total_kategori }}</h5>
             <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Total Kategori</p>
           </div>
+          @endcan
+          @can('view_produk')
           <div
             class="max-w-sm text-center w-1/4 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $total_produk }}</h5>
             <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Total Produk</p>
           </div>
+          @endcan
+          @can('view_ruang')
           <div
             class="max-w-sm text-center w-1/4 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $total_ruang }}</h5>
             <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Total Ruang</p>
           </div>
+          @endcan
         </div>
         <div class="flex gap-3">
           @can('view_produk')
