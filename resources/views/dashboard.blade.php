@@ -102,6 +102,28 @@
           </div>
         </div>
         @else
+        <div class="bg-white border border-gray-200 p-5 rounded mt-3">
+          <div class="flex flex-1 px-5 items-center justify-center lg:justify-start">
+            <div class="w-20 h-20 sm:w-24 sm:h-24 flex-none lg:w-32 lg:h-32 image-fit relative  cursor-pointer zoom-in">
+              @if ($sekolah->logo != '/img/tutwuri.png')
+              <img src="{{ asset('storage/' . $sekolah->logo) }}" alt="" style="object-fit: cover" class="rounded-full"
+                data-action="zoom">
+              @else
+              <img src="{{ $sekolah->logo }}" alt="" style="object-fit: cover" class="rounded-full" data-action="zoom">
+              @endif
+            </div>
+  
+            <div class="ml-5">
+              <div class="truncate sm:whitespace-normal font-medium text-lg">{{ $sekolah->nama }}
+              </div>
+              <div class="text-slate-500">NPSN : {{ $sekolah->npsn }}</div>
+              <div class="text-slate-500">Kepala Sekolah : {{ $sekolah->kepala_sekolah }}</div>
+              <div class="text-slate-500">Kode : {{ $sekolah->kode }}</div>
+              <div class="text-slate-500">Alamat : {{ $sekolah->alamat }}</div>
+            </div>
+            <a href="{{ route('sekolah.edit.own') }}" class="btn btn-warning btn-sm rounded">Edit Sekolah</a>
+          </div>
+        </div>
         <div class="flex gap-3 my-3">
           @can('view_peminjaman')
           <div

@@ -1,8 +1,7 @@
-@extends('mylayouts.guard')
+@extends('mylayouts.main')
 
 <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 <style>
-  /* Mark input boxes that gets an error on validation: */
   input.invalid {
     background-color: #ffdddd;
   }
@@ -148,12 +147,6 @@
                     <label for="ref_provinsi_id" class="form-label">Provinsi</label>
                     <select class="between-input-item-select form-control @error('ref_provinsi_id') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror" name="ref_provinsi_id" id="ref_provinsi_id">
                       <option value="">Pilih Provinsi</option>
-                      @foreach ($provinsis as $provinsi)
-                      <option value="{{ $provinsi->id }}" {{ isset($data) ? ($data->ref_provinsi_id == $provinsi->id ?
-                        'selected' : '') : (old('ref_provinsi_id') == $provinsi->id ? 'selected' : '') }}>{{
-                        $provinsi->nama
-                        }}</option>
-                      @endforeach
                     </select>
                     @error('ref_provinsi_id')
                     <div class="invalid-feedback">
