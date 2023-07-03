@@ -69,8 +69,8 @@
           @endif
         </div>
         @if (Auth::user()->hasRole('super_admin'))
-        <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-          <div class="report-box zoom-in">
+        <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y my-2">
+          <div class="report-box">
             <div class="box p-5">
               <div class="flex">
                 <i data-lucide="monitor" class="report-box__icon text-warning"></i>
@@ -86,7 +86,7 @@
           </div>
         </div>
         <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-          <div class="report-box zoom-in">
+          <div class="report-box">
             <div class="box p-5">
               <div class="flex">
                 <i data-lucide="user" class="report-box__icon text-success"></i>
@@ -102,74 +102,50 @@
           </div>
         </div>
         @else
-        <div class="bg-white border border-gray-200 p-5 rounded mt-3">
-          <div class="flex flex-1 px-5 items-center justify-center lg:justify-start">
-            <div class="w-20 h-20 sm:w-24 sm:h-24 flex-none lg:w-32 lg:h-32 image-fit relative  cursor-pointer zoom-in">
-              @if ($sekolah->logo != '/img/tutwuri.png')
-              <img src="{{ asset('storage/' . $sekolah->logo) }}" alt="" style="object-fit: cover" class="rounded-full"
-                data-action="zoom">
-              @else
-              <img src="{{ $sekolah->logo }}" alt="" style="object-fit: cover" class="rounded-full" data-action="zoom">
-              @endif
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 my-4">
+            <div
+                class="text-center w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $total_peminjaman }}
+                </h5>
+                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Total Peminjaman</p>
             </div>
-  
-            <div class="ml-5">
-              <div class="truncate sm:whitespace-normal font-medium text-lg">{{ $sekolah->nama }}
-              </div>
-              <div class="text-slate-500">NPSN : {{ $sekolah->npsn }}</div>
-              <div class="text-slate-500">Kepala Sekolah : {{ $sekolah->kepala_sekolah }}</div>
-              <div class="text-slate-500">Kode : {{ $sekolah->kode }}</div>
-              <div class="text-slate-500">Alamat : {{ $sekolah->alamat }}</div>
+            <div
+                class="text-center w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $total_kategori }}</h5>
+                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Total Kategori</p>
             </div>
-            <a href="{{ route('sekolah.edit.own') }}" class="btn btn-warning btn-sm rounded">Edit Sekolah</a>
-          </div>
+            <div
+                class="text-center w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $total_produk }}</h5>
+                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Total Produk</p>
+            </div>
+            <div
+                class="text-center w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $total_ruang }}</h5>
+                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Total Ruang</p>
+            </div>
         </div>
-        <div class="flex gap-3 my-3">
-          @can('view_peminjaman')
-          <div
-            class="max-w-sm text-center w-1/4 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $total_peminjaman }}
-            </h5>
-            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Total Peminjaman</p>
+        <div class="grid grid-cols-12 gap-6">
+          <div class="intro-y box col-span-12 lg:col-span-6 flex gap-3 justify-center">
+            @can('view_produk')
+            @include('grafik.produk')
+            @endcan
           </div>
-          @endcan
-          @can('view_kategori')
-          <div
-            class="max-w-sm text-center w-1/4 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $total_kategori }}</h5>
-            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Total Kategori</p>
+          <div class="intro-y box col-span-12 lg:col-span-6 flex gap-3 justify-center">
+            @can('view_ruang')
+            @include('grafik.ruang')
+            @endcan
           </div>
-          @endcan
-          @can('view_produk')
-          <div
-            class="max-w-sm text-center w-1/4 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $total_produk }}</h5>
-            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Total Produk</p>
+          <div class="intro-y box col-span-12 lg:col-span-6 flex gap-3 justify-center">
+            @can('view_kelas')
+            @include('grafik.kelas')
+            @endcan
           </div>
-          @endcan
-          @can('view_ruang')
-          <div
-            class="max-w-sm text-center w-1/4 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $total_ruang }}</h5>
-            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Total Ruang</p>
+          <div class="intro-y box col-span-12 lg:col-span-6 flex gap-3 justify-center">
+            @can('view_peminjaman')
+            @include('grafik.email')
+            @endcan
           </div>
-          @endcan
-        </div>
-        <div class="flex gap-3">
-          @can('view_produk')
-          @include('grafik.produk')
-          @endcan
-          @can('view_ruang')
-          @include('grafik.ruang')
-          @endcan
-        </div>
-        <div class="flex gap-3 mt-3">
-          @can('view_kelas')
-          @include('grafik.kelas')
-          @endcan
-          @can('view_peminjaman')
-          @include('grafik.email')
-          @endcan
         </div>
         @endif
       </div>
